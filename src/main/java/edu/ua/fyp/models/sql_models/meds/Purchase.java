@@ -14,9 +14,10 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @ToString
 @Entity
-@Table(name = "purchases")
+@Table(name = "med_purchases")
 public class Purchase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -32,12 +33,15 @@ public class Purchase {
 	private Date updatedAt;
 	@ManyToOne
 	@JoinColumn(name = "med_id", nullable = false)
+	@NonNull
 	private Medicine medicine;
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
+	@NonNull
 	private User user;
 	@ManyToOne
 	@JoinColumn(name = "status_id", nullable = false)
+	@NonNull
 	private PurchaseStatus status;
 
 	@Override

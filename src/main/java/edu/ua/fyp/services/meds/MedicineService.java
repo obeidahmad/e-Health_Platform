@@ -5,7 +5,6 @@ import edu.ua.fyp.models.DTOs.meds.MedicineDTO;
 import edu.ua.fyp.models.query_settings.QuerySettings;
 import edu.ua.fyp.models.sql_models.meds.Medicine;
 import edu.ua.fyp.repositories.meds.MedicineRepository;
-import edu.ua.fyp.services.CRUDService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

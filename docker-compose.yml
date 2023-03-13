@@ -1,0 +1,10 @@
+postgres-fyp:
+  container_name: postgres-fyp
+  image: postgres:15.1
+  restart: always
+  ports:
+    - "5432:5432"
+  environment:
+    POSTGRES_USER: ahmadobeid
+    POSTGRES_PASSWORD: ahmadobeidpass
+    POSTGRES_DB: fyp
