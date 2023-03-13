@@ -7,7 +7,6 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -44,7 +43,7 @@ public class Bookmark {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		if (o == null || this.getClass() != o.getClass()) return false;
 
 		Bookmark bookmark = (Bookmark) o;
 

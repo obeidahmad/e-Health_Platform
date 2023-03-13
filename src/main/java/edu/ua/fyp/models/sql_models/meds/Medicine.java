@@ -1,6 +1,7 @@
 package edu.ua.fyp.models.sql_models.meds;
 
 
+import edu.ua.fyp.models.DTOs.meds.MedicineDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -54,11 +56,13 @@ public class Medicine {
 	@ManyToOne
 	@JoinColumn(name = "form_id", nullable = false)
 	private MedForm medForm;
+	@OneToMany(mappedBy = "medicine")
+	private List<Purchase> purchases;
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		if (o == null || this.getClass() != o.getClass()) return false;
 
 		Medicine medicine = (Medicine) o;
 
@@ -68,5 +72,9 @@ public class Medicine {
 	@Override
 	public int hashCode() {
 		return id.hashCode();
+	}
+
+	public MedicineDTO toDTO() {
+		return new MedicineDTO(this);
 	}
 }

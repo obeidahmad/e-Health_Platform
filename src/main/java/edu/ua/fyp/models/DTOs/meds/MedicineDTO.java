@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NonNull;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Data
 public class MedicineDTO {
@@ -31,6 +33,7 @@ public class MedicineDTO {
 	private String medClass;
 	@NonNull
 	private String medForm;
+	private List<PurchaseDTO> purchases;
 
 	public MedicineDTO(Medicine element) {
 		this.id = element.getId();
@@ -46,5 +49,6 @@ public class MedicineDTO {
 		this.updatedAt = element.getUpdatedAt();
 		this.medClass = element.getMedClass().getName();
 		this.medForm = element.getMedForm().getName();
+		this.purchases = element.getPurchases().stream().map(PurchaseDTO::new).collect(Collectors.toList());
 	}
 }

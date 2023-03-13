@@ -1,5 +1,6 @@
 package edu.ua.fyp.models.sql_models.general;
 
+import edu.ua.fyp.models.DTOs.general.UserDTO;
 import edu.ua.fyp.models.sql_models.meds.Bookmark;
 import edu.ua.fyp.models.sql_models.meds.Purchase;
 import jakarta.persistence.*;
@@ -41,7 +42,7 @@ public class User {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		if (o == null || this.getClass() != o.getClass()) return false;
 
 		User user = (User) o;
 
@@ -51,5 +52,9 @@ public class User {
 	@Override
 	public int hashCode() {
 		return id.hashCode();
+	}
+
+	public UserDTO toDTO() {
+		return new UserDTO(this);
 	}
 }
