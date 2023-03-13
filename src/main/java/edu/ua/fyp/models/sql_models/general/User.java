@@ -1,6 +1,5 @@
 package edu.ua.fyp.models.sql_models.general;
 
-import edu.ua.fyp.models.DTOs.general.UserDTO;
 import edu.ua.fyp.models.sql_models.meds.Bookmark;
 import edu.ua.fyp.models.sql_models.meds.Purchase;
 import jakarta.persistence.*;
@@ -8,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -52,9 +50,5 @@ public class User {
 	@Override
 	public int hashCode() {
 		return id.hashCode();
-	}
-
-	public UserDTO toDTO() {
-		return new UserDTO(this);
 	}
 }

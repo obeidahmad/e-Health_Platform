@@ -1,11 +1,9 @@
 package edu.ua.fyp.models.sql_models.meds;
 
 
-import edu.ua.fyp.models.DTOs.meds.MedicineDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -72,9 +70,5 @@ public class Medicine {
 	@Override
 	public int hashCode() {
 		return id.hashCode();
-	}
-
-	public MedicineDTO toDTO() {
-		return new MedicineDTO(this);
 	}
 }

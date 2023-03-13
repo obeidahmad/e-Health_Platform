@@ -3,7 +3,6 @@ package edu.ua.fyp.models.sql_models.meds;
 import edu.ua.fyp.models.sql_models.general.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

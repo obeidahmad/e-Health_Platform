@@ -62,7 +62,7 @@ public class MedicineController {
 	@DeleteMapping("purchase/{purchaseId}")
 	public UserDTO removePurchase(@PathVariable UUID purchaseId) {
 		purchaseService.removePurchase(purchaseId);
-		return purchaseService.getElementById(purchaseId).getUser().toDTO();
+		return new UserDTO(purchaseService.getElementById(purchaseId).getUser(), true);
 	}
 
 	@PostMapping("buy/{userId}/{medId}")

@@ -22,12 +22,12 @@ public class PurchaseDTO {
 	@NonNull
 	private String status;
 
-	public PurchaseDTO(Purchase element) {
-		this.id = element.getId();
-		this.createdAt = element.getCreatedAt();
-		this.updatedAt = element.getUpdatedAt();
-		this.medicine = new MedicineDTO(element.getMedicine());
-		this.user = new UserDTO(element.getUser());
-		this.status = element.getStatus().getName();
+	public PurchaseDTO(Purchase purchase) {
+		this.id = purchase.getId();
+		this.createdAt = purchase.getCreatedAt();
+		this.updatedAt = purchase.getUpdatedAt();
+		this.medicine = new MedicineDTO(purchase.getMedicine(), true);
+		this.user = new UserDTO(purchase.getUser(), true);
+		this.status = purchase.getStatus().getName();
 	}
 }

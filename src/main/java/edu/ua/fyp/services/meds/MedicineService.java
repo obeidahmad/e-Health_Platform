@@ -19,7 +19,7 @@ public class MedicineService {
 	private final MedicineRepository medicineRepo;
 
 	public List<MedicineDTO> getAllQueriedElements(QuerySettings querySettings) {
-		return medicineRepo.queryMedicines(querySettings).stream().map(MedicineDTO::new).collect(Collectors.toList());
+		return medicineRepo.queryMedicines(querySettings).stream().map(med -> new MedicineDTO(med, true)).collect(Collectors.toList());
 	}
 
 	public Medicine getElementById(UUID medId) {
@@ -27,11 +27,11 @@ public class MedicineService {
 				new ResourceNotFoundException("medicine", "id", medId));
 	}
 
-	public MedicineDTO getElementDTOById(UUID medId) {
-		return getElementById(medId).toDTO();
+	public MedicineDTO getElementDTOById(UUID medId, Boolean withLists) {
+		return new MedicineDTO(getElementById(medId), !withLists);
 	}
 
 	public List<PurchaseDTO> getMedicinePurchases(UUID medId) {
-		return getElementDTOById(medId).getPurchases();
+		return getElementDTOById(medId, true).getPurchases();
 	}
 }

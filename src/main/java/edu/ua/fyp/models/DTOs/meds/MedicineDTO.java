@@ -35,20 +35,20 @@ public class MedicineDTO {
 	private String medForm;
 	private List<PurchaseDTO> purchases;
 
-	public MedicineDTO(Medicine element) {
-		this.id = element.getId();
-		this.brandName = element.getBrandName();
-		this.description = element.getDescription();
-		this.dosage = element.getDosage();
-		this.requiresPrescription = element.getRequiresPrescription();
-		this.imageUrl = element.getImageUrl();
-		this.quantity = element.getQuantity();
-		this.isPrivate = element.getIsPrivate();
-		this.price = element.getPrice();
-		this.createdAt = element.getCreatedAt();
-		this.updatedAt = element.getUpdatedAt();
-		this.medClass = element.getMedClass().getName();
-		this.medForm = element.getMedForm().getName();
-		this.purchases = element.getPurchases().stream().map(PurchaseDTO::new).collect(Collectors.toList());
+	public MedicineDTO(Medicine med, Boolean withoutLists) {
+		this.id = med.getId();
+		this.brandName = med.getBrandName();
+		this.description = med.getDescription();
+		this.dosage = med.getDosage();
+		this.requiresPrescription = med.getRequiresPrescription();
+		this.imageUrl = med.getImageUrl();
+		this.quantity = med.getQuantity();
+		this.isPrivate = med.getIsPrivate();
+		this.price = med.getPrice();
+		this.createdAt = med.getCreatedAt();
+		this.updatedAt = med.getUpdatedAt();
+		this.medClass = med.getMedClass().getName();
+		this.medForm = med.getMedForm().getName();
+		this.purchases = withoutLists ? null : med.getPurchases().stream().map(PurchaseDTO::new).collect(Collectors.toList());
 	}
 }

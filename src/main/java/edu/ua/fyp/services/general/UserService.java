@@ -21,15 +21,19 @@ public class UserService {
 		return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("user", "id", id));
 	}
 
-	public UserDTO getElementDTOById(UUID id) {
-		return getElementById(id).toDTO();
+	private UserDTO getElementDTOById(UUID id, Boolean withLists) {
+		return new UserDTO(getElementById(id), !withLists);
 	}
 
-	public List<MedicineDTO> getUserBookmarks(UUID id) {
-		return getElementDTOById(id).getBookmarkedMeds();
+	public UserDTO getElementDTOById(UUID id) {
+		return getElementDTOById(id, false);
+	}
+
+	public List<MedicineDTO> getUserBookmarks(UUID userId) {
+		return getElementDTOById(userId, true).getBookmarkedMeds();
 	}
 
 	public List<PurchaseDTO> getUserPurchases(UUID userId) {
-		return getElementDTOById(userId).getPurchases();
+		return getElementDTOById(userId, true).getPurchases();
 	}
 }

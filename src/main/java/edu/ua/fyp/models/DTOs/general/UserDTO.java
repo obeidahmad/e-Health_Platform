@@ -21,11 +21,12 @@ public class UserDTO {
 	private List<MedicineDTO> bookmarkedMeds;
 	private List<PurchaseDTO> purchases;
 
-	public UserDTO(User element) {
-		this.id = element.getId();
-		this.createdAt = element.getCreatedAt();
-		this.updatedAt = element.getUpdatedAt();
-		this.bookmarkedMeds = element.getBookmarks().stream().map(bookmark -> new MedicineDTO(bookmark.getMedicine())).collect(Collectors.toList());
-		this.purchases = element.getPurchases().stream().map(PurchaseDTO::new).collect(Collectors.toList());
+	public UserDTO(User user, Boolean withoutLists) {
+		this.id = user.getId();
+		this.createdAt = user.getCreatedAt();
+		this.updatedAt = user.getUpdatedAt();
+		this.bookmarkedMeds = withoutLists ? null :
+				user.getBookmarks().stream().map(bookmark -> new MedicineDTO(bookmark.getMedicine(), true)).collect(Collectors.toList());
+		this.purchases = withoutLists ? null : user.getPurchases().stream().map(PurchaseDTO::new).collect(Collectors.toList());
 	}
 }
