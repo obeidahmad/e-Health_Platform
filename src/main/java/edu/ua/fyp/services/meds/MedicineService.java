@@ -1,10 +1,13 @@
 package edu.ua.fyp.services.meds;
 
 import edu.ua.fyp.exceptions.ResourceNotFoundException;
-import edu.ua.fyp.models.DTOs.meds.MedicineDTO;
-import edu.ua.fyp.models.DTOs.meds.PurchaseDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.CreateMedicineDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.MedicineDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.UpdateMedicineDTO;
 import edu.ua.fyp.models.query_settings.QuerySettings;
 import edu.ua.fyp.models.sql_models.meds.Medicine;
+import edu.ua.fyp.repositories.meds.MedicineClassRepository;
+import edu.ua.fyp.repositories.meds.MedicineFormRepository;
 import edu.ua.fyp.repositories.meds.MedicineRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,21 +20,54 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MedicineService {
 	private final MedicineRepository medicineRepo;
+	private final MedicineClassRepository medicineClassRepo;
+	private final MedicineFormRepository medicineFormRepo;
 
-	public List<MedicineDTO> getAllQueriedElements(QuerySettings querySettings) {
-		return medicineRepo.queryMedicines(querySettings).stream().map(med -> new MedicineDTO(med, true)).collect(Collectors.toList());
+	public List<MedicineDTO> getAllQueriedMedicines(QuerySettings querySettings) {
+		return medicineRepo.queryMedicines(querySettings).stream().map(MedicineDTO::new).collect(Collectors.toList());
 	}
 
-	public Medicine getElementById(UUID medId) {
+	public Medicine getMedicineById(UUID medId) {
 		return medicineRepo.findById(medId).orElseThrow(() ->
 				new ResourceNotFoundException("medicine", "id", medId));
 	}
 
-	public MedicineDTO getElementDTOById(UUID medId, Boolean withLists) {
-		return new MedicineDTO(getElementById(medId), !withLists);
+	public MedicineDTO getMedicineDTOById(UUID medId) {
+		return new MedicineDTO(getMedicineById(medId));
 	}
 
-	public List<PurchaseDTO> getMedicinePurchases(UUID medId) {
-		return getElementDTOById(medId, true).getPurchases();
+	public MedicineDTO updateMedicine(UpdateMedicineDTO updateMedicine) {
+		Medicine validMedicine = getMedicineById(updateMedicine.medId());
+		if (updateMedicine.brandName() !=null) validMedicine.setBrandName(updateMedicine.brandName());
+		if (updateMedicine.description() != null) validMedicine.setDescription(updateMedicine.description());
+		if (updateMedicine.dosage()!=null) validMedicine.setDosage(updateMedicine.dosage());
+		if (updateMedicine.requiresPrescription() !=null) validMedicine.setRequiresPrescription(updateMedicine.requiresPrescription());
+		if (updateMedicine.imageUrl() != null) validMedicine.setImageUrl(updateMedicine.imageUrl());
+		if (updateMedicine.quantity() != null) validMedicine.setQuantity(updateMedicine.quantity());
+		if (updateMedicine.isPrivate() != null) validMedicine.setIsPrivate(updateMedicine.isPrivate());
+		if (updateMedicine.price() != null) validMedicine.setPrice(updateMedicine.price());
+		if (updateMedicine.medClass() != null) validMedicine.setMedClass(medicineClassRepo.findByName(updateMedicine.medClass()));
+		if (updateMedicine.medForm() != null) validMedicine.setMedForm(medicineFormRepo.findByName(updateMedicine.medForm()));
+		medicineRepo.save(validMedicine);
+		return new MedicineDTO(validMedicine);
+	}
+
+	public void deleteMedicine(UUID medId) {
+		this.getMedicineById(medId);
+		medicineRepo.deleteById(medId);
+	}
+
+	public MedicineDTO addMedicine(CreateMedicineDTO createMedicine) {
+		Medicine newMedicine = new Medicine();
+		newMedicine.setBrandName(createMedicine.brandName());
+		newMedicine.setDosage(createMedicine.dosage());
+		newMedicine.setMedClass(medicineClassRepo.findByName(createMedicine.medClass()));
+		newMedicine.setMedForm(medicineFormRepo.findByName(createMedicine.medForm()));if (createMedicine.requiresPrescription() !=null) newMedicine.setRequiresPrescription(createMedicine.requiresPrescription());
+		if (createMedicine.description() != null) newMedicine.setDescription(createMedicine.description());
+		if (createMedicine.imageUrl() != null) newMedicine.setImageUrl(createMedicine.imageUrl());
+		if (createMedicine.quantity() != null) newMedicine.setQuantity(createMedicine.quantity());
+		if (createMedicine.isPrivate() != null) newMedicine.setIsPrivate(createMedicine.isPrivate());
+		if (createMedicine.price() != null) newMedicine.setPrice(createMedicine.price());
+		return new MedicineDTO(medicineRepo.save(newMedicine));
 	}
 }

@@ -1,8 +1,10 @@
 package edu.ua.fyp.controllers;
 
 import edu.ua.fyp.models.DTOs.general.UserDTO;
-import edu.ua.fyp.models.DTOs.meds.MedicineDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.CreateMedicineDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.MedicineDTO;
 import edu.ua.fyp.models.DTOs.meds.PurchaseDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.UpdateMedicineDTO;
 import edu.ua.fyp.models.query_settings.QuerySettings;
 import edu.ua.fyp.models.sql_models.meds.Purchase;
 import edu.ua.fyp.services.general.UserService;
@@ -28,12 +30,12 @@ public class MedicineController {
 
 	@GetMapping("all")
 	public List<MedicineDTO> getAllMedicines(@RequestBody QuerySettings querySettings) {
-		return medService.getAllQueriedElements(querySettings);
+		return medService.getAllQueriedMedicines(querySettings);
 	}
 
 	@GetMapping("user/bookmark/{userId}")
 	public List<MedicineDTO> getUserBookmark(@PathVariable UUID userId) {
-		return userService.getUserBookmarks(userId);
+		return bookmarkService.getUserBookmarkedMedicines(userId);
 	}
 
 	@PostMapping("user/bookmark/{userId}")
@@ -50,24 +52,24 @@ public class MedicineController {
 
 	@GetMapping("user/purchase/{userId}")
 	public List<PurchaseDTO> getUserPurchase(@PathVariable UUID userId) {
-		return userService.getUserPurchases(userId);
+		return purchaseService.getUserPurchases(userId);
 	}
 
 	@PostMapping("user/purchase/{userId}/{medId}")
 	public UserDTO reserveMedicine(@PathVariable UUID userId, @PathVariable UUID medId) {
-		purchaseService.reserveMedicine(userService.getElementById(userId), medService.getElementById(medId));
+		purchaseService.reserveMedicine(userService.getElementById(userId), medService.getMedicineById(medId));
 		return userService.getElementDTOById(userId);
 	}
 
 	@DeleteMapping("purchase/{purchaseId}")
 	public UserDTO removePurchase(@PathVariable UUID purchaseId) {
 		purchaseService.removePurchase(purchaseId);
-		return new UserDTO(purchaseService.getElementById(purchaseId).getUser(), true);
+		return new UserDTO(purchaseService.getElementById(purchaseId).getUser());
 	}
 
 	@PostMapping("buy/{userId}/{medId}")
 	public ResponseEntity<UserDTO> buyMedicine(@PathVariable UUID userId, @PathVariable UUID medId) {
-		purchaseService.buyMedicine(userService.getElementById(userId), medService.getElementById(medId));
+		purchaseService.buyMedicine(userService.getElementById(userId), medService.getMedicineById(medId));
 		return new ResponseEntity<>(userService.getElementDTOById(userId), HttpStatus.CREATED);
 	}
 
@@ -79,6 +81,22 @@ public class MedicineController {
 
 	@GetMapping("purchase/{medId}")
 	public List<PurchaseDTO> getMedicinePurchaseHistory(@PathVariable UUID medId) {
-		return medService.getMedicinePurchases(medId);
+		return purchaseService.getMedicinePurchases(medId);
+	}
+
+	@PutMapping()
+	public MedicineDTO updateMedicine(@RequestBody UpdateMedicineDTO updateMedicine) {
+		return medService.updateMedicine(updateMedicine);
+	}
+
+	@DeleteMapping("{medId}")
+	public ResponseEntity<String> removeMedicine(@PathVariable UUID medId) {
+		medService.deleteMedicine(medId);
+		return new ResponseEntity<>("Medicine Deleted", HttpStatus.NO_CONTENT);
+	}
+
+	@PostMapping()
+	public MedicineDTO addMedicine(@RequestBody CreateMedicineDTO createMedicine) {
+		return medService.addMedicine(createMedicine);
 	}
 }

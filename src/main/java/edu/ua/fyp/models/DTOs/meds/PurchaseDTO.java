@@ -1,6 +1,7 @@
 package edu.ua.fyp.models.DTOs.meds;
 
 import edu.ua.fyp.models.DTOs.general.UserDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.MedicineDTO;
 import edu.ua.fyp.models.sql_models.meds.Purchase;
 import lombok.Data;
 import lombok.NonNull;
@@ -26,8 +27,8 @@ public class PurchaseDTO {
 		this.id = purchase.getId();
 		this.createdAt = purchase.getCreatedAt();
 		this.updatedAt = purchase.getUpdatedAt();
-		this.medicine = new MedicineDTO(purchase.getMedicine(), true);
-		this.user = new UserDTO(purchase.getUser(), true);
+		this.medicine = new MedicineDTO(purchase.getMedicine());
+		this.user = new UserDTO(purchase.getUser());
 		this.status = purchase.getStatus().getName();
 	}
 }

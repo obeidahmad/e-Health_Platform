@@ -1,13 +1,11 @@
-package edu.ua.fyp.models.DTOs.meds;
+package edu.ua.fyp.models.DTOs.meds.Medicine;
 
 import edu.ua.fyp.models.sql_models.meds.Medicine;
 import lombok.Data;
 import lombok.NonNull;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Data
 public class MedicineDTO {
@@ -33,9 +31,8 @@ public class MedicineDTO {
 	private String medClass;
 	@NonNull
 	private String medForm;
-	private List<PurchaseDTO> purchases;
 
-	public MedicineDTO(Medicine med, Boolean withoutLists) {
+	public MedicineDTO(Medicine med) {
 		this.id = med.getId();
 		this.brandName = med.getBrandName();
 		this.description = med.getDescription();
@@ -49,6 +46,5 @@ public class MedicineDTO {
 		this.updatedAt = med.getUpdatedAt();
 		this.medClass = med.getMedClass().getName();
 		this.medForm = med.getMedForm().getName();
-		this.purchases = withoutLists ? null : med.getPurchases().stream().map(PurchaseDTO::new).collect(Collectors.toList());
 	}
 }

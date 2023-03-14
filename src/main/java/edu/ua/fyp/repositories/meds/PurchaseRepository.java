@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, UUID> {
 	List<Purchase> findAllByUserId(UUID userId);
+	List<Purchase> findAllByMedicineId(UUID medId);
 }

@@ -38,7 +38,7 @@ public class Medicine {
 	private Integer quantity;
 	@Column(name = "is_private", columnDefinition = "boolean default true", nullable = false)
 	private Boolean isPrivate;
-	@Column(columnDefinition = "Decimal(10,2)")
+	@Column(columnDefinition = "Decimal(10,2) default 0.00", nullable = false)
 	private Double price;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)

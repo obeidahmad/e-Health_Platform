@@ -1,5 +1,6 @@
 package edu.ua.fyp.services.meds;
 
+import edu.ua.fyp.models.DTOs.meds.Medicine.MedicineDTO;
 import edu.ua.fyp.models.sql_models.meds.Bookmark;
 import edu.ua.fyp.models.sql_models.meds.BookmarkKey;
 import edu.ua.fyp.repositories.meds.BookmarkRepository;
@@ -28,5 +29,9 @@ public class BookmarkService {
 
 	public void removeBookmark(UUID userId, UUID medId) {
 		bookmarkRepo.deleteById(new BookmarkKey(userId, medId));
+	}
+
+	public List<MedicineDTO> getUserBookmarkedMedicines(UUID userId) {
+		return bookmarkRepo.findAllByIdUserId(userId).stream().map(bookmark -> new MedicineDTO(bookmark.getMedicine())).collect(Collectors.toList());
 	}
 }

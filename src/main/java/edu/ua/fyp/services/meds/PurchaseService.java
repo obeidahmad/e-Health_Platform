@@ -1,6 +1,7 @@
 package edu.ua.fyp.services.meds;
 
 import edu.ua.fyp.exceptions.ResourceNotFoundException;
+import edu.ua.fyp.models.DTOs.meds.PurchaseDTO;
 import edu.ua.fyp.models.sql_models.general.User;
 import edu.ua.fyp.models.sql_models.meds.Medicine;
 import edu.ua.fyp.models.sql_models.meds.Purchase;
@@ -10,7 +11,9 @@ import edu.ua.fyp.repositories.meds.PurchaseStatusRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -47,5 +50,13 @@ public class PurchaseService {
 
 	public void removePurchase(UUID purchaseId) {
 		purchaseRepo.delete(getElementById(purchaseId));
+	}
+
+	public List<PurchaseDTO> getMedicinePurchases(UUID medId) {
+		return purchaseRepo.findAllByMedicineId(medId).stream().map(PurchaseDTO::new).collect(Collectors.toList());
+	}
+
+	public List<PurchaseDTO> getUserPurchases(UUID userId) {
+		return purchaseRepo.findAllByUserId(userId).stream().map(PurchaseDTO::new).collect(Collectors.toList());
 	}
 }
