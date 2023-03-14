@@ -21,7 +21,7 @@ public class PurchaseService {
 	private final PurchaseRepository purchaseRepo;
 	private final PurchaseStatusRepository purchaseStatusRepo;
 
-	public Purchase getElementById(UUID purchaseId) {
+	public Purchase getPurchaseById(UUID purchaseId) {
 		return purchaseRepo.findById(purchaseId).orElseThrow(() -> new ResourceNotFoundException("purchase", "id", purchaseId));
 	}
 
@@ -42,14 +42,14 @@ public class PurchaseService {
 	}
 
 	public Purchase buyMedicine(UUID purchaseId) {
-		Purchase purchase = getElementById(purchaseId);
+		Purchase purchase = getPurchaseById(purchaseId);
 		purchase.setStatus(getPurchaseStatusByName("bought"));
 		purchaseRepo.save(purchase);
 		return purchase;
 	}
 
 	public void removePurchase(UUID purchaseId) {
-		purchaseRepo.delete(getElementById(purchaseId));
+		purchaseRepo.delete(getPurchaseById(purchaseId));
 	}
 
 	public List<PurchaseDTO> getMedicinePurchases(UUID medId) {

@@ -14,11 +14,11 @@ import java.util.UUID;
 public class UserService {
 	private final UserRepository userRepo;
 
-	public User getElementById(UUID id) {
+	public User getUserById(UUID id) {
 		return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("user", "id", id));
 	}
 
-	public UserDTO getElementDTOById(UUID id) {
-		return new UserDTO(getElementById(id));
+	public UserDTO getUserDTOById(UUID id) {
+		return new UserDTO(getUserById(id));
 	}
 }

@@ -41,13 +41,13 @@ public class MedicineController {
 	@PostMapping("user/bookmark/{userId}")
 	public ResponseEntity<UserDTO> addBookmarks(@PathVariable UUID userId, @RequestBody List<UUID> medIds) {
 		bookmarkService.addBookmarks(userId, medIds);
-		return new ResponseEntity<>(userService.getElementDTOById(userId), HttpStatus.CREATED);
+		return new ResponseEntity<>(userService.getUserDTOById(userId), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("user/bookmark/{userId}")
 	public UserDTO removeBookmarks(@PathVariable UUID userId, @RequestBody List<UUID> medIds) {
 		bookmarkService.removeBookmarks(userId, medIds);
-		return userService.getElementDTOById(userId);
+		return userService.getUserDTOById(userId);
 	}
 
 	@GetMapping("user/purchase/{userId}")
@@ -57,26 +57,26 @@ public class MedicineController {
 
 	@PostMapping("user/purchase/{userId}/{medId}")
 	public UserDTO reserveMedicine(@PathVariable UUID userId, @PathVariable UUID medId) {
-		purchaseService.reserveMedicine(userService.getElementById(userId), medService.getMedicineById(medId));
-		return userService.getElementDTOById(userId);
+		purchaseService.reserveMedicine(userService.getUserById(userId), medService.getMedicineById(medId));
+		return userService.getUserDTOById(userId);
 	}
 
 	@DeleteMapping("purchase/{purchaseId}")
 	public UserDTO removePurchase(@PathVariable UUID purchaseId) {
 		purchaseService.removePurchase(purchaseId);
-		return new UserDTO(purchaseService.getElementById(purchaseId).getUser());
+		return new UserDTO(purchaseService.getPurchaseById(purchaseId).getUser());
 	}
 
 	@PostMapping("buy/{userId}/{medId}")
 	public ResponseEntity<UserDTO> buyMedicine(@PathVariable UUID userId, @PathVariable UUID medId) {
-		purchaseService.buyMedicine(userService.getElementById(userId), medService.getMedicineById(medId));
-		return new ResponseEntity<>(userService.getElementDTOById(userId), HttpStatus.CREATED);
+		purchaseService.buyMedicine(userService.getUserById(userId), medService.getMedicineById(medId));
+		return new ResponseEntity<>(userService.getUserDTOById(userId), HttpStatus.CREATED);
 	}
 
 	@PutMapping("purchase/{purchaseId}")
 	public UserDTO buyReservedMedicine(@PathVariable UUID purchaseId) {
 		Purchase purchase = purchaseService.buyMedicine(purchaseId);
-		return userService.getElementDTOById(purchase.getUser().getId());
+		return userService.getUserDTOById(purchase.getUser().getId());
 	}
 
 	@GetMapping("purchase/{medId}")
