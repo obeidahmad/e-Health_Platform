@@ -2,9 +2,12 @@ package edu.ua.fyp.services.meds;
 
 import edu.ua.fyp.exceptions.ResourceNotFoundException;
 import edu.ua.fyp.models.DTOs.meds.Medicine.CreateMedicineDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.MedicineBookmarkDTO;
 import edu.ua.fyp.models.DTOs.meds.Medicine.MedicineDTO;
 import edu.ua.fyp.models.DTOs.meds.Medicine.UpdateMedicineDTO;
 import edu.ua.fyp.models.query_settings.QuerySettings;
+import edu.ua.fyp.models.sql_models.meds.MedClass;
+import edu.ua.fyp.models.sql_models.meds.MedForm;
 import edu.ua.fyp.models.sql_models.meds.Medicine;
 import edu.ua.fyp.repositories.meds.MedicineClassRepository;
 import edu.ua.fyp.repositories.meds.MedicineFormRepository;
@@ -25,6 +28,15 @@ public class MedicineService {
 
 	public List<MedicineDTO> getAllQueriedMedicines(QuerySettings querySettings) {
 		return medicineRepo.queryMedicines(querySettings).stream().map(MedicineDTO::new).collect(Collectors.toList());
+	}
+
+	public List<MedicineBookmarkDTO> getAllQueriedMedicines(QuerySettings querySettings, UUID userId) {
+		return medicineRepo.queryMedicines(querySettings).stream().map(medicine -> {
+			if (medicine.getBookmarks().stream().anyMatch(bookmark -> bookmark.getUser().getId() == userId)) {
+				return new MedicineBookmarkDTO(medicine, true);
+			}
+			return new MedicineBookmarkDTO(medicine, false);
+		}).collect(Collectors.toList());
 	}
 
 	public Medicine getMedicineById(UUID medId) {
@@ -69,5 +81,13 @@ public class MedicineService {
 		if (createMedicine.isPrivate() != null) newMedicine.setIsPrivate(createMedicine.isPrivate());
 		if (createMedicine.price() != null) newMedicine.setPrice(createMedicine.price());
 		return new MedicineDTO(medicineRepo.save(newMedicine));
+	}
+
+	public List<String> getAllForms() {
+		return medicineFormRepo.findAll().stream().map(MedForm::getName).collect(Collectors.toList());
+	}
+
+	public List<String> getAllClasses() {
+		return medicineClassRepo.findAll().stream().map(MedClass::getName).collect(Collectors.toList());
 	}
 }

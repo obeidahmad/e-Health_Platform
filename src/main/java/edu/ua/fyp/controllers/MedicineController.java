@@ -2,6 +2,7 @@ package edu.ua.fyp.controllers;
 
 import edu.ua.fyp.models.DTOs.general.UserDTO;
 import edu.ua.fyp.models.DTOs.meds.Medicine.CreateMedicineDTO;
+import edu.ua.fyp.models.DTOs.meds.Medicine.MedicineBookmarkDTO;
 import edu.ua.fyp.models.DTOs.meds.Medicine.MedicineDTO;
 import edu.ua.fyp.models.DTOs.meds.PurchaseDTO;
 import edu.ua.fyp.models.DTOs.meds.Medicine.UpdateMedicineDTO;
@@ -28,9 +29,14 @@ public class MedicineController {
 	private final BookmarkService bookmarkService;
 	private final PurchaseService purchaseService;
 
-	@GetMapping("all")
+	@PostMapping("all")
 	public List<MedicineDTO> getAllMedicines(@RequestBody QuerySettings querySettings) {
 		return medService.getAllQueriedMedicines(querySettings);
+	}
+
+	@PostMapping("all/{userId}")
+	public List<MedicineBookmarkDTO> getAllMedicines(@RequestBody QuerySettings querySettings, @PathVariable UUID userId) {
+		return medService.getAllQueriedMedicines(querySettings, userId);
 	}
 
 	@GetMapping("user/bookmark/{userId}")
@@ -44,7 +50,7 @@ public class MedicineController {
 		return new ResponseEntity<>(userService.getUserDTOById(userId), HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("user/bookmark/{userId}")
+	@PostMapping("user/bookmark/delete/{userId}")
 	public UserDTO removeBookmarks(@PathVariable UUID userId, @RequestBody List<UUID> medIds) {
 		bookmarkService.removeBookmarks(userId, medIds);
 		return userService.getUserDTOById(userId);
@@ -61,7 +67,7 @@ public class MedicineController {
 		return userService.getUserDTOById(userId);
 	}
 
-	@DeleteMapping("purchase/{purchaseId}")
+	@DeleteMapping("purchase/delete/{purchaseId}")
 	public UserDTO removePurchase(@PathVariable UUID purchaseId) {
 		purchaseService.removePurchase(purchaseId);
 		return new UserDTO(purchaseService.getPurchaseById(purchaseId).getUser());
@@ -89,7 +95,7 @@ public class MedicineController {
 		return medService.updateMedicine(updateMedicine);
 	}
 
-	@DeleteMapping("{medId}")
+	@DeleteMapping("delete/{medId}")
 	public ResponseEntity<String> removeMedicine(@PathVariable UUID medId) {
 		medService.deleteMedicine(medId);
 		return new ResponseEntity<>("Medicine Deleted", HttpStatus.NO_CONTENT);
@@ -98,5 +104,15 @@ public class MedicineController {
 	@PostMapping()
 	public MedicineDTO addMedicine(@RequestBody CreateMedicineDTO createMedicine) {
 		return medService.addMedicine(createMedicine);
+	}
+
+	@GetMapping("forms")
+	public List<String> getAllForms() {
+		return medService.getAllForms();
+	}
+
+	@GetMapping("classes")
+	public List<String> getAllClasses() {
+		return medService.getAllClasses();
 	}
 }

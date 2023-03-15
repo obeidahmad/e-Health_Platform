@@ -57,6 +57,9 @@ public class Medicine {
 	@OneToMany(mappedBy = "medicine")
 	private List<Purchase> purchases;
 
+	@OneToMany(mappedBy = "medicine")
+	private List<Bookmark> bookmarks;
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

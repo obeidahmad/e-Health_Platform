@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -23,7 +22,7 @@ public class MedForm {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(updatable = false, nullable = false)
 	private UUID id;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -37,7 +36,7 @@ public class MedForm {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		if (o == null || this.getClass() != o.getClass()) return false;
 
 		MedForm medForm = (MedForm) o;
 

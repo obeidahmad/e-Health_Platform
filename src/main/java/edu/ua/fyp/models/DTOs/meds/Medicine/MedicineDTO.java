@@ -2,11 +2,13 @@ package edu.ua.fyp.models.DTOs.meds.Medicine;
 
 import edu.ua.fyp.models.sql_models.meds.Medicine;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.Date;
 import java.util.UUID;
 
+@NoArgsConstructor
 @Data
 public class MedicineDTO {
 	@NonNull
