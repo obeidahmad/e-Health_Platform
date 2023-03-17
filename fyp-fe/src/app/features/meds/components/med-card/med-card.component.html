@@ -1,0 +1,24 @@
+<nz-card (click)="triggerSelected()" nzHoverable>
+  <div class="header">
+    <span [nzTheme]="'outline'" nz-icon nzType="book"></span>
+    <!--    <span nz-icon nzType="book" [nzTheme]="fill"></span>-->
+  </div>
+  <div>
+    <img *ngIf="medItem.imageUrl" [alt]="medItem.brandName + ' image'" [nzSrc]="medItem.imageUrl"
+         [src]="medItem.imageUrl"
+         nz-image>
+    <div *ngIf="!medItem.imageUrl" class="image-replacement"></div>
+  </div>
+  <div class="flexed">
+    <div [nzTooltipMouseEnterDelay]="1" [nzTooltipTitle]="medItem.brandName" class="brand-name" nz-tooltip
+         nzTooltipPlacement="topLeft">{{medItem.brandName}}</div>
+    <div class="dosage">{{medItem.dosage}}</div>
+  </div>
+  <div class="flexed">
+    <div>
+      <nz-tag>{{medItem.medClass}}</nz-tag>
+    </div>
+
+    <app-tag [content]="getAvailability()" [type]="(medItem.quantity == 0)? 'error':'primary'"></app-tag>
+  </div>
+</nz-card>

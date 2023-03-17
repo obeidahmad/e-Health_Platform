@@ -1,0 +1,12 @@
+.items {
+  padding-bottom: 3em;
+}
+
+
+nz-pagination {
+  float: right;
+}
+
+section {
+  margin-bottom: 2em;
+}

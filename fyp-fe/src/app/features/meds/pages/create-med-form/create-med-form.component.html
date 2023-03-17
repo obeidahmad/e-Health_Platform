@@ -1,0 +1,49 @@
+<section>
+  <form [formGroup]="form" nz-form nzLayout="vertical">
+
+    <nz-form-item>
+      <nz-form-label nzFlex="1" nzRequired>Brand Name</nz-form-label>
+      <nz-form-control nzFlex="1" nzHasFeedback>
+        <input formControlName="brandName" id="brandName"
+               maxlength="100" nz-input/>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzFlex="1" nzRequired>Dosage</nz-form-label>
+      <nz-form-control nzFlex="1" nzHasFeedback>
+        <input formControlName="dosage" id="dosage"
+               maxlength="10" nz-input/>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div nz-row [nzGutter]="12">
+      <nz-form-item nz-col nzSpan="12">
+        <nz-form-label nzRequired>Medicine Class</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="medClass" nzAllowClear
+                     nzPlaceHolder="eg. Fever reducer" nzShowSearch>
+            <!--          TODO -->
+            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-col nzSpan="12">
+        <nz-form-label nzRequired>Medicine Form</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="medForm" nzAllowClear
+                     nzPlaceHolder="eg. Tablet" nzShowSearch>
+            <!--          TODO -->
+            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+
+  </form>
+</section>

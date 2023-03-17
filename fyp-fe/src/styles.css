@@ -1,0 +1,29 @@
+:root {
+  --primary-color: #1860A5;
+  --secondary-color: #42405D;
+  --primary-80: #74AEF8;
+  --primary-container: #FBFCFF;
+  --error-color: #BA1A1A;
+  --surface-1: #FBFCFF;
+  --primary-dark: #0a2f52;
+  --tertiary-90: #69F9E8;
+  --tertiary-text: #005049;
+  --error-container: #FFDAD6;
+  --secondary-text-color: #fff;
+
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: 'Josefin Sans', sans-serif;
+}

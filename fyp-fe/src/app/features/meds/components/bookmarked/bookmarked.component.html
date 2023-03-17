@@ -1,0 +1,11 @@
+<nz-badge [nzCount]="5" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
+  <span nz-icon nzType="book" nzTheme="fill"></span>
+</nz-badge>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item *ngFor="let med of meds">
+       {{med.brandName}}, <span>{{med.dosage}}</span>
+    </li>
+  </ul>
+</nz-dropdown-menu>

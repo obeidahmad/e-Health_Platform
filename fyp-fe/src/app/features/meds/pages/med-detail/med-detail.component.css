@@ -1,0 +1,19 @@
+section {
+  padding: 12px 36px;
+}
+
+.image-replacement {
+  background-color: #D9D9D9;
+}
+
+section > div {
+  margin-bottom: 16px;
+}
+
+
+.bookmark {
+  font-size: 2em;
+  color: var(--primary-dark);
+  float: right;
+  cursor: pointer;
+}

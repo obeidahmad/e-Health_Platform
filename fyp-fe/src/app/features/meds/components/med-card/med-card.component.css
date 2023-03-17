@@ -1,0 +1,58 @@
+nz-card div {
+  width: 100%;
+}
+
+nz-card div:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  align-content: flex-end;
+  flex-direction: row-reverse;
+
+}
+
+.header span {
+   margin-left: auto;
+}
+
+.image-replacement {
+  background-color: #D9D9D9;
+}
+
+div img, div .image-replacement {
+  height: 87px;
+}
+
+
+
+.flexed{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.flexed .brand-name {
+  font-size: 1em;
+  font-weight: 400;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flexed  .dosage{
+  text-align: left;
+  width: fit-content;
+  color: var(--primary-80);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.flexed .prescription {
+  font-style: italic;
+  color: var(--primary-dark);
+}

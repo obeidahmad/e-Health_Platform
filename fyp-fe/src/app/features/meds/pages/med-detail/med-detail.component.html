@@ -1,0 +1,46 @@
+<section>
+  <div [nzGutter]="16" nz-row nzAlign="middle">
+    <h1 nz-col>{{medItem.brandName}}</h1>
+    <app-tag [content]="getAvailability()" [type]="(medItem.quantity ==0)?'error':'primary' " nz-col></app-tag>
+    <app-tag *ngIf="medItem.requiresPrescription" content="Prescription needed" nz-col type="info"></app-tag>
+    <div nz-col nzFlex="auto">
+      <span nz-icon nzType="book" nzTheme="fill" class="bookmark"></span>
+    </div>
+  </div>
+
+  <div [nzGutter]="16" nz-row>
+    <img *ngIf="medItem.imageUrl" [alt]="medItem.brandName + ' image'"
+         [nzSpan]="10" [nzSrc]="medItem.imageUrl"
+         [src]="medItem.imageUrl"
+         nz-col
+         nz-image>
+    <div nz-col *ngIf="!medItem.imageUrl" [nzSpan]="10" class="image-replacement"></div>
+    <div [nzSpan]="14" nz-col>
+      <p>{{medItem.description}}</p>
+      <nz-descriptions
+        [nzColumn]="{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }"
+        nzBordered
+        style="margin-bottom: 16px">
+        <nz-descriptions-item nzTitle="Form">
+          <nz-tag>{{medItem.medForm}}</nz-tag>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Class">
+          <nz-tag>{{medItem.medClass}}</nz-tag>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Dosage">
+          <nz-tag>{{medItem.dosage}}</nz-tag>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Quantity">
+          <nz-tag>{{medItem.quantity}}</nz-tag>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Price">
+          <nz-tag>{{medItem.price | currency}}</nz-tag>
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </div>
+  </div>
+
+  <div>
+    <button nz-button nzType="primary" nzSize="large">Reserve this medicine</button>
+  </div>
+</section>

@@ -1,0 +1,107 @@
+<div class="search" nz-row nzAlign="top">
+  <nz-input-group [nzCompact]="true"
+                  [nzSuffix]="inputClearTpl"
+                  class="input-search"
+                  nz-col>
+    <input [(ngModel)]="searchQuery"
+           [nzBorderless]="true"
+           nz-input
+           placeholder="Search for a medicine..."
+           type="text"/>
+  </nz-input-group>
+  <ng-template #inputClearTpl>
+    <i
+      (click)="searchQuery = undefined"
+      *ngIf="searchQuery && searchQuery.length else searchIconTpl"
+      class="ant-input-clear-icon"
+      nz-icon
+      nzTheme="fill"
+      nzType="close-circle"
+    ></i>
+  </ng-template>
+  <ng-template #searchIconTpl>
+    <i
+      (click)="searchQuery = undefined"
+      nz-icon
+      nzTheme="outline"
+      nzType="search"
+    ></i>
+  </ng-template>
+</div>
+<div class="filter">
+  <button (click)="openFilter()" nz-button nzSize="large" nzType="default">
+    <span nz-icon nzTheme="outline" nzType="filter"></span> Filter
+  </button>
+</div>
+
+<nz-drawer
+  (nzOnClose)="closeFilter()"
+  [nzClosable]="false"
+  [nzFooter]="footerTpl"
+  [nzVisible]="drawerSettings.visible"
+  [nzWidth]="720"
+  nzPlacement="left"
+  nzTitle="Filters">
+
+  <form *nzDrawerContent nz-form>
+    <div [nzGutter]="8" nz-row>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Medicine Class</nz-form-label>
+          <nz-form-control>
+            <nz-select nzPlaceHolder="eg. Fever reducer"></nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Med form</nz-form-label>
+          <nz-form-control>
+            <nz-select nzPlaceHolder="eg. Tablet"></nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div [nzGutter]="8" nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label>Quantity</nz-form-label>
+          <nz-form-control>
+            <nz-slider [ngModel]="[20, 50]" [nzStep]="1" nzRange nzVertical></nz-slider>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div [nzGutter]="8" nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label>Available</nz-form-label>
+          <nz-form-control>
+            <nz-switch></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+    </div>
+    <div [nzGutter]="8" nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label>Needs prescription</nz-form-label>
+          <nz-form-control>
+            <nz-switch></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <ng-template #footerTpl>
+
+    <div style="float: right">
+      <button (click)="closeFilter()" nz-button style="margin-right: 8px;">Cancel</button>
+      <button (click)="closeFilter()" nz-button nzType="primary">Submit</button>
+    </div>
+  </ng-template>
+
+
+</nz-drawer>

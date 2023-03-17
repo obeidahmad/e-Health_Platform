@@ -1,0 +1,74 @@
+// Custom Theming for NG-ZORRO
+// For more information: https://ng.ant.design/docs/customize-theme/en
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+// Override less variables to here
+// View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
+
+@primary-color: #1860A5;
+
+@error-color: #BA1A1A;
+
+@surface-1: #FBFCFF;
+
+@body-background: mix(@surface-1, @primary-color, 95%);
+@component-background: @surface-1;
+
+@text-color: #001E2E;
+
+
+@border-radius-base: 6px;
+@btn-shadow: none;
+
+
+@font-family: -apple-system, BlinkMacSystemFont, 'Unbounded', cursive, Roboto, 'Helvetica Neue', Arial,
+'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+
+// Shadow
+@shadow-color: rgba(24, 96, 165, 0.12);
+@shadow-2: 0 3px 6px -4px rgba(86, 136, 299, 0.23), 0 6px 16px 0 rgba(86, 136, 299, 0.08),
+0 9px 28px 8px rgba(86, 136, 299, 0.05);
+//
+
+@input-bg: mix(@primary-color, @surface-1, 9%);
+
+
+// header
+@layout-header-background: @surface-1;
+@background-color-light: hsv(0, 0, 98%); // background of header and selected item
+@text-color-secondary: fade(@text-color, 45%);
+
+@primary-1: color(~`colorPalette('@{primary-color}', 1) `); // replace tint(@primary-color, 90%)
+@red-1: color(~`colorPalette('@{error-color}', 1) `);
+// menu
+@menu-inline-toplevel-item-height: 40px;
+@menu-item-height: 40px;
+@menu-collapsed-width: 80px;
+@menu-bg: @component-background;
+@menu-popup-bg: @component-background;
+@menu-item-color: @text-color;
+@menu-inline-submenu-bg: @background-color-light;
+
+@menu-item-active-bg: @primary-1;
+@menu-item-active-danger-bg: @red-1;
+
+
+// buttons
+@btn-shadow: 0 2px 0 @shadow-color;
+@btn-font-weight: 400;
+@btn-border-radius-base: @border-radius-base;
+@btn-border-radius-sm: @border-radius-base;
+@btn-border-width: 0;
+@btn-shadow: none;
+@btn-primary-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+@btn-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+
+
+// card
+@card-shadow: 0 1px 2px -2px rgba(24, 96, 165, 0.09), 0 3px 6px 0 rgba(0, 30, 46, 0.09),
+0 5px 12px 4px rgba(24, 96, 165, 0.09);
+
+
+// divider
+@divider-color: fade(@text-color, 45%);

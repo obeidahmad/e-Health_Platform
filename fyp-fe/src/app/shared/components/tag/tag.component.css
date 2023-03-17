@@ -1,0 +1,21 @@
+div {
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 1em;
+}
+
+.primary {
+  background-color: var(--tertiary-90);
+  color: var(--tertiary-text);
+}
+
+.error {
+  background-color: var(--error-container);
+  color: var(--error-color);
+}
+
+
+.info {
+  background-color: var(--secondary-color);
+  color: var(--secondary-text-color);
+}
