@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -27,8 +27,8 @@ public class MedicineDTO {
 	private Boolean isPrivate;
 	private Double price;
 	@NonNull
-	private Date createdAt;
-	private Date updatedAt;
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
 	@NonNull
 	private String medClass;
 	@NonNull

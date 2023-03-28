@@ -8,7 +8,7 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Getter
@@ -27,16 +27,16 @@ public class MedForm {
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at")
-	private Date createdAt;
+	private Timestamp createdAt;
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
-	private Date updatedAt;
+	private Timestamp updatedAt;
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || this.getClass() != o.getClass()) return false;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		MedForm medForm = (MedForm) o;
 

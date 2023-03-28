@@ -7,7 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,11 +43,11 @@ public class Medicine {
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false)
-	private Date createdAt;
+	private Timestamp createdAt;
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
-	private Date updatedAt;
+	private Timestamp updatedAt;
 	@ManyToOne
 	@JoinColumn(name = "class_id", nullable = false)
 	private MedClass medClass;
@@ -63,7 +63,7 @@ public class Medicine {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || this.getClass() != o.getClass()) return false;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		Medicine medicine = (Medicine) o;
 

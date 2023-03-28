@@ -1,0 +1,77 @@
+package edu.ua.appointment.services;
+
+import edu.ua.appointment.exceptions.ResourceNotFoundException;
+import edu.ua.appointment.exceptions.WrongTimeFrameException;
+import edu.ua.appointment.models.DTOs.AppointmentDTO;
+import edu.ua.appointment.models.DTOs.CreateAppointmentDTO;
+import edu.ua.appointment.models.enums.TimeFrame;
+import edu.ua.sqldatabasepersistence.models.sql_models.appts.Appointment;
+import edu.ua.sqldatabasepersistence.models.sql_models.general.User;
+import edu.ua.sqldatabasepersistence.repositories.appts.AppointmentRepository;
+import edu.ua.sqldatabasepersistence.repositories.general.UserRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor
+public class AppointmentService {
+	private final AppointmentRepository appointmentRepo;
+	private final UserRepository userRepo;
+
+	public void createAppointment(CreateAppointmentDTO createAppointment) {
+		User doctor = userRepo.findById(createAppointment.doctorId()).orElseThrow(() -> new ResourceNotFoundException("user(doctor)", "id",
+				createAppointment.doctorId()));
+		User user = userRepo.findById(createAppointment.userId()).orElseThrow(() -> new ResourceNotFoundException("user", "id",
+				createAppointment.userId()));
+
+		Appointment newAppointment = new Appointment();
+		newAppointment.setUser(user);
+		newAppointment.setDoctor(doctor);
+		newAppointment.setDate(createAppointment.getDate());
+
+		appointmentRepo.save(newAppointment);
+	}
+
+	public void deleteAppointment(UUID appointmentId) {
+		appointmentRepo.findById(appointmentId).orElseThrow(() ->
+				new ResourceNotFoundException("appointment", "id", appointmentId));
+		appointmentRepo.deleteById(appointmentId);
+	}
+
+	public List<AppointmentDTO> getAppointmentsByUserId(TimeFrame timeFrame, Date startDate, UUID userId) {
+		List<Appointment> appointments;
+		switch (timeFrame) {
+			case MONTH ->
+					appointments = appointmentRepo.findAllByMonthAndByUserId(new Timestamp(startDate.getTime()), userId);
+			case WEEK -> {
+				Timestamp endDate = new Timestamp(Date.valueOf(startDate.toLocalDate().plusDays(7)).getTime());
+				appointments = appointmentRepo.findAllByDateBetweenAndUserId(new Timestamp(startDate.getTime()), endDate, userId);
+			}
+			default -> throw new WrongTimeFrameException();
+		}
+
+		return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+	}
+
+	public List<AppointmentDTO> getAppointmentsByDoctorId(TimeFrame timeFrame, Date startDate, UUID doctorId) {
+		List<Appointment> appointments;
+		switch (timeFrame) {
+			case MONTH ->
+					appointments = appointmentRepo.findAllByMonthAndByDoctorId(new Timestamp(startDate.getTime()), doctorId);
+			case WEEK -> {
+				Timestamp endDate = new Timestamp(Date.valueOf(startDate.toLocalDate().plusDays(7)).getTime());
+				appointments = appointmentRepo.findAllByDateBetweenAndDoctorId(new Timestamp(startDate.getTime()), endDate, doctorId);
+			}
+			default -> throw new WrongTimeFrameException();
+		}
+
+		return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+	}
+}

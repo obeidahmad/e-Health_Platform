@@ -4,7 +4,7 @@ import edu.ua.sqldatabasepersistence.models.sql_models.general.User;
 import lombok.Data;
 import lombok.NonNull;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
@@ -12,8 +12,8 @@ public class UserDTO {
 	@NonNull
 	private UUID id;
 	@NonNull
-	private Date createdAt;
-	private Date updatedAt;
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
 
 	public UserDTO(User user) {
 		this.id = user.getId();

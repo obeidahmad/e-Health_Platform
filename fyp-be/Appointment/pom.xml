@@ -9,20 +9,14 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>Pharmacy</artifactId>
+    <artifactId>Appointment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Pharmacy</name>
-    <description>Pharmacy</description>
+    <name>Appointment</name>
+    <description>Appointment</description>
     <properties>
         <java.version>17</java.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>SQLDatabasePersistence</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -32,6 +26,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SQLDatabasePersistence</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

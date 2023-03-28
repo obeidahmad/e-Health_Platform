@@ -1,29 +1,35 @@
-package edu.ua.sqldatabasepersistence.models.sql_models.meds;
+package edu.ua.sqldatabasepersistence.models.sql_models.appts;
 
+import edu.ua.sqldatabasepersistence.models.sql_models.general.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "med_purchase_status", schema = "meds")
-public class PurchaseStatus {
+@Table(name = "appointments", schema = "appts")
+public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(updatable = false, nullable = false)
 	private UUID id;
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+	@ManyToOne
+	@JoinColumn(name = "dr_id", nullable = false)
+	private User doctor;
 	@Column(nullable = false)
-	private String name;
+	private Timestamp date;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at")
@@ -38,9 +44,9 @@ public class PurchaseStatus {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		PurchaseStatus that = (PurchaseStatus) o;
+		Appointment that = (Appointment) o;
 
-		return id.equals(that.id);
+		return Objects.equals(id, that.id);
 	}
 
 	@Override

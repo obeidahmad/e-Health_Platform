@@ -1,4 +1,4 @@
-package edu.ua.sqldatabasepersistence.models.sql_models.meds;
+package edu.ua.sqldatabasepersistence.models.sql_models.general;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,13 +16,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "med_purchase_status", schema = "meds")
-public class PurchaseStatus {
+@Table(name = "roles", schema = "general")
+public class UserRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(updatable = false, nullable = false)
 	private UUID id;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -38,9 +38,9 @@ public class PurchaseStatus {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		PurchaseStatus that = (PurchaseStatus) o;
+		UserRole userRole = (UserRole) o;
 
-		return id.equals(that.id);
+		return id.equals(userRole.id);
 	}
 
 	@Override

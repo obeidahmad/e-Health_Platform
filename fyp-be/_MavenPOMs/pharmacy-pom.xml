@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>pharmacy-module</artifactId>
+    <artifactId>fyp</artifactId>
     <groupId>edu.ua</groupId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
