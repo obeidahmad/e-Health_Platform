@@ -7,15 +7,19 @@ import edu.ua.appointment.models.DTOs.AppointmentDTO;
 import edu.ua.appointment.models.DTOs.CreateAppointmentDTO;
 import edu.ua.appointment.models.enums.TimeFrame;
 import edu.ua.sqldatabasepersistence.models.sql_models.appts.Appointment;
+import edu.ua.sqldatabasepersistence.models.sql_models.appts.Availability;
 import edu.ua.sqldatabasepersistence.models.sql_models.general.User;
 import edu.ua.sqldatabasepersistence.repositories.appts.AppointmentRepository;
+import edu.ua.sqldatabasepersistence.repositories.appts.AvailabilityRepository;
 import edu.ua.sqldatabasepersistence.repositories.general.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AppointmentService {
 	private final AppointmentRepository appointmentRepo;
+	private final AvailabilityRepository availabilityRepo;
 	private final UserRepository userRepo;
 
 	public void createAppointment(CreateAppointmentDTO createAppointment) {
@@ -39,12 +44,26 @@ public class AppointmentService {
 			throw new AppointmentTimeSlotUnavailable(doctor.getId(), createAppointment.date());
 		}
 
-		Appointment newAppointment = new Appointment();
-		newAppointment.setUser(user);
-		newAppointment.setDoctor(doctor);
-		newAppointment.setDate(createAppointment.date());
+		Date day = Date.valueOf(createAppointment.date().toLocalDateTime().toLocalDate());
+		List<Availability> availabilities = availabilityRepo.findAllByDayAndDoctorId(day, doctor.getId());
 
-		appointmentRepo.save(newAppointment);
+		for (Availability availability: availabilities) {
+			LocalTime startTime = availability.getStartHour().toLocalTime();
+			LocalTime endTime = availability.getEndHour().toLocalTime();
+			LocalTime time = createAppointment.date().toLocalDateTime().toLocalTime();
+
+			if (time.isBefore(endTime) && time.isAfter(startTime)) {
+				Appointment newAppointment = new Appointment();
+				newAppointment.setUser(user);
+				newAppointment.setDoctor(doctor);
+				newAppointment.setDate(createAppointment.date());
+
+				appointmentRepo.save(newAppointment);
+				return;
+			}
+		}
+
+		throw new AppointmentTimeSlotUnavailable(doctor.getId(), createAppointment.date());
 	}
 
 	public void deleteAppointment(UUID appointmentId) {

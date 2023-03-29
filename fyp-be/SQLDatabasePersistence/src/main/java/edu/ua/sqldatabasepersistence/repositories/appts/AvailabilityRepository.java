@@ -13,4 +13,6 @@ public interface AvailabilityRepository extends JpaRepository<Availability, UUID
 	List<Availability> findAllByMonthAndByDoctorId(Date day, UUID doctorId);
 
 	List<Availability> findAllByDayBetweenAndDoctorId(Date firstDate, Date lastDate, UUID doctorId);
+
+	List<Availability> findAllByDayAndDoctorId(Date date, UUID dockerId);
 }
