@@ -1,5 +1,6 @@
 package edu.ua.appointment.services;
 
+import edu.ua.appointment.exceptions.AppointmentTimeSlotUnavailable;
 import edu.ua.appointment.exceptions.ResourceNotFoundException;
 import edu.ua.appointment.exceptions.WrongTimeFrameException;
 import edu.ua.appointment.models.DTOs.AppointmentDTO;
@@ -31,10 +32,17 @@ public class AppointmentService {
 		User user = userRepo.findById(createAppointment.userId()).orElseThrow(() -> new ResourceNotFoundException("user", "id",
 				createAppointment.userId()));
 
+		Timestamp end = new Timestamp(createAppointment.date().getTime() + doctor.getTimeSlot().getTime());
+		Timestamp start = new Timestamp(createAppointment.date().getTime() - doctor.getTimeSlot().getTime());
+
+		if (appointmentRepo.findAllByDateBetweenAndDoctorId(start, end, doctor.getId()).size() > 0) {
+			throw new AppointmentTimeSlotUnavailable(doctor.getId(), createAppointment.date());
+		}
+
 		Appointment newAppointment = new Appointment();
 		newAppointment.setUser(user);
 		newAppointment.setDoctor(doctor);
-		newAppointment.setDate(createAppointment.getDate());
+		newAppointment.setDate(createAppointment.date());
 
 		appointmentRepo.save(newAppointment);
 	}
