@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"edu.ua.sqldatabasepersistence"})
+@ComponentScan({"edu.ua.sqldatabasepersistence", "edu.ua.appointment"})
 @EntityScan("edu.ua.sqldatabasepersistence.models")
 @EnableJpaRepositories("edu.ua.sqldatabasepersistence.repositories")
 @Import(SqlDatabasePersistenceApplication.class)
