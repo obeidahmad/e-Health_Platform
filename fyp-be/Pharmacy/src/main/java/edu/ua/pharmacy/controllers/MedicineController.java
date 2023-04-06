@@ -10,6 +10,8 @@ import edu.ua.pharmacy.services.general.UserService;
 import edu.ua.pharmacy.services.meds.BookmarkService;
 import edu.ua.pharmacy.services.meds.MedicineService;
 import edu.ua.pharmacy.services.meds.PurchaseService;
+import edu.ua.sqldatabasepersistence.models.sql_models.meds.MedClass;
+import edu.ua.sqldatabasepersistence.models.sql_models.meds.MedForm;
 import edu.ua.sqldatabasepersistence.models.sql_models.meds.Purchase;
 import edu.ua.sqldatabasepersistence.models.query_settings.MedicineQuerySettings;
 import lombok.AllArgsConstructor;
@@ -104,6 +106,16 @@ public class MedicineController {
 	@PostMapping()
 	public MedicineDTO addMedicine(@RequestBody CreateMedicineDTO createMedicine) {
 		return medService.addMedicine(createMedicine);
+	}
+
+	@PostMapping("class")
+	public MedClass addMedicineClass(@RequestBody MedClass medForm) {
+		return medService.addMedClass(medForm);
+	}
+
+	@PostMapping("form")
+	public MedForm addMedicineForm(@RequestBody MedForm medForm) {
+		return medService.addMedForm(medForm);
 	}
 
 	@GetMapping("forms")

@@ -30,6 +30,12 @@ public class MedicineService {
 		return medicineRepo.queryMedicines(medicineQuerySettings).stream().map(MedicineDTO::new).collect(Collectors.toList());
 	}
 
+	public MedClass addMedClass(MedClass medClass){
+		return medicineClassRepo.save(medClass);
+	}
+	public MedForm addMedForm(MedForm medForm) {
+		return medicineFormRepo.save(medForm);
+	}
 	public List<MedicineBookmarkDTO> getAllQueriedMedicines(MedicineQuerySettings medicineQuerySettings, UUID userId) {
 		return medicineRepo.queryMedicines(medicineQuerySettings).stream().map(medicine -> {
 			if (medicine.getBookmarks().stream().anyMatch(bookmark -> bookmark.getUser().getId() == userId)) {
