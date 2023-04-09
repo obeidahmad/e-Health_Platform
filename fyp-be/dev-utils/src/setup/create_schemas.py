@@ -7,7 +7,8 @@ conn = psycopg2.connect(
     password="ahmadobeidpass"
 )
 
-schemas_needed = ['appts', 'meds']
+
+schemas_needed = ['appts', 'meds', 'genera;']
 
 # Create a new schema
 for schema_name in schemas_needed:
