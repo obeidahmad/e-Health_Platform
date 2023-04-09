@@ -29,17 +29,17 @@ public class Medicine {
 	private String description;
 	@Column(nullable = false)
 	private String dosage;
-	@Column(name = "requires_prescription", columnDefinition = "boolean default true", nullable = false)
+	@Column(name = "requires_prescription", nullable = false)
 	private Boolean requiresPrescription;
 	@Column(name = "image_url")
 	private String imageUrl;
-	@Column(columnDefinition = "integer default 0")
+	@Column(columnDefinition = "integer")
 	@Min(value = 0, message = "The column should not be a negative number.")
-	private Integer quantity;
-	@Column(name = "is_private", columnDefinition = "boolean default true")
-	private Boolean isPrivate;
-	@Column(columnDefinition = "Decimal(10,2) default 0.00")
-	private Double price;
+	private Integer quantity = 0;
+	@Column(name = "is_private")
+	private Boolean isPrivate = true;
+	@Column(columnDefinition = "Decimal(10,2)")
+	private Double price = 0.00;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false)
