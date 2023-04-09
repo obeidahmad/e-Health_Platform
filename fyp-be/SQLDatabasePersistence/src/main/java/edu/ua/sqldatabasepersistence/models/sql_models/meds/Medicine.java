@@ -33,12 +33,12 @@ public class Medicine {
 	private Boolean requiresPrescription;
 	@Column(name = "image_url")
 	private String imageUrl;
-	@Column(columnDefinition = "integer default 0", nullable = false)
+	@Column(columnDefinition = "integer default 0")
 	@Min(value = 0, message = "The column should not be a negative number.")
 	private Integer quantity;
-	@Column(name = "is_private", columnDefinition = "boolean default true", nullable = false)
+	@Column(name = "is_private", columnDefinition = "boolean default true")
 	private Boolean isPrivate;
-	@Column(columnDefinition = "Decimal(10,2) default 0.00", nullable = false)
+	@Column(columnDefinition = "Decimal(10,2) default 0.00")
 	private Double price;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)

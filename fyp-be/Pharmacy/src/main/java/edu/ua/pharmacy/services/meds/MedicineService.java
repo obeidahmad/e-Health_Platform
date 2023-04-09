@@ -64,8 +64,10 @@ public class MedicineService {
 		if (updateMedicine.quantity() != null) validMedicine.setQuantity(updateMedicine.quantity());
 		if (updateMedicine.isPrivate() != null) validMedicine.setIsPrivate(updateMedicine.isPrivate());
 		if (updateMedicine.price() != null) validMedicine.setPrice(updateMedicine.price());
-		if (updateMedicine.medClass() != null) validMedicine.setMedClass(medicineClassRepo.findByName(updateMedicine.medClass()));
-		if (updateMedicine.medForm() != null) validMedicine.setMedForm(medicineFormRepo.findByName(updateMedicine.medForm()));
+		if (updateMedicine.medClass() != null) validMedicine.setMedClass(medicineClassRepo.findByName(updateMedicine.medClass()).orElseThrow(() ->
+				new ResourceNotFoundException("med_class", "value", updateMedicine.medClass())));
+		if (updateMedicine.medForm() != null) validMedicine.setMedForm(medicineFormRepo.findByName(updateMedicine.medForm()).orElseThrow(() ->
+				new ResourceNotFoundException("med_form", "value", updateMedicine.medForm())));
 		medicineRepo.save(validMedicine);
 		return new MedicineDTO(validMedicine);
 	}
@@ -79,8 +81,10 @@ public class MedicineService {
 		Medicine newMedicine = new Medicine();
 		newMedicine.setBrandName(createMedicine.brandName());
 		newMedicine.setDosage(createMedicine.dosage());
-		newMedicine.setMedClass(medicineClassRepo.findByName(createMedicine.medClass()));
-		newMedicine.setMedForm(medicineFormRepo.findByName(createMedicine.medForm()));
+		newMedicine.setMedClass(medicineClassRepo.findByName(createMedicine.medClass()).orElseThrow(() ->
+				new ResourceNotFoundException("med_class", "value", createMedicine.medClass())));
+		newMedicine.setMedForm(medicineFormRepo.findByName(createMedicine.medForm()).orElseThrow(() ->
+				new ResourceNotFoundException("med_form", "value", createMedicine.medForm())));
 		if (createMedicine.requiresPrescription() != null) newMedicine.setRequiresPrescription(createMedicine.requiresPrescription());
 		if (createMedicine.description() != null) newMedicine.setDescription(createMedicine.description());
 		if (createMedicine.imageUrl() != null) newMedicine.setImageUrl(createMedicine.imageUrl());

@@ -1,5 +1,6 @@
 package edu.ua.pharmacy.controllers;
 
+import edu.ua.pharmacy.exceptions.ResourceNotFoundException;
 import edu.ua.pharmacy.models.DTOs.general.UserDTO;
 import edu.ua.pharmacy.models.DTOs.meds.Medicine.CreateMedicineDTO;
 import edu.ua.pharmacy.models.DTOs.meds.Medicine.MedicineBookmarkDTO;
@@ -30,6 +31,11 @@ public class MedicineController {
 	private final UserService userService;
 	private final BookmarkService bookmarkService;
 	private final PurchaseService purchaseService;
+
+	@ExceptionHandler({ResourceNotFoundException.class})
+	public ResponseEntity<String> handleRuntimeException(RuntimeException runtimeException) {
+		return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.NOT_FOUND);
+	}
 
 	@PostMapping("all")
 	public List<MedicineDTO> getAllMedicines(@RequestBody MedicineQuerySettings medicineQuerySettings) {
