@@ -53,6 +53,11 @@ public class MedicineController {
 		return medService.getAllQueriedMedicines(medicineQuerySettings, userId);
 	}
 
+	@GetMapping("{medId}")
+	public MedicineDTO getMedicine(@PathVariable UUID medId) {
+		return medService.getMedicineDTOById(medId);
+	}
+
 	@GetMapping("user/bookmark/{userId}")
 	public List<MedicineDTO> getUserBookmark(@PathVariable UUID userId) {
 		return bookmarkService.getUserBookmarkedMedicines(userId);
