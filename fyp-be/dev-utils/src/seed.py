@@ -1,7 +1,7 @@
 try:
     import seed_med_class
     import seed_med_forms
-    import seed_medicins
+    import seed_medicines
 except:
     pass
 """
