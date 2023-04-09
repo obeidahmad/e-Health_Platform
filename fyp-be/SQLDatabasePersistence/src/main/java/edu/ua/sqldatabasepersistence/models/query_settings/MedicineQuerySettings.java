@@ -26,16 +26,16 @@ public final class MedicineQuerySettings {
 	private final Pair<Double, Double> price;
 
 	public MedicineQuerySettings(@NonNull Integer pageNumber, @NonNull Integer pageSize, String searchText, String medClass, String medForm, List<Integer> quantity, Boolean requiresPrescription, Boolean isAvailable, List<Double> price) {
-		if (pageNumber < 0) throw new QuerySettingsException("pageNumber", pageNumber, "positive");
+		if (pageNumber < 1) throw new QuerySettingsException("pageNumber", pageNumber, "positive");
 		if (pageSize < 1 || pageSize > 100) throw new QuerySettingsException("pageSize", pageSize, "between 1 and 100");
 		if (quantity != null) if (quantity.size() > 2) throw new QuerySettingsException("quantity", quantity, "a max of 2 numbers");
 		if (price != null) if (price.size() > 2) throw new QuerySettingsException("price", price, "a max of 2 numbers");
 
-		this.pageNumber = pageNumber;
+		this.pageNumber = pageNumber - 1;
 		this.pageSize = pageSize;
 		this.searchText = (searchText != null) ? "%" + searchText.toLowerCase() + "%" : null;
 		this.medClass = (medClass != null) ? (medClass.length() < 1) ? null : medClass : null;
-		this.medForm = (medClass != null) ? (medForm.length() < 1) ? null : medForm : null;
+		this.medForm = (medForm != null) ? (medForm.length() < 1) ? null : medForm : null;
 		this.quantity = (quantity != null) ? Pair.of(min(quantity), max(quantity)) : null;
 		this.price = (price != null) ? Pair.of(min(price), max(price)) : null;
 		this.isAvailable = isAvailable;

@@ -13,6 +13,17 @@ services:
     depends_on:
       - postgres-fyp
 
+  appointment-fyp:
+    container_name: appointment-fyp
+    image: appointment-fyp:latest
+    build:
+      context: fyp-be
+      dockerfile: ./appointment.dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-fyp
+
   postgres-fyp:
     container_name: postgres-fyp
     image: postgres:15.1
