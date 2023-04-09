@@ -31,21 +31,28 @@ public class AppointmentService {
 	private final UserRepository userRepo;
 
 	public void createAppointment(CreateAppointmentDTO createAppointment) {
+//		Check Doctor and User exist
 		User doctor = userRepo.findById(createAppointment.doctorId()).orElseThrow(() -> new ResourceNotFoundException("user(doctor)", "id",
 				createAppointment.doctorId()));
+		System.out.println("Meeddoh3");
 		User user = userRepo.findById(createAppointment.userId()).orElseThrow(() -> new ResourceNotFoundException("user", "id",
 				createAppointment.userId()));
 
-		Timestamp end = new Timestamp(createAppointment.date().getTime() + doctor.getTimeSlot().getTime());
-		Timestamp start = new Timestamp(createAppointment.date().getTime() - doctor.getTimeSlot().getTime());
+//		Create start-end window (date of appointment with timeslot taken into consideration)
+		long timeslot = (long) doctor.getTimeSlot() * 60 * 1000;
+		Timestamp start = new Timestamp(createAppointment.date().getTime() - timeslot);
+		Timestamp end = new Timestamp(createAppointment.date().getTime() + timeslot);
 
+//		If doctor has appointment during timeslot specified above then he ain't available
 		if (appointmentRepo.findAllByDateBetweenAndDoctorId(start, end, doctor.getId()).size() > 0) {
 			throw new AppointmentTimeSlotUnavailable(doctor.getId(), createAppointment.date());
 		}
 
+//		Get Doctor Availabilities during the appointment Day
 		Date day = Date.valueOf(createAppointment.date().toLocalDateTime().toLocalDate());
 		List<Availability> availabilities = availabilityRepo.findAllByDayAndDoctorId(day, doctor.getId());
 
+//		For each availability time frame check if appointment time is in that frame
 		for (Availability availability: availabilities) {
 			LocalTime startTime = availability.getStartHour().toLocalTime();
 			LocalTime endTime = availability.getEndHour().toLocalTime();
@@ -62,6 +69,7 @@ public class AppointmentService {
 			}
 		}
 
+//		Error is thrown in not in frame
 		throw new AppointmentTimeSlotUnavailable(doctor.getId(), createAppointment.date());
 	}
 

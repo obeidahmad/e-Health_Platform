@@ -1,7 +1,6 @@
 package edu.ua.appointment.contollers;
 
 import edu.ua.sqldatabasepersistence.models.sql_models.general.User;
-import edu.ua.sqldatabasepersistence.models.sql_models.general.UserRole;
 import edu.ua.sqldatabasepersistence.repositories.general.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,4 @@ public class UserControllerDev {
     User createUser(@RequestBody User user) {
         return userRepository.save(user);
     }
-
-
 }

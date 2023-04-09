@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AvailabilityRepository extends JpaRepository<Availability, UUID>  {
-	@Query("select a from Availability a where MONTH(a.day) = MONTH(:day) and YEAR(a.day) = YEAR(:day) and a.doctor.id = :doctorId")
-	List<Availability> findAllByMonthAndByDoctorId(Date day, UUID doctorId);
+	@Query("select a from Availability a where MONTH(a.day) = ?1 and YEAR(a.day) = ?2 and a.doctor.id = ?3")
+	List<Availability> findAllByMonthYearAndDoctorId(int month, int year, UUID doctorId);
 
 	List<Availability> findAllByDayBetweenAndDoctorId(Date firstDate, Date lastDate, UUID doctorId);
 

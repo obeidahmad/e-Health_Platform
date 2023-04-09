@@ -1,5 +1,8 @@
 package edu.ua.appointment.contollers;
 
+import edu.ua.appointment.exceptions.AppointmentTimeSlotUnavailable;
+import edu.ua.appointment.exceptions.WrongTimeFrameException;
+import edu.ua.appointment.exceptions.ResourceNotFoundException;
 import edu.ua.appointment.models.DTOs.AppointmentDTO;
 import edu.ua.appointment.models.DTOs.AvailabilityDTO;
 import edu.ua.appointment.models.DTOs.CreateAppointmentDTO;
@@ -23,8 +26,23 @@ public class AppointmentController {
 	private final AppointmentService appointmentService;
 	private final AvailabilityService availabilityService;
 
+	@ExceptionHandler({ResourceNotFoundException.class})
+	public ResponseEntity<String> handleResourceNotFoundException(RuntimeException runtimeException) {
+		return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler({WrongTimeFrameException.class})
+	public ResponseEntity<String> handleTimeConflicts(RuntimeException runtimeException) {
+		return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.CONFLICT);
+	}
+
+	@ExceptionHandler({AppointmentTimeSlotUnavailable.class})
+	public ResponseEntity<String> handleAppointmentTimeSlotErrors(RuntimeException runtimeException) {
+		return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.FAILED_DEPENDENCY);
+	}
+
 	@GetMapping("availability/{timeFrame}/{startDate}/{doctorId}")
-	public List<AvailabilityDTO> getAllDoctorAvailability(@PathVariable TimeFrame timeFrame, @PathVariable Date startDate, @PathVariable UUID doctorId) {
+	public List<AvailabilityDTO> getAllDoctorAvailability(@PathVariable TimeFrame timeFrame, @PathVariable String startDate, @PathVariable UUID doctorId) {
 		return availabilityService.getAvailabilityByDoctorId(timeFrame, startDate, doctorId);
 	}
 
