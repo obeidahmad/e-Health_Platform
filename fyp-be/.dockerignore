@@ -1,9 +1,9 @@
 Pharmacy/target/
 Pharmacy/.mvn/
 Pharmacy/.gitignore
-Pharmacy/Pharmacy.iml
+Pharmacy/Pharmacy*.iml
 
 SQLDatabasePersistence/target/
 SQLDatabasePersistence/.mvn/
 SQLDatabasePersistence/.gitignore
-SQLDatabasePersistence/SQLDatabasePersistence.iml
+SQLDatabasePersistence/SQLDatabasePersistence*.iml

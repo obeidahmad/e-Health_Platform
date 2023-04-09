@@ -1,5 +1,6 @@
 package edu.ua.pharmacy.controllers;
 
+import edu.ua.pharmacy.exceptions.DatabaseUniqueConstraintException;
 import edu.ua.pharmacy.exceptions.ResourceNotFoundException;
 import edu.ua.pharmacy.models.DTOs.general.UserDTO;
 import edu.ua.pharmacy.models.DTOs.meds.Medicine.CreateMedicineDTO;
@@ -33,8 +34,13 @@ public class MedicineController {
 	private final PurchaseService purchaseService;
 
 	@ExceptionHandler({ResourceNotFoundException.class})
-	public ResponseEntity<String> handleRuntimeException(RuntimeException runtimeException) {
+	public ResponseEntity<String> handleResourceNotFoundException(RuntimeException runtimeException) {
 		return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler({DatabaseUniqueConstraintException.class})
+	public ResponseEntity<String> handleUniqueConstraintViolation(RuntimeException runtimeException) {
+		return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.CONFLICT);
 	}
 
 	@PostMapping("all")
@@ -115,13 +121,13 @@ public class MedicineController {
 	}
 
 	@PostMapping("class")
-	public MedClass addMedicineClass(@RequestBody MedClass medForm) {
-		return medService.addMedClass(medForm);
+	public MedClass addMedicineClass(@RequestBody String value) {
+		return medService.addMedClass(value);
 	}
 
 	@PostMapping("form")
-	public MedForm addMedicineForm(@RequestBody MedForm medForm) {
-		return medService.addMedForm(medForm);
+	public MedForm addMedicineForm(@RequestBody String value) {
+		return medService.addMedForm(value);
 	}
 
 	@GetMapping("forms")

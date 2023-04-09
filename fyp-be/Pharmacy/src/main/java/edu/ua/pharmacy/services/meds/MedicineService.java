@@ -1,5 +1,6 @@
 package edu.ua.pharmacy.services.meds;
 
+import edu.ua.pharmacy.exceptions.DatabaseUniqueConstraintException;
 import edu.ua.pharmacy.exceptions.ResourceNotFoundException;
 import edu.ua.pharmacy.models.DTOs.meds.Medicine.CreateMedicineDTO;
 import edu.ua.pharmacy.models.DTOs.meds.Medicine.MedicineBookmarkDTO;
@@ -13,6 +14,7 @@ import edu.ua.sqldatabasepersistence.repositories.meds.MedicineClassRepository;
 import edu.ua.sqldatabasepersistence.repositories.meds.MedicineFormRepository;
 import edu.ua.sqldatabasepersistence.repositories.meds.MedicineRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,12 +31,25 @@ public class MedicineService {
 	public List<MedicineDTO> getAllQueriedMedicines(MedicineQuerySettings medicineQuerySettings) {
 		return medicineRepo.queryMedicines(medicineQuerySettings).stream().map(MedicineDTO::new).collect(Collectors.toList());
 	}
-
-	public MedClass addMedClass(MedClass medClass){
-		return medicineClassRepo.save(medClass);
+	public MedClass addMedClass(String classValue){
+		try {
+			return medicineClassRepo.save(new MedClass(classValue));
+		} catch (DataIntegrityViolationException e) {
+			if (e.getMostSpecificCause().getMessage().contains("duplicate key value violates unique constraint")) {
+				throw new DatabaseUniqueConstraintException("Form", "name", classValue);
+			}
+			throw e;
+		}
 	}
-	public MedForm addMedForm(MedForm medForm) {
-		return medicineFormRepo.save(medForm);
+	public MedForm addMedForm(String formValue) {
+		try {
+			return medicineFormRepo.save(new MedForm(formValue));
+		} catch (DataIntegrityViolationException e) {
+			if (e.getMostSpecificCause().getMessage().contains("duplicate key value violates unique constraint")) {
+				throw new DatabaseUniqueConstraintException("Form", "name", formValue);
+			}
+			throw e;
+		}
 	}
 	public List<MedicineBookmarkDTO> getAllQueriedMedicines(MedicineQuerySettings medicineQuerySettings, UUID userId) {
 		return medicineRepo.queryMedicines(medicineQuerySettings).stream().map(medicine -> {

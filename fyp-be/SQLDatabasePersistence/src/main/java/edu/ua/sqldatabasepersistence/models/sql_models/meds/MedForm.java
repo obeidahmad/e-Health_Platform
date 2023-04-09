@@ -33,6 +33,10 @@ public class MedForm {
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
 
+	public MedForm(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

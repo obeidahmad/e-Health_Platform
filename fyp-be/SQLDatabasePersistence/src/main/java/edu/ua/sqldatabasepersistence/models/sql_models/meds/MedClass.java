@@ -33,6 +33,10 @@ public class MedClass {
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
 
+	public MedClass(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
