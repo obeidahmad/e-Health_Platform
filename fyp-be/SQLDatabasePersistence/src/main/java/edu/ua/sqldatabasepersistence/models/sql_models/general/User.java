@@ -3,6 +3,7 @@ package edu.ua.sqldatabasepersistence.models.sql_models.general;
 import edu.ua.sqldatabasepersistence.models.sql_models.meds.Bookmark;
 import edu.ua.sqldatabasepersistence.models.sql_models.meds.Purchase;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,6 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
@@ -25,8 +25,9 @@ public class User {
 	@Id
 	@Column(updatable = false, nullable = false)
 	private UUID id;
+	@PositiveOrZero
 	@Column(name = "time_slot")
-	private Time timeSlot;
+	private int timeSlot = 30;
 	@ManyToOne
 	@JoinColumn(name = "role_id", nullable = false)
 	private UserRole role;

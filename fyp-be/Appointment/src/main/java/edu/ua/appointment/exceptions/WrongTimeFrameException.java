@@ -9,4 +9,8 @@ public class WrongTimeFrameException extends RuntimeException {
 	public WrongTimeFrameException() {
 		super("Wrong timeframe specified.");
 	}
+
+	public WrongTimeFrameException(String message) {
+		super(message);
+	}
 }

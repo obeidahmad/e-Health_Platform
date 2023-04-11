@@ -1,6 +1,6 @@
 try:
     from setup import create_schemas
-    from seeders import seed_med_forms, seed_med_class, seed_medicines, create_roles
+    from seeders import seed_med_forms, seed_med_class, seed_medicines, create_roles, seed_mock_users
 except Exception as e:
     print(e)
     pass
