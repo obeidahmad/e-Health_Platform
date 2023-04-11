@@ -38,6 +38,8 @@ public class Appointment {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
+	@Column
+	private Boolean notified = false;
 
 	@Override
 	public boolean equals(Object o) {

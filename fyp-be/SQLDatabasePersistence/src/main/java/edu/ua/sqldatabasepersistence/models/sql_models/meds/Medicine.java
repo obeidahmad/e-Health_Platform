@@ -56,7 +56,6 @@ public class Medicine {
 	private MedForm medForm;
 	@OneToMany(mappedBy = "medicine")
 	private List<Purchase> purchases;
-
 	@OneToMany(mappedBy = "medicine")
 	private List<Bookmark> bookmarks;
 
