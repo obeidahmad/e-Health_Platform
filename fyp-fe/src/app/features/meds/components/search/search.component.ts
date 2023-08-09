@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-search',
@@ -6,12 +7,16 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  public form!: FormGroup;
 
   public drawerSettings: { visible: boolean } = {
     visible: false
   };
 
-  constructor() {
+  constructor(private formBuilder: FormBuilder) {
+    this.form = formBuilder.group({
+
+    })
   }
 
   private _searchQuery?: string;

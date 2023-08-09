@@ -43,7 +43,7 @@
   nzPlacement="left"
   nzTitle="Filters">
 
-  <form *nzDrawerContent nz-form>
+  <form *nzDrawerContent nz-form [formGroup]="form">
     <div [nzGutter]="8" nz-row>
       <div nz-col nzSpan="12">
         <nz-form-item>

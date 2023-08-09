@@ -1,4 +1,6 @@
 export const CoreRoutes = Object.freeze({
   AUTH: 'auth',
-  MEDS: 'pharmacy'
+  MEDS: 'pharmacy',
+  APPT: 'appointment',
+  ADMIN: 'admin'
  })

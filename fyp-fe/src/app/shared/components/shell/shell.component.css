@@ -1,0 +1,56 @@
+nz-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 500px;
+  height: 60px;
+  display: flex;
+}
+
+.profile button:first-child {
+  margin-right: 12px;
+  background-color: #D3E3FF;
+  color: var(--primary-color)
+}
+
+
+.profile button {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+h1 {
+  color: #001C39;
+  margin: 0;
+}
+
+.logo img {
+  margin: auto 0;
+  width: 50px;
+
+}
+
+[nz-menu] {
+  line-height: 64px;
+}
+
+
+.sub-header {
+  background: #D3E3FF;
+  height: 52px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+nz-content {
+  padding: 20px 50px;
+}
+
+
+.item {
+  margin-bottom: 16px;
+}

@@ -1,30 +1,7 @@
-<nz-layout>
-  <nz-header>
-    <div class="logo">
-      <img [nzDisablePreview]="true" alt="MJO Logo" nz-image nzSrc="assets/logo.png" src="../../../assets/logo.png"/>
-      <h1>MJO Center</h1>
-    </div>
-    <div [nzGutter]="12" class="profile" nz-row nzAlign="middle">
-      <button nz-button nz-col nzType="default">Login</button>
-      <button nz-button nz-col nzType="primary">Signup</button>
-    </div>
-  </nz-header>
-  <section class="sub-header">
-    <nz-breadcrumb [nzAutoGenerate]="true">
-      <nz-breadcrumb-item>
-        <span nz-icon nzType="home"></span>
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-    <div nz-row nzAlign="middle" nzGutter="12">
-      <app-bookmarked nz-col></app-bookmarked>
-      <button (click)="openPurchaseDrawer()" nz-button nz-col nzType="text">Your purchases</button>
-    </div>
-
-  </section>
-  <nz-content>
-    <router-outlet></router-outlet>
-  </nz-content>
-</nz-layout>
+<app-shell>
+  <app-bookmarked nz-col></app-bookmarked>
+  <button (click)="openPurchaseDrawer()" nz-button nz-col nzType="text">Your purchases</button>
+</app-shell>
 
 <nz-drawer
   (nzOnClose)="close()"
@@ -34,12 +11,10 @@
   nzTitle="Your history">
   <ng-container *nzDrawerContent>
 
-      <div  *ngFor="let item of purshasedMeds | async; let index = index" class="item">
-        <app-med-card (selected)="navigateToMed($event)"></app-med-card>
-      </div>
+    <div *ngFor="let item of purshasedMeds | async; let index = index" class="item">
+      <app-med-card (selected)="navigateToMed($event)"></app-med-card>
+    </div>
   </ng-container>
-
-
 </nz-drawer>
 
 

@@ -13,6 +13,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../../environments/environment";
+import { AppointmentsModule } from '../domain/appointments/appointments.module';
 
 registerLocaleData(en);
 
@@ -27,7 +28,8 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AppointmentsModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

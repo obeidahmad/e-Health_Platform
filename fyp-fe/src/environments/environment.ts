@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:8080',
+  meds: 'http://localhost:8080/med',
+  appt: 'http://localhost:8080/appt',
   firebase: {
     apiKey: "AIzaSyBhDG3rZhJKnrQ0YV4IV75Nt8M2uCPVSec",
     authDomain: "e-dispensary-c02f3.firebaseapp.com",

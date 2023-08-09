@@ -1,0 +1,41 @@
+<div class="title">
+  <input nz-input placeholder="Event title..." [(ngModel)]="event.title" />
+  <nz-date-picker [(ngModel)]="event.date"></nz-date-picker>
+</div>
+
+<div class="editor">
+  <div *ngFor="let item of event.structure">
+    <ng-template [ngSwitch]="item.type">
+      <app-image-chunk *ngSwitchCase="'image'"></app-image-chunk>
+      <app-title-chunk *ngSwitchCase="'title'"></app-title-chunk>
+      <app-image-with-caption-chunk *ngSwitchCase="'image-with-caption'"></app-image-with-caption-chunk>
+      <app-paragraph-chunk *ngSwitchCase="'paragraph'"></app-paragraph-chunk>
+    </ng-template>
+  </div>
+
+    <nz-card class="the-plus">
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+    </nz-card>
+</div>
+
+
+
+<nz-drawer
+  (nzOnClose)="closeNewChunkDrawer()"
+  [nzClosable]="false"
+  [nzFooter]="footerTpl"
+  [nzVisible]="drawerSettings.visible"
+  [nzWidth]="720"
+  nzPlacement="left"
+  nzTitle="Add New Section">
+
+
+</nz-drawer>
+
+<ng-template #footerTpl>
+
+  <div style="float: right">
+    <button (click)="closeFilter()" nz-button style="margin-right: 8px;">Cancel</button>
+    <button (click)="closeFilter()" nz-button nzType="primary">Submit</button>
+  </div>
+</ng-template>
