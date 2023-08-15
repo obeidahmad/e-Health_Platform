@@ -15,9 +15,9 @@ public class AppointmentDTO {
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 	@NonNull
-	private UUID doctorId;
+	private String doctorId;
 	@NonNull
-	private UUID userId;
+	private String userId;
 
 	public AppointmentDTO(Appointment appointment) {
 		this.id = appointment.getId();

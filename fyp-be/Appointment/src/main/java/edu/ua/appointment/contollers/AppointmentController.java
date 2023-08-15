@@ -42,7 +42,7 @@ public class AppointmentController {
 	}
 
 	@GetMapping("availability/{timeFrame}/{startDate}/{doctorId}")
-	public List<AvailabilityDTO> getAllDoctorAvailability(@PathVariable TimeFrame timeFrame, @PathVariable String startDate, @PathVariable UUID doctorId) {
+	public List<AvailabilityDTO> getAllDoctorAvailability(@PathVariable TimeFrame timeFrame, @PathVariable String startDate, @PathVariable String  doctorId) {
 		return availabilityService.getAvailabilityByDoctorId(timeFrame, startDate, doctorId);
 	}
 
@@ -63,12 +63,12 @@ public class AppointmentController {
 	}
 
 	@GetMapping("user/{timeFrame}/{startDate}/{userId}")
-	public List<AppointmentDTO> getAllUserAppointments(@PathVariable TimeFrame timeFrame, @PathVariable Date startDate, @PathVariable UUID userId) {
+	public List<AppointmentDTO> getAllUserAppointments(@PathVariable TimeFrame timeFrame, @PathVariable Date startDate, @PathVariable String userId) {
 		return appointmentService.getAppointmentsByUserId(timeFrame, startDate, userId);
 	}
 
 	@GetMapping("doctor/{timeFrame}/{startDate}/{doctorId}")
-	public List<AppointmentDTO> getAllDoctorAppointments(@PathVariable TimeFrame timeFrame, @PathVariable Date startDate, @PathVariable UUID doctorId) {
+	public List<AppointmentDTO> getAllDoctorAppointments(@PathVariable TimeFrame timeFrame, @PathVariable Date startDate, @PathVariable String doctorId) {
 		return appointmentService.getAppointmentsByDoctorId(timeFrame, startDate, doctorId);
 	}
 }

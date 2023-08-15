@@ -79,7 +79,7 @@ public class AppointmentService {
 		appointmentRepo.deleteById(appointmentId);
 	}
 
-	public List<AppointmentDTO> getAppointmentsByUserId(TimeFrame timeFrame, Date startDate, UUID userId) {
+	public List<AppointmentDTO> getAppointmentsByUserId(TimeFrame timeFrame, Date startDate, String userId) {
 		List<Appointment> appointments;
 		switch (timeFrame) {
 			case MONTH ->
@@ -94,7 +94,7 @@ public class AppointmentService {
 		return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
 	}
 
-	public List<AppointmentDTO> getAppointmentsByDoctorId(TimeFrame timeFrame, Date startDate, UUID doctorId) {
+	public List<AppointmentDTO> getAppointmentsByDoctorId(TimeFrame timeFrame, Date startDate, String doctorId) {
 		List<Appointment> appointments;
 		switch (timeFrame) {
 			case MONTH ->

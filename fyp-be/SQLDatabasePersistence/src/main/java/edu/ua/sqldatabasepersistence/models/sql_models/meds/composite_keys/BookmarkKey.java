@@ -12,12 +12,12 @@ import java.util.UUID;
 
 @Embeddable
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 public class BookmarkKey implements Serializable {
 	@Column(name = "user_id")
 	@NonNull
-	private UUID userId;
+	private String userId;
 
 	@Column(name = "med_id")
 	@NonNull

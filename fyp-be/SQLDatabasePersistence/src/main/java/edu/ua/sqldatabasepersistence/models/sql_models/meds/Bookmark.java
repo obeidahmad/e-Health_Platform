@@ -1,7 +1,5 @@
 package edu.ua.sqldatabasepersistence.models.sql_models.meds;
 
-import edu.ua.sqldatabasepersistence.models.sql_models.general.User;
-import edu.ua.sqldatabasepersistence.models.sql_models.meds.composite_keys.BookmarkKey;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,18 +9,20 @@ import java.util.Date;
 import java.util.UUID;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "bookmarks", schema = "meds")
 public class Bookmark {
-	@EmbeddedId
-	private BookmarkKey id;
-	@ManyToOne
-	@MapsId("userId")
-	@JoinColumn(name = "user_id")
-	private User user;
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
+//	@ManyToOne
+//	@MapsId("userId")
+	@Column(name = "user_id")
+	private String userId;
 	@ManyToOne
 	@MapsId("medId")
 	@JoinColumn(name = "med_id")
@@ -36,9 +36,9 @@ public class Bookmark {
 	@Column(name = "updated_at")
 	private Date updatedAt;
 
-	public Bookmark(UUID userId, UUID medId) {
-		this.id = new BookmarkKey(userId, medId);
-	}
+//	public Bookmark(UUID userId, UUID medId) {
+//		this.id = new BookmarkKey(userId, medId);
+//	}
 
 	@Override
 	public boolean equals(Object o) {

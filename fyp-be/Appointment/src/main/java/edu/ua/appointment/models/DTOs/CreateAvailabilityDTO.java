@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Getter
 public final class CreateAvailabilityDTO {
-	private final @NonNull UUID doctorId;
+	private final @NonNull String doctorId;
 	private final @NonNull List<AvailabilityDayDTO> days;
 	private final @NonNull String startDate;
 	private final @NonNull String endDate;
