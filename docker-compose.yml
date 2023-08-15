@@ -44,7 +44,28 @@ services:
     depends_on:
       - postgres-fyp
 
+  minio:
+    image: minio/minio:RELEASE.2022-10-08T20-11-00Z.fips
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: miniouser
+      MINIO_ROOT_PASSWORD: miniopass
+    command: server --console-address ":9001" /data
+
+  nginx:
+    container_name: nginx-fyp
+    image: nginx-fyp:latest
+    build:
+      context: fyp-be/nginx
+      dockerfile: dockerfile
+    ports:
+      - "5000:80"
+
   fyp-fe:
+    container_name: fyp-fe
     image: fyp-fe:latest
     build:
       context: ./fyp-fe
