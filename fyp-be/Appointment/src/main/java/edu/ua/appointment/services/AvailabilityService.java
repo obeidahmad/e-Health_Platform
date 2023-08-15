@@ -24,12 +24,15 @@ public class AvailabilityService {
 	private final AvailabilityRepository availabilityRepo;
 	private final UserRepository userRepo;
 
-	public List<AvailabilityDTO> getAvailabilityByDoctorId(TimeFrame timeFrame, String startDate, UUID doctorId) {
+	public List<AvailabilityDTO> getAvailabilityByDoctorId(TimeFrame timeFrame, String startDate, String doctorId) {
 		List<Availability> availabilities;
 		Date day = Date.valueOf(startDate);
 		switch (timeFrame) {
 			case MONTH -> {
 				LocalDate localDay = day.toLocalDate();
+				System.out.println("SUUUP");
+				System.out.println(localDay.getMonthValue());
+				System.out.println(localDay.getYear());
 				availabilities = availabilityRepo.findAllByMonthYearAndDoctorId(localDay.getMonthValue(), localDay.getYear(), doctorId);
 			}
 			case WEEK -> {

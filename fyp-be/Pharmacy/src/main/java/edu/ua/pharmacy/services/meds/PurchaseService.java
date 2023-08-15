@@ -56,7 +56,7 @@ public class PurchaseService {
 		return purchaseRepo.findAllByMedicineId(medId).stream().map(PurchaseDTO::new).collect(Collectors.toList());
 	}
 
-	public List<PurchaseDTO> getUserPurchases(UUID userId) {
+	public List<PurchaseDTO> getUserPurchases(String userId) {
 		return purchaseRepo.findAllByUserId(userId).stream().map(PurchaseDTO::new).collect(Collectors.toList());
 	}
 }

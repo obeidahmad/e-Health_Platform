@@ -26,6 +26,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/med")
 public class MedicineController {
 	private final MedicineService medService;
@@ -49,7 +50,7 @@ public class MedicineController {
 	}
 
 	@PostMapping("all/{userId}")
-	public List<MedicineBookmarkDTO> getAllMedicines(@RequestBody MedicineQuerySettings medicineQuerySettings, @PathVariable UUID userId) {
+	public List<MedicineBookmarkDTO> getAllMedicines(@RequestBody MedicineQuerySettings medicineQuerySettings, @PathVariable String userId) {
 		return medService.getAllQueriedMedicines(medicineQuerySettings, userId);
 	}
 
@@ -59,29 +60,29 @@ public class MedicineController {
 	}
 
 	@GetMapping("user/bookmark/{userId}")
-	public List<MedicineDTO> getUserBookmark(@PathVariable UUID userId) {
+	public List<MedicineDTO> getUserBookmark(@PathVariable String userId) {
 		return bookmarkService.getUserBookmarkedMedicines(userId);
 	}
 
 	@PostMapping("user/bookmark/{userId}")
-	public ResponseEntity<UserDTO> addBookmarks(@PathVariable UUID userId, @RequestBody List<UUID> medIds) {
+	public ResponseEntity<UserDTO> addBookmarks(@PathVariable String userId, @RequestBody List<UUID> medIds) {
 		bookmarkService.addBookmarks(userId, medIds);
 		return new ResponseEntity<>(userService.getUserDTOById(userId), HttpStatus.CREATED);
 	}
 
 	@PostMapping("user/bookmark/delete/{userId}")
-	public UserDTO removeBookmarks(@PathVariable UUID userId, @RequestBody List<UUID> medIds) {
+	public UserDTO removeBookmarks(@PathVariable String userId, @RequestBody List<UUID> medIds) {
 		bookmarkService.removeBookmarks(userId, medIds);
 		return userService.getUserDTOById(userId);
 	}
 
 	@GetMapping("user/purchase/{userId}")
-	public List<PurchaseDTO> getUserPurchase(@PathVariable UUID userId) {
+	public List<PurchaseDTO> getUserPurchase(@PathVariable String userId) {
 		return purchaseService.getUserPurchases(userId);
 	}
 
 	@PostMapping("user/purchase/{userId}/{medId}")
-	public UserDTO reserveMedicine(@PathVariable UUID userId, @PathVariable UUID medId) {
+	public UserDTO reserveMedicine(@PathVariable String userId, @PathVariable UUID medId) {
 		purchaseService.reserveMedicine(userService.getUserById(userId), medService.getMedicineById(medId));
 		return userService.getUserDTOById(userId);
 	}
@@ -93,7 +94,7 @@ public class MedicineController {
 	}
 
 	@PostMapping("buy/{userId}/{medId}")
-	public ResponseEntity<UserDTO> buyMedicine(@PathVariable UUID userId, @PathVariable UUID medId) {
+	public ResponseEntity<UserDTO> buyMedicine(@PathVariable String userId, @PathVariable UUID medId) {
 		purchaseService.buyMedicine(userService.getUserById(userId), medService.getMedicineById(medId));
 		return new ResponseEntity<>(userService.getUserDTOById(userId), HttpStatus.CREATED);
 	}
