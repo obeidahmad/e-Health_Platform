@@ -44,6 +44,7 @@ public class MedicineController {
 		return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.CONFLICT);
 	}
 
+	//	TODO: RETURN FACETS OF NUMBER OF PAGES
 	@PostMapping("all")
 	public List<MedicineDTO> getAllMedicines(@RequestBody MedicineQuerySettings medicineQuerySettings) {
 		return medService.getAllQueriedMedicines(medicineQuerySettings);
@@ -64,6 +65,7 @@ public class MedicineController {
 		return bookmarkService.getUserBookmarkedMedicines(userId);
 	}
 
+//	TODO: check this it is not bookmarking
 	@PostMapping("user/bookmark/{userId}")
 	public ResponseEntity<UserDTO> addBookmarks(@PathVariable String userId, @RequestBody List<UUID> medIds) {
 		bookmarkService.addBookmarks(userId, medIds);
@@ -81,6 +83,7 @@ public class MedicineController {
 		return purchaseService.getUserPurchases(userId);
 	}
 
+//	TODO: IT IS RETURNING 400 EVEN THO IT SEEMS SMOOTH AS BUTTER
 	@PostMapping("user/purchase/{userId}/{medId}")
 	public UserDTO reserveMedicine(@PathVariable String userId, @PathVariable UUID medId) {
 		purchaseService.reserveMedicine(userService.getUserById(userId), medService.getMedicineById(medId));
@@ -99,11 +102,11 @@ public class MedicineController {
 		return new ResponseEntity<>(userService.getUserDTOById(userId), HttpStatus.CREATED);
 	}
 
-	@PutMapping("purchase/{purchaseId}")
-	public UserDTO buyReservedMedicine(@PathVariable UUID purchaseId) {
-		Purchase purchase = purchaseService.buyMedicine(purchaseId);
-		return userService.getUserDTOById(purchase.getUser().getId());
-	}
+//	@PutMapping("purchase/{purchaseId}")
+//	public UserDTO buyReservedMedicine(@PathVariable UUID purchaseId) {
+//		Purchase purchase = purchaseService.buyMedicine(purchaseId);
+//		return userService.getUserDTOById(purchase.getUser().getId());
+//	}
 
 	@GetMapping("purchase/{medId}")
 	public List<PurchaseDTO> getMedicinePurchaseHistory(@PathVariable UUID medId) {
