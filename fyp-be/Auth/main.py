@@ -121,12 +121,12 @@ class JWTBearerService(HTTPBearer):
         super(JWTBearerService, self).__init__()
 
     async def __call__(self, request: Request):
-        credentials: HTTPAuthorizationCredentials = await super(JWTBearerService, self).__call__(request)
-        if credentials:
-            if not credentials.scheme == "Bearer":
+        credential: HTTPAuthorizationCredentials = await super(JWTBearerService, self).__call__(request)
+        if credential:
+            if not credential.scheme == "Bearer":
                 raise HTTPException(status_code=403, detail="Invalid authentication scheme.")
             try:
-                user = auth.verify_id_token(credentials.credentials)
+                user = auth.verify_id_token(credential.credentials)
             except UserNotFoundError:
                 raise HTTPException(status_code=404, detail="This user does not exist")
             except InvalidIdTokenError as e:
