@@ -74,7 +74,7 @@ async def signup(user_credentials: NonPatientSignup):
     except InvalidIdTokenError:
         raise HTTPException(status_code=400, detail="Bad token")
     else:
-        custom_claims = {'role': 'patient'}
+        custom_claims = {'role': 'nurse'}
         auth.set_custom_user_claims(user.uid, custom_claims)
         custom_token = auth.create_custom_token(user.uid, custom_claims)
         return {"token": custom_token}
@@ -96,7 +96,7 @@ async def signup(user_credentials: DoctorSignup):
     except InvalidIdTokenError:
         raise HTTPException(status_code=400, detail="Bad token")
     else:
-        custom_claims = {'role': 'patient', 'time_slot': user_credentials.time_slot}
+        custom_claims = {'role': 'doctor', 'time_slot': user_credentials.time_slot}
         auth.set_custom_user_claims(user.uid, custom_claims)
         custom_token = auth.create_custom_token(user.uid, custom_claims)
         return {"token": custom_token}
