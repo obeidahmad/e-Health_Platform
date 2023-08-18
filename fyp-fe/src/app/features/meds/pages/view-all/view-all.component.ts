@@ -14,7 +14,7 @@ export class ViewAllComponent implements OnInit {
   public meds: MedItem[] = [];
   public searchAndFilterSettings: MedsQuerySettings = {
     pageNumber: 1,
-    pageSize: 12
+    pageSize: 9
   }
 
   constructor(private _medsService: MedsService,
@@ -22,10 +22,22 @@ export class ViewAllComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._medsService.getAllByUser(this.searchAndFilterSettings).subscribe(res => this.meds = res);
+    this.getAll();
   }
 
   navigateToMed($event: string) {
     this._router.navigate([CoreRoutes.MEDS, $event])
+  }
+
+  changePage($event: any) {
+    this.searchAndFilterSettings.pageNumber = $event;
+    this.getAll();
+  }
+
+  private getAll() {
+    this._medsService.getAllByUser(this.searchAndFilterSettings)
+      .subscribe(res => {
+        this.meds = res
+      });
   }
 }

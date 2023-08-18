@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CoreRoutes} from "../../core/core-routes";
 import {Router} from "@angular/router";
-import {Observable, of} from "rxjs";
-import {MedItem} from "../../domain/meds/models/med-item";
+import {MedsService} from "../../domain/meds/services/meds.service";
+import {Purchase} from "../../domain/meds/models/purchase";
 
 @Component({
   selector: 'app-meds-view',
@@ -10,22 +10,36 @@ import {MedItem} from "../../domain/meds/models/med-item";
   styleUrls: ['./meds-view.component.css']
 })
 export class MedsViewComponent implements OnInit {
+  public loading: boolean = false;
   public drawerSettings: { visible: boolean } = {
     visible: false
   };
 
-  public purshasedMeds: Observable<MedItem[]>= of([]);
+  public purchasedMeds: Purchase[] = [];
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router,
+              private medsService: MedsService) {
 
   }
 
   ngOnInit(): void {
+    this.medsService.getUserPurchases().subscribe({
+
+      next: res => this.purchasedMeds = res
+    })
+
   }
 
 
   public openPurchaseDrawer() {
-    this.drawerSettings.visible = true;
+    this.medsService.getUserPurchases().subscribe({
+      next: res => {
+        this.purchasedMeds = res;
+        this.drawerSettings.visible = true;
+
+      }
+
+    })
   }
 
   public close() {

@@ -6,6 +6,8 @@ import {MedItem} from "../models/med-item";
 import {Observable} from "rxjs";
 import {AuthService} from "../../authentication/services/auth.service";
 import {CreateMed, UpdateMed} from "../models/create-med";
+import {user} from "@angular/fire/auth";
+import {Purchase} from "../models/purchase";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,7 @@ export class MedsService {
 
   public getAllByUser(settings: MedsQuerySettings): Observable<MedItem[]> {
     const userId = this._authService.getCurrentUserId();
-    return this._http.post<MedItem[]>(`${this.url}/${userId}`, settings);
+    return this._http.post<MedItem[]>(`${this.url}/all/${userId}`, settings);
   }
 
   public createMed(medItem: CreateMed): Observable<MedItem> {
@@ -54,7 +56,7 @@ export class MedsService {
 
   public unBookmarkMeds(medIds: string[]) {
     const userId = this._authService.getCurrentUserId();
-    return this._http.post(this.url + `/user/bookmark/${userId}`, medIds)
+    return this._http.post(this.url + `/user/bookmark/delete/${userId}`, medIds)
   }
 
   public reserveMed(medId: string) {
@@ -62,9 +64,14 @@ export class MedsService {
     return this._http.post(this.url + `/user/purchase/${userId}/${medId}`, {})
   }
 
-  public unReserveMed(medId: string) {
+  public getUserPurchases(): Observable<Purchase[]>{
     const userId = this._authService.getCurrentUserId();
-    return this._http.delete(this.url + `/purchase/${medId}`)
+    return this._http.get<Purchase[]>(this.url + `/user/purchase/${userId}`);
+  }
+
+  public unReserveMed(purchaseId: string) {
+    const userId = this._authService.getCurrentUserId();
+    return this._http.delete(this.url + `/purchase/delete/${purchaseId}`)
   }
 
   public getMedForms(): Observable<string[]> {

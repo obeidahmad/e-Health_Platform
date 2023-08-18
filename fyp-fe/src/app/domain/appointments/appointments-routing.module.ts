@@ -1,10 +1,25 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AppointmentsComponent} from "../../features/appointments/pages/appointments/appointments.component";
+import {AppointmentsViewComponent} from "../../features/appointments/appointments-view.component";
+import {PatientViewComponent} from "../../features/appointments/pages/patient-view/patient-view.component";
+import {SetAvailabilityComponent} from "../../features/appointments/pages/set-availability/set-availability.component";
+import {RoleGuardGuard} from "../../core/guards/role-guard.guard";
 
 const routes: Routes = [{
   path: '',
-  component: AppointmentsComponent
+  component: AppointmentsViewComponent,
+  children: [
+    {
+      path: '',
+      component: PatientViewComponent
+    },
+    {
+      path: 'set_availability',
+      component: SetAvailabilityComponent,
+      canActivate: [RoleGuardGuard],
+      data: {role: "doctor"}
+    }
+  ]
 }];
 
 @NgModule({

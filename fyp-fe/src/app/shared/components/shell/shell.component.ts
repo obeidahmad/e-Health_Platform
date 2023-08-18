@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CoreRoutes} from "../../../core/core-routes";
 
 @Component({
   selector: 'app-shell',
@@ -7,7 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShellComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+
+  }
+
+  patientRoutes = [
+    {
+      name: "Medicines",
+      route: CoreRoutes.MEDS
+    },
+
+  ]
 
   ngOnInit(): void {
   }

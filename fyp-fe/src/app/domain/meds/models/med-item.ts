@@ -9,5 +9,5 @@ export interface MedItem {
   price: number;
   medClass: string;
   medForm: string;
-  isBookmarked?: string;
+  isBookmarked?: boolean;
 }

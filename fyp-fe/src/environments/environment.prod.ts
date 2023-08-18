@@ -1,14 +1,14 @@
 export const environment = {
   production: true,
   meds: 'http://localhost:8080',
+  auth: 'http://localhost:8082',
   appt: 'http://localhost:8080',
   firebase: {
-    apiKey: "AIzaSyBhDG3rZhJKnrQ0YV4IV75Nt8M2uCPVSec",
-    authDomain: "e-dispensary-c02f3.firebaseapp.com",
-    projectId: "e-dispensary-c02f3",
-    storageBucket: "e-dispensary-c02f3.appspot.com",
-    messagingSenderId: "44986660711",
-    appId: "1:44986660711:web:4d4f52d6b0c5e17938a1c2",
-    measurementId: "G-ENKEVW8PYF"
+    apiKey: "AIzaSyBWK9Lxj2AGzTi-pDXgToHMTIH-c4IDG9k",
+    authDomain: "e-dispensary-f803d.firebaseapp.com",
+    projectId: "e-dispensary-f803d",
+    storageBucket: "e-dispensary-f803d.appspot.com",
+    messagingSenderId: "160543886984",
+    appId: "1:160543886984:web:abfc20058abadef519593d"
   }
 };

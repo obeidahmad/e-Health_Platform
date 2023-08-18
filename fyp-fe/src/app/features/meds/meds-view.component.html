@@ -10,9 +10,13 @@
   nzPlacement="right"
   nzTitle="Your history">
   <ng-container *nzDrawerContent>
-
-    <div *ngFor="let item of purshasedMeds | async; let index = index" class="item">
-      <app-med-card (selected)="navigateToMed($event)"></app-med-card>
+    <nz-empty *ngIf="purchasedMeds.length < 1"></nz-empty>
+    <div *ngFor="let item of purchasedMeds; let index = index" class="item">
+      <app-med-card (selected)="navigateToMed($event)"
+                    [medItem]="item.medicine"
+                    [minimal]="true"
+                    [purchaseDate]="item.updatedAt"
+      ></app-med-card>
     </div>
   </ng-container>
 </nz-drawer>

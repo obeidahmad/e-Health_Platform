@@ -23,7 +23,6 @@ export class AvailabilityService {
   }
 
   public setDrAvailability(availability: AvailabilityRequest) {
-    return this._http.post(this.url + '/availability', availability);
+    return this._http.post<AvailabilityResponse[]>(this.url + '/availability', availability);
   }
-
 }

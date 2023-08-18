@@ -12,4 +12,6 @@
     <app-med-card [medItem]="item" (selected)="navigateToMed($event)"></app-med-card>
   </div>
 </main>
-<nz-pagination [nzPageIndex]="searchAndFilterSettings.pageSize"></nz-pagination>
+<nz-pagination [nzPageIndex]="searchAndFilterSettings.pageNumber"
+               [nzTotal]="500"
+               (nzPageIndexChange)="changePage($event)"></nz-pagination>

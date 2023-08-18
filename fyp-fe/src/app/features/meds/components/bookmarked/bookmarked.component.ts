@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MedItem} from "../../../../domain/meds/models/med-item";
+import {MedsService} from "../../../../domain/meds/services/meds.service";
 
 @Component({
   selector: 'app-bookmarked',
@@ -8,34 +9,24 @@ import {MedItem} from "../../../../domain/meds/models/med-item";
 })
 export class BookmarkedComponent implements OnInit {
   public meds: MedItem[] = [];
-  constructor() {
+
+  constructor(private _medsService: MedsService) {
   }
 
   ngOnInit(): void {
-    this.meds = [
-      {
-        id: "cndskl",
-        brandName: "Panadol",
-        description: "jkdhsvlv dofoidjs vdnfjkvn fdkjsbfjkshd sjgrosenjgiuoerhsjgkes gvjfdpvjeso bhjes jvfdsjvlfkdh bfis",
-        dosage: "10mg",
-        requiresPrescription: false,
-        quantity: 10,
-        price: 5,
-        medClass: "Fever reducer",
-        medForm: "Pill"
-      },
-      {
-        id: "cndskl",
-        brandName: "Panadol",
-        description: "jkdhsvlv dofoidjs vdnfjkvn fdkjsbfjkshd sjgrosenjgiuoerhsjgkes gvjfdpvjeso bhjes jvfdsjvlfkdh bfis",
-        dosage: "10mg",
-        requiresPrescription: false,
-        quantity: 10,
-        price: 5,
-        medClass: "Fever reducer",
-        medForm: "Pill"
-      }
-    ]
+    this._medsService
+      .getBookmarked()
+      .subscribe({
+        next: (meds) => this.meds = meds
+      })
   }
 
+  toggleViewDropDown($event: boolean) {
+    if ($event) {
+      this._medsService.getBookmarked()
+        .subscribe({
+          next: (meds) => this.meds = meds
+        })
+    }
+  }
 }

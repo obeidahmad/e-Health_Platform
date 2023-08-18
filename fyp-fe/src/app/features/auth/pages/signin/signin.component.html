@@ -10,13 +10,14 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-control nzErrorTip="Please input your password.!">
+    <nz-form-control nzErrorTip="Please input your password.">
       <nz-input-group nzPrefixIcon="lock">
         <input formControlName="password" nz-input placeholder="Password" type="password"/>
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
-  <button [nzType]="'primary'" class="login-form-button login-form-margin"   nz-button>Sign In</button>
+  <p (click)="onForgotPassword()">Forgot Password?</p>
+  <button [nzType]="'primary'" class="login-form-button login-form-margin"  nz-button>Sign In</button>
 </form>
 
 <nz-divider nzPlain  nzText="Or"></nz-divider>

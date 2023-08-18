@@ -9,6 +9,7 @@ import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
 import { GoogleBtnComponent } from './components/google-btn/google-btn.component';
+import {NzMenuModule} from "ng-zorro-antd/menu";
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { GoogleBtnComponent } from './components/google-btn/google-btn.component
         NzGridModule,
         NzButtonModule,
         NzBreadCrumbModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        NzMenuModule
     ]
 })
 export class SharedModule {

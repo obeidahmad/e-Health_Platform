@@ -16,6 +16,18 @@ h1 {
 
 }
 
+p {
+  font-style: italic;
+  margin-top: -1rem;
+  display: block;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+p:hover{
+  opacity: 1;
+}
+
 h3 {
   color: var(--primary-color);
   font-size: 28px;

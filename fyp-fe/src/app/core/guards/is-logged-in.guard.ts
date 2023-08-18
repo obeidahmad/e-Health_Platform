@@ -14,7 +14,7 @@ export class IsLoggedInGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isLoggedIn = localStorage.getItem("user") == null;
     if (!isLoggedIn) return true;
-    this._router.navigate([CoreRoutes.MEDS]);
+    // this._router.navigate([CoreRoutes.MEDS]);
     return false;
   }
 
