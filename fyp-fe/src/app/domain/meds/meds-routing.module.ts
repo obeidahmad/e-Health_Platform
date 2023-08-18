@@ -7,7 +7,6 @@ import {MedRoutes} from "../med-routes";
 import {CreateMedFormComponent} from "../../features/meds/pages/create-med-form/create-med-form.component";
 
 const routes: Routes = [
-
   {
     path: '',
     component: MedsViewComponent,
@@ -26,7 +25,6 @@ const routes: Routes = [
       }
     ],
   },
-
 ];
 
 @NgModule({

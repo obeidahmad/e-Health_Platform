@@ -15,8 +15,7 @@ possible_forms = ['tablet', 'capsule', 'solution', 'suspension', 'injectable', '
 possible_forms = [form.title() for form in possible_forms]
 for form in possible_forms:
     # Define the JSON body for the request
-    data = {'name': form}
 
-    response = requests.post(URL, json=data, verify=False)
+    response = requests.post(URL, data=form, verify=False)
 
     print(f'Response for {form}: {response.status_code} - {response.content}')

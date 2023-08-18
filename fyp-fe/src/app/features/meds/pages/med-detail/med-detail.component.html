@@ -1,10 +1,11 @@
-<section>
+<nz-skeleton *ngIf="loading" [nzAvatar]="false" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+<section *ngIf="!loading">
   <div [nzGutter]="16" nz-row nzAlign="middle">
     <h1 nz-col>{{medItem.brandName}}</h1>
     <app-tag [content]="getAvailability()" [type]="(medItem.quantity ==0)?'error':'primary' " nz-col></app-tag>
     <app-tag *ngIf="medItem.requiresPrescription" content="Prescription needed" nz-col type="info"></app-tag>
     <div nz-col nzFlex="auto">
-      <span nz-icon nzType="book" nzTheme="fill" class="bookmark"></span>
+      <span class="bookmark" nz-icon (click)="toggleBookmark()" [nzTheme]="getBookmarked()" nzType="book"></span>
     </div>
   </div>
 
@@ -14,7 +15,7 @@
          [src]="medItem.imageUrl"
          nz-col
          nz-image>
-    <div nz-col *ngIf="!medItem.imageUrl" [nzSpan]="10" class="image-replacement"></div>
+    <div *ngIf="!medItem.imageUrl" [nzSpan]="10" class="image-replacement" nz-col></div>
     <div [nzSpan]="14" nz-col>
       <p>{{medItem.description}}</p>
       <nz-descriptions
@@ -40,7 +41,10 @@
     </div>
   </div>
 
-  <div>
-    <button nz-button nzType="primary" nzSize="large">Reserve this medicine</button>
+  <div *ngIf="purchaseStatus == 'new'">
+    <button nz-button nzSize="large" nzType="primary" (click)="reserveMed()">Reserve this medicine</button>
+  </div>
+  <div *ngIf="purchaseStatus != 'new'">
+    <button nz-button nzSize="large" nzType="primary" (click)="unReserveMed()">Remove reservation</button>
   </div>
 </section>

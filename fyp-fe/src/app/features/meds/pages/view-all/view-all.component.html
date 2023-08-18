@@ -3,13 +3,15 @@
 </section>
 
 <main [nzGutter]="46" class="meds-items" nz-row nzJustify="start">
-  <div *ngFor="let item of meds; let index = index"
+  <div *ngFor="let item of meds;"
        [nzLg]="{ span: 8 }"
        [nzMd]="{ span: 24 }"
        [nzSm]="{ span: 24 }"
        [nzXl]="{ span: 6}"
        [nzXs]="{ span: 24 }" class="items" nz-col>
-    <app-med-card (selected)="navigateToMed($event)"></app-med-card>
+    <app-med-card [medItem]="item" (selected)="navigateToMed($event)"></app-med-card>
   </div>
 </main>
-<nz-pagination [nzPageIndex]="1" [nzTotal]="500"></nz-pagination>
+<nz-pagination [nzPageIndex]="searchAndFilterSettings.pageNumber"
+               [nzTotal]="500"
+               (nzPageIndexChange)="changePage($event)"></nz-pagination>

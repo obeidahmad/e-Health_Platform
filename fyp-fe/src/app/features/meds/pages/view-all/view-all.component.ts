@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MedsService} from "../../../../domain/meds/services/meds.service";
 import {Router} from "@angular/router";
 import {CoreRoutes} from "../../../../core/core-routes";
+import {MedItem} from "../../../../domain/meds/models/med-item";
+import {MedsQuerySettings} from "../../../../domain/meds/models/meds-query-settings";
 
 @Component({
   selector: 'app-view-all',
@@ -9,17 +11,33 @@ import {CoreRoutes} from "../../../../core/core-routes";
   styleUrls: ['./view-all.component.css']
 })
 export class ViewAllComponent implements OnInit {
-  meds = [1, 2, 3, 4, 5, 6, 2, 2, 4, 34];
+  public meds: MedItem[] = [];
+  public searchAndFilterSettings: MedsQuerySettings = {
+    pageNumber: 1,
+    pageSize: 9
+  }
 
   constructor(private _medsService: MedsService,
               private _router: Router) {
   }
 
   ngOnInit(): void {
-
+    this.getAll();
   }
 
   navigateToMed($event: string) {
     this._router.navigate([CoreRoutes.MEDS, $event])
+  }
+
+  changePage($event: any) {
+    this.searchAndFilterSettings.pageNumber = $event;
+    this.getAll();
+  }
+
+  private getAll() {
+    this._medsService.getAllByUser(this.searchAndFilterSettings)
+      .subscribe(res => {
+        this.meds = res
+      });
   }
 }

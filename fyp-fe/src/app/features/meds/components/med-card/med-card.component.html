@@ -1,9 +1,11 @@
 <nz-card (click)="triggerSelected()" nzHoverable>
   <div class="header">
-    <span [nzTheme]="'outline'" nz-icon nzType="book"></span>
+    <span (click)="toggleBookmark()" *ngIf="!minimal" [nzTheme]="getBookmarked()" class="bookmark" nz-icon
+          nzType="book"></span>
+    <span *ngIf="minimal" class="bookmark">{{getDate()}}</span>
     <!--    <span nz-icon nzType="book" [nzTheme]="fill"></span>-->
   </div>
-  <div>
+  <div *ngIf="!minimal">
     <img *ngIf="medItem.imageUrl" [alt]="medItem.brandName + ' image'" [nzSrc]="medItem.imageUrl"
          [src]="medItem.imageUrl"
          nz-image>

@@ -1,0 +1,43 @@
+form{
+  margin-top: 2rem;
+}
+
+.login-form-button {
+  float: right;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+
+h1 {
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 48px;
+
+}
+
+p {
+  font-style: italic;
+  margin-top: -1rem;
+  display: block;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+p:hover{
+  opacity: 1;
+}
+
+h3 {
+  color: var(--primary-color);
+  font-size: 28px;
+  line-height: 36px;
+}
+
+
+.socials{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}

@@ -43,10 +43,9 @@ print(classes)
 
 for med_class in classes:
     # Define the JSON body for the request
-    data = {'name': med_class}
 
     # Send the POST request
-    response = requests.post(URL, json=data, verify=False)
+    response = requests.post(URL, data=med_class, verify=False)
 
     # Print the response status code and content
     print(f'Response for {med_class}: {response.status_code} - {response.content}')

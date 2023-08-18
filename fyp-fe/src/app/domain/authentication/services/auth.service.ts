@@ -3,55 +3,74 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {Router} from "@angular/router";
 import {LoginModel} from "../models/login-model";
 import firebase from "firebase/compat";
-import {filter} from "rxjs";
-import {UserAuth} from "../../../core/models/user-auth";
+import {UserAuth, UserInformation} from "../../../core/models/user-auth";
 import {CoreRoutes} from "../../../core/core-routes";
 import {AuthRoutes} from "../auth-routes";
-import UserCredential = firebase.auth.UserCredential;
-import User = firebase.User;
 import * as auth from 'firebase/auth';
+import {environment} from "../../../../environments/environment";
+import {HttpClient} from "@angular/common/http";
+import UserCredential = firebase.auth.UserCredential;
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private authBackendUrl = environment.auth
 
   constructor(private _fbAuth: AngularFireAuth,
+              private _http: HttpClient,
               private _router: Router) {
 
     this._fbAuth.authState.subscribe((user) => {
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user)); // TODO update
-        // JSON.parse(localStorage.getItem('user')!);4
-        let token = "";
-        user.getIdToken().then(t => token = t);
-        const userAuth: UserAuth = {
-          uid: user.uid,
-          email: user.email || "No Mail Provided",
-          isVerified: user.emailVerified,
-          token
-        }
-        localStorage.setItem("userAuth", JSON.stringify(userAuth))
-      } else {
+      if(user) {
+
+      }
+      if (!user) {
         localStorage.setItem("userAuth", 'null');
+        localStorage.setItem("user", 'null');
         this._router.navigate([CoreRoutes.AUTH, AuthRoutes.LOGIN]);
       }
     });
   }
 
+  forgotPassword(emailToReset: string) {
+    return this._fbAuth
+      .sendPasswordResetEmail(emailToReset)
+      .then(() => {
+        return "Email sent, check your inbox"
+      }).catch(error=>{
+        console.log(error.code);
+        const code = error.code;
+        if (code == 'auth/user-not-found') throw Error("No such user");
+        throw Error(error);
+      })
+  }
 
   public signIn(loginInfo: LoginModel) {
     return this._fbAuth.signInWithEmailAndPassword(loginInfo.email, loginInfo.password)
       .then((result: UserCredential) => {
-        this._fbAuth.authState
-          .pipe(filter(user => !!user))
-          .subscribe((user: User | null) => {
-            console.log(user);
-            this._router.navigate(['TODO'])
+        result.user?.getIdToken().then(token => {
+          this._http.get(this.getUserUrl(token)).subscribe({
+            next: (userInfo: any) => {
+              localStorage.setItem("token", token);
+              localStorage.setItem('user', JSON.stringify(userInfo))
+              if (!userInfo.role) throw Error("No assigned role")
+
+            }
           })
+        })
       }).catch((error) => {
-        console.log(error);
+        console.log(error.code)
+        const errorCode = error.code;
+        if (!errorCode) throw error
+        if (errorCode === 'auth/user-not-found') {
+          throw new Error('This user does not have an account. Sign up?');
+        } else if (errorCode === 'auth/wrong-password') {
+          throw new Error('Wrong password');
+        } else {
+          throw error;
+        }
       })
   }
 
@@ -70,30 +89,47 @@ export class AuthService {
   public verifyEmail() {
     return this._fbAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
-      .then(() => {
-        this._router.navigate([AuthRoutes.VERIFY_EMAIL]);
-      });
   }
 
   public authWithGoogle() {
-    return this.authWithExternalProvider(new auth.GoogleAuthProvider()).then((res: any) => {
-      console.log(res);
-      this._router.navigate(['TODO']);
-    });
+    return this.authWithExternalProvider(new auth.GoogleAuthProvider())
+      .then((res) => {
+        console.log(res)
+        // this._http.get(this.getUserUrl(token)).subscribe({
+        //   next: (userInfo) => {
+        //     console.log(userInfo)
+        //     localStorage.setItem('user', JSON.stringify(userInfo))
+        //     console.log("gonna navigate")
+        //   }
+        // })
+        // this._router.navigate([CoreRoutes.MEDS]);
+      });
   }
+
+  public getCurrentUser(): UserInformation | undefined  {
+    const user = localStorage.getItem('user');
+    return (user)? JSON.parse(user) : undefined;
+  }
+
+  public getCurrentUserId(): string | undefined {
+    // @ts-ignore
+    if (this.getCurrentUser() == '') return '';
+    else {
+      return  this.getCurrentUser()?.user_id;
+    }
+  }
+
+  private getUserUrl = (token: string) => `${this.authBackendUrl}/validate_token?token=${token}`
 
   private authWithExternalProvider(provider: any) {
     return this._fbAuth
       .signInWithPopup(provider)
       .then((result: any) => {
-        this._router.navigate([CoreRoutes.MEDS]);
+        console.log(result.credential().access_token)
+        // this._router.navigate([CoreRoutes.MEDS]);
       })
       .catch((error: any) => {
 
       });
-  }
-  public getCurrentUser(): UserAuth {
-    const user = localStorage.getItem('user') || '';
-    return JSON.parse(user);
   }
 }

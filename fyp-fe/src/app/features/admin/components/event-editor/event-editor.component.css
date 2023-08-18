@@ -1,0 +1,40 @@
+.title{
+  margin-bottom: 1rem;
+}
+
+.title input{
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 2rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+}
+
+.editor{
+  border-radius: 12px;
+  border: solid thin var(--secondary-color);
+  padding: 12px;
+}
+
+
+.the-plus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.the-plus:hover{
+  opacity: 1;
+  box-shadow: 0 3px 6px -4px rgba(86, 136, 299, 0.23);
+}
+
+.the-plus span{
+  font-size: 2rem;
+  color: var(--secondary-color);
+  opacity: 0.8;
+}

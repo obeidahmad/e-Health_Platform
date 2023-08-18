@@ -4,8 +4,8 @@ export interface MedsQuerySettings {
   searchText?: string;
   medClass?: string;
   medForm?: string;
-  quantity?: { [min: string]: [max: string] };
+  quantity?: [];
   requiresPrescription?: boolean;
   isAvailable?: boolean;
-  price?: { [min: string]: [max: string] };
+  price?: [];
 }

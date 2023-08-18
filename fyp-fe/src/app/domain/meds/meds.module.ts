@@ -35,6 +35,9 @@ import {NzSwitchModule} from "ng-zorro-antd/switch";
 import {MedDetailComponent} from '../../features/meds/pages/med-detail/med-detail.component';
 import {NzDescriptionsModule} from "ng-zorro-antd/descriptions";
 import {CreateMedFormComponent} from '../../features/meds/pages/create-med-form/create-med-form.component';
+import {NzSkeletonModule} from "ng-zorro-antd/skeleton";
+import {NzMessageModule} from "ng-zorro-antd/message";
+import {NzEmptyModule} from "ng-zorro-antd/empty";
 
 
 @NgModule({
@@ -76,7 +79,10 @@ import {CreateMedFormComponent} from '../../features/meds/pages/create-med-form/
     NzFormModule,
     NzSliderModule,
     NzSwitchModule,
-    NzDescriptionsModule
+    NzDescriptionsModule,
+    NzSkeletonModule,
+    NzMessageModule,
+    NzEmptyModule
   ]
 })
 export class MedsModule {

@@ -1,1 +1,28 @@
-<p>signin works!</p>
+<h1>Welcome Back!</h1>
+<h3>Sign back in to get to your account</h3>
+
+<form (ngSubmit)="submitForm()" [formGroup]="form" class="login-form" nz-form>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input a valid email.">
+      <nz-input-group nzPrefixIcon="mail">
+        <input formControlName="email" nz-input placeholder="Email" type="text"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input your password.">
+      <nz-input-group nzPrefixIcon="lock">
+        <input formControlName="password" nz-input placeholder="Password" type="password"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <p (click)="onForgotPassword()">Forgot Password?</p>
+  <button [nzType]="'primary'" class="login-form-button login-form-margin"  nz-button>Sign In</button>
+</form>
+
+<nz-divider nzPlain  nzText="Or"></nz-divider>
+
+<div class="socials">
+  <app-google-btn (google)="loginWithGoogle()"></app-google-btn>
+</div>
+

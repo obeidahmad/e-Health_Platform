@@ -13,12 +13,15 @@ import {AppRoutingModule} from "./app-routing.module";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../../environments/environment";
+import { AppointmentsModule } from '../domain/appointments/appointments.module';
+import { GenericDashboardComponent } from './components/generic-dashboard/generic-dashboard.component';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GenericDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AppointmentsModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

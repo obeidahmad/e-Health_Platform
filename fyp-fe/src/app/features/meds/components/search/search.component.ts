@@ -6,12 +6,42 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
   public drawerSettings: { visible: boolean } = {
     visible: false
   };
 
   constructor() {
+  }
+
+  private _filterQuery = {
+    medClass: '',
+    medForm: '',
+    requiresPrescription: false,
+    isAvailable: true,
+    quantity: [0, 5000],
+    price: [0, 5000]
+  }
+
+  get filterQuery(): {
+    medClass: string;
+    isAvailable: boolean;
+    medForm: string;
+    quantity: number[];
+    price: number[];
+    requiresPrescription: boolean
+  } {
+    return this._filterQuery;
+  }
+
+  set filterQuery(value: {
+    medClass: string;
+    isAvailable: boolean;
+    medForm: string;
+    quantity: number[];
+    price: number[];
+    requiresPrescription: boolean
+  }) {
+    this._filterQuery = value;
   }
 
   private _searchQuery?: string;
@@ -38,6 +68,5 @@ export class SearchComponent implements OnInit {
 
   public closeFilter() {
     this.drawerSettings.visible = false;
-
   }
 }

@@ -5,6 +5,7 @@
                   nz-col>
     <input [(ngModel)]="searchQuery"
            [nzBorderless]="true"
+           name="searchQuery"
            nz-input
            placeholder="Search for a medicine..."
            type="text"/>
@@ -49,7 +50,10 @@
         <nz-form-item>
           <nz-form-label>Medicine Class</nz-form-label>
           <nz-form-control>
-            <nz-select nzPlaceHolder="eg. Fever reducer"></nz-select>
+            <nz-select
+              [(ngModel)]="filterQuery.medClass"
+              name="medClass"
+              nzPlaceHolder="eg. Fever reducer"></nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -57,17 +61,25 @@
         <nz-form-item>
           <nz-form-label>Med form</nz-form-label>
           <nz-form-control>
-            <nz-select nzPlaceHolder="eg. Tablet"></nz-select>
+            <nz-select
+              [(ngModel)]="filterQuery.medForm"
+              name="medForm"
+              nzPlaceHolder="eg. Tablet"></nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
     </div>
     <div [nzGutter]="8" nz-row>
       <div nz-col nzSpan="24">
-        <nz-form-item>
+        <nz-form-item style="width: 100%;">
           <nz-form-label>Quantity</nz-form-label>
           <nz-form-control>
-            <nz-slider [ngModel]="[20, 50]" [nzStep]="1" nzRange nzVertical></nz-slider>
+            <nz-slider
+              nzRange
+              [(ngModel)]="filterQuery.quantity"
+              [nzStep]="1"
+              name="quantity"
+               nzVertical></nz-slider>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -77,7 +89,9 @@
         <nz-form-item>
           <nz-form-label>Available</nz-form-label>
           <nz-form-control>
-            <nz-switch></nz-switch>
+            <nz-switch
+              [(ngModel)]="filterQuery.isAvailable"
+              name="available"></nz-switch>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -88,7 +102,9 @@
         <nz-form-item>
           <nz-form-label>Needs prescription</nz-form-label>
           <nz-form-control>
-            <nz-switch></nz-switch>
+            <nz-switch
+              [(ngModel)]="filterQuery.requiresPrescription"
+              name="requiresPrescription"></nz-switch>
           </nz-form-control>
         </nz-form-item>
       </div>

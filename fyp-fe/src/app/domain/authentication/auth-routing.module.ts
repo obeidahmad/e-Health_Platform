@@ -4,6 +4,8 @@ import {SigninComponent} from "../../features/auth/pages/signin/signin.component
 import {AuthRoutes} from "./auth-routes";
 import {SignupComponent} from "../../features/auth/pages/signup/signup.component";
 import {AuthComponent} from "../../features/auth/auth.component";
+import {ForgotPasswordComponent} from "../../features/auth/pages/forgot-password/forgot-password.component";
+import {VerifyEmailComponent} from "../../features/auth/pages/verify-email/verify-email.component";
 
 const routes: Routes = [
   {
@@ -22,6 +24,14 @@ const routes: Routes = [
       {
         path: AuthRoutes.SIGNUP,
         component: SignupComponent
+      },
+      {
+        path: AuthRoutes.FORGOT_PASSWORD,
+        component: ForgotPasswordComponent
+      },
+      {
+        path: AuthRoutes.VERIFY_EMAIL,
+        component: VerifyEmailComponent
       }
     ]
   },
