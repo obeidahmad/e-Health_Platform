@@ -9,11 +9,11 @@ users = [
         }
     },
     {
-        "id": "FakeDrSSOsQS0FcQ7jIYbEgZfBp2",
+        "id": "dIZ5aWwtShRmAB5ach9yB7XMYmL2",
         "role": {
             "id": "7b3fe957-f026-4a10-b302-dc9041393dc4"
         },
-        "timeSlot": "00:10:00"
+        "timeSlot": "00:15:00"
     }
 ]
 for user in users:
