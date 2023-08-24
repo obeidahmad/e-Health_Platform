@@ -25,6 +25,7 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzMessageModule} from "ng-zorro-antd/message";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import { DrDashboardComponent } from '../../features/appointments/pages/dr-dashboard/dr-dashboard.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
     PatientViewComponent,
     SetAvailabilityComponent,
     ApptCardComponent,
-    DrViewComponent
+    DrViewComponent,
+    DrDashboardComponent,
   ],
   imports: [
     CommonModule,
