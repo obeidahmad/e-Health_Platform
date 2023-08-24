@@ -130,7 +130,7 @@ class JWTBearerService(HTTPBearer):
             except UserNotFoundError:
                 raise HTTPException(status_code=404, detail="This user does not exist")
             except InvalidIdTokenError as e:
-                raise HTTPException(status_code=403, detail=e)
+                raise HTTPException(status_code=403, detail=str(e))
             if (self.role == "employee" and user["role"] not in ["nurse", "doctor", "admin"]) or (
                     self.role == "patient" and user["role"] != "patient") or (
                     self.role == "doctor" and user["role"] != "doctor") or (
