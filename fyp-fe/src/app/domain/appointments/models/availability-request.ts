@@ -6,7 +6,7 @@ export interface DayRequest {
 
 export interface AvailabilityRequest {
   doctorId: string;
-  days: DayRequest;
+  days: DayRequest[];
   startDate: string;
   endDate: string;
 }

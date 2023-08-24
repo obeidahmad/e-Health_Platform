@@ -111,11 +111,11 @@ export class AuthService {
     return (user)? JSON.parse(user) : undefined;
   }
 
-  public getCurrentUserId(): string | undefined {
-    // @ts-ignore
-    if (this.getCurrentUser() == '') return '';
+  public getCurrentUserId(): string {
+    const user = this.getCurrentUser();
+    if (!user) return '';
     else {
-      return  this.getCurrentUser()?.user_id;
+      return  user.user_id;
     }
   }
 
