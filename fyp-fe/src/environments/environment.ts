@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   meds: 'http://localhost:8080/med',
-  appt: 'http://localhost:8080/appt',
+  appt: 'http://localhost:8081/appt',
   auth: 'http://localhost:8082',
   firebase: {
     apiKey: "AIzaSyBWK9Lxj2AGzTi-pDXgToHMTIH-c4IDG9k",

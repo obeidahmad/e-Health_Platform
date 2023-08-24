@@ -26,6 +26,7 @@
     "@fullcalendar/list": "^6.1.8",
     "@fullcalendar/timegrid": "^6.1.8",
     "@ngrx/store": "^1.0.0",
+    "date-fns": "^2.30.0",
     "firebase": "^9.17.1",
     "ng-zorro-antd": "^14.0.0",
     "rxjs": "~7.5.0",
