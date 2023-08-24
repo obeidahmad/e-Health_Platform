@@ -61,7 +61,6 @@ public class MedicineController {
 		return bookmarkService.getUserBookmarkedMedicines(userId);
 	}
 
-//	TODO: check this it is not bookmarking
 	@PostMapping("user/bookmark/{userId}")
 	public ResponseEntity<UserDTO> addBookmarks(@PathVariable String userId, @RequestBody List<UUID> medIds) {
 		bookmarkService.addBookmarks(userId, medIds);

@@ -21,11 +21,10 @@ public class Bookmark {
 	private UUID id;
 //	@ManyToOne
 //	@MapsId("userId")
-	@Column(name = "user_id")
+	@Column(name = "user_id", nullable = false)
 	private String userId;
 	@ManyToOne
-	@MapsId("medId")
-	@JoinColumn(name = "med_id")
+	@JoinColumn(name = "med_id", nullable = false)
 	private Medicine medicine;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)

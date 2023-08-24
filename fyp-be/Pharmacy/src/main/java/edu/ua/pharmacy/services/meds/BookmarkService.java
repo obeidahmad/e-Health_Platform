@@ -1,7 +1,9 @@
 package edu.ua.pharmacy.services.meds;
 
+import edu.ua.pharmacy.exceptions.ResourceNotFoundException;
 import edu.ua.pharmacy.models.DTOs.meds.Medicine.MedicineDTO;
 import edu.ua.sqldatabasepersistence.models.sql_models.meds.Bookmark;
+import edu.ua.sqldatabasepersistence.models.sql_models.meds.Medicine;
 import edu.ua.sqldatabasepersistence.models.sql_models.meds.composite_keys.BookmarkKey;
 import edu.ua.sqldatabasepersistence.repositories.meds.BookmarkRepository;
 import edu.ua.sqldatabasepersistence.repositories.meds.MedicineRepository;
@@ -16,7 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BookmarkService {
     private final BookmarkRepository bookmarkRepo;
-    private final MedicineRepository medicineRepository;
+    private final MedicineRepository medicineRepo;
 
     public List<Bookmark> addBookmarks(String userId, List<UUID> medIds) {
         return medIds.stream().map(medId -> addBookmark(userId, medId)).toList();
@@ -25,12 +27,10 @@ public class BookmarkService {
     public Bookmark addBookmark(String userId, UUID medId) {
         Bookmark bookmark = new Bookmark();
         bookmark.setUserId(userId);
-
-        return medicineRepository.findById(medId).map(medicine -> {
-            bookmark.setMedicine(medicine);
-            return bookmarkRepo.save(bookmark);
-        }).orElseThrow();
-
+        Medicine medicine = medicineRepo.findById(medId)
+                .orElseThrow(() -> new ResourceNotFoundException("medicine", "id", medId));
+        bookmark.setMedicine(medicine);
+        return bookmarkRepo.save(bookmark);
     }
 
     public void removeBookmarks(String userId, List<UUID> medIds) {
