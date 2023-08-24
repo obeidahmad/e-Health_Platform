@@ -119,6 +119,14 @@ export class AuthService {
     }
   }
 
+  public getCurrentUserRole(): string {
+    const user = this.getCurrentUser();
+    if (!user) return '';
+    else {
+      return  user.role || '';
+    }
+  }
+
   private getUserUrl = (token: string) => `${this.authBackendUrl}/validate_token?token=${token}`
 
   private authWithExternalProvider(provider: any) {
