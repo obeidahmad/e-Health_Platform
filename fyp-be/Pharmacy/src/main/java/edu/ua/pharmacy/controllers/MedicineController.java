@@ -78,7 +78,6 @@ public class MedicineController {
 		return purchaseService.getUserPurchases(userId);
 	}
 
-//	TODO: IT IS RETURNING 400 EVEN THO IT SEEMS SMOOTH AS BUTTER
 	@PostMapping("user/purchase/{userId}/{medId}")
 	public UserDTO reserveMedicine(@PathVariable String userId, @PathVariable UUID medId) {
 		purchaseService.reserveMedicine(userService.getUserById(userId), medService.getMedicineById(medId));
