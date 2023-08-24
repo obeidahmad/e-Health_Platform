@@ -3,10 +3,7 @@ package edu.ua.pharmacy.controllers;
 import edu.ua.pharmacy.exceptions.DatabaseUniqueConstraintException;
 import edu.ua.pharmacy.exceptions.ResourceNotFoundException;
 import edu.ua.pharmacy.models.DTOs.general.UserDTO;
-import edu.ua.pharmacy.models.DTOs.meds.Medicine.CreateMedicineDTO;
-import edu.ua.pharmacy.models.DTOs.meds.Medicine.MedicineBookmarkDTO;
-import edu.ua.pharmacy.models.DTOs.meds.Medicine.MedicineDTO;
-import edu.ua.pharmacy.models.DTOs.meds.Medicine.UpdateMedicineDTO;
+import edu.ua.pharmacy.models.DTOs.meds.Medicine.*;
 import edu.ua.pharmacy.models.DTOs.meds.PurchaseDTO;
 import edu.ua.pharmacy.services.general.UserService;
 import edu.ua.pharmacy.services.meds.BookmarkService;
@@ -44,14 +41,13 @@ public class MedicineController {
 		return new ResponseEntity<>(runtimeException.getMessage(), HttpStatus.CONFLICT);
 	}
 
-	//	TODO: RETURN FACETS OF NUMBER OF PAGES
 	@PostMapping("all")
-	public List<MedicineDTO> getAllMedicines(@RequestBody MedicineQuerySettings medicineQuerySettings) {
+	public QueryMedicineDTO getAllMedicines(@RequestBody MedicineQuerySettings medicineQuerySettings) {
 		return medService.getAllQueriedMedicines(medicineQuerySettings);
 	}
 
 	@PostMapping("all/{userId}")
-	public List<MedicineBookmarkDTO> getAllMedicines(@RequestBody MedicineQuerySettings medicineQuerySettings, @PathVariable String userId) {
+	public QueryMedicineDTO getAllMedicines(@RequestBody MedicineQuerySettings medicineQuerySettings, @PathVariable String userId) {
 		return medService.getAllQueriedMedicines(medicineQuerySettings, userId);
 	}
 

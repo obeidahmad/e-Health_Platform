@@ -2,10 +2,7 @@ package edu.ua.pharmacy.services.meds;
 
 import edu.ua.pharmacy.exceptions.DatabaseUniqueConstraintException;
 import edu.ua.pharmacy.exceptions.ResourceNotFoundException;
-import edu.ua.pharmacy.models.DTOs.meds.Medicine.CreateMedicineDTO;
-import edu.ua.pharmacy.models.DTOs.meds.Medicine.MedicineBookmarkDTO;
-import edu.ua.pharmacy.models.DTOs.meds.Medicine.MedicineDTO;
-import edu.ua.pharmacy.models.DTOs.meds.Medicine.UpdateMedicineDTO;
+import edu.ua.pharmacy.models.DTOs.meds.Medicine.*;
 import edu.ua.sqldatabasepersistence.models.query_settings.MedicineQuerySettings;
 import edu.ua.sqldatabasepersistence.models.sql_models.meds.MedClass;
 import edu.ua.sqldatabasepersistence.models.sql_models.meds.MedForm;
@@ -15,6 +12,7 @@ import edu.ua.sqldatabasepersistence.repositories.meds.MedicineFormRepository;
 import edu.ua.sqldatabasepersistence.repositories.meds.MedicineRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +26,12 @@ public class MedicineService {
     private final MedicineClassRepository medicineClassRepo;
     private final MedicineFormRepository medicineFormRepo;
 
-    public List<MedicineDTO> getAllQueriedMedicines(MedicineQuerySettings medicineQuerySettings) {
-        return medicineRepo.queryMedicines(medicineQuerySettings).stream().map(MedicineDTO::new).collect(Collectors.toList());
+    public QueryMedicineDTO getAllQueriedMedicines(MedicineQuerySettings medicineQuerySettings) {
+        Page<Medicine> result = medicineRepo.queryMedicines(medicineQuerySettings);
+        List<MedicineDTO> medicineList = result.stream().map(MedicineDTO::new).toList();
+        long totalRecords = result.getTotalElements();
+        int maxPages = (int) Math.ceil((double) totalRecords / medicineQuerySettings.getPage().getPageSize());
+        return new QueryMedicineDTO(medicineList, maxPages);
     }
 
     public MedClass addMedClass(String classValue) {
@@ -54,13 +56,17 @@ public class MedicineService {
         }
     }
 
-    public List<MedicineBookmarkDTO> getAllQueriedMedicines(MedicineQuerySettings medicineQuerySettings, String userId) {
-        return medicineRepo.queryMedicines(medicineQuerySettings).stream().map(medicine -> {
+    public QueryMedicineDTO getAllQueriedMedicines(MedicineQuerySettings medicineQuerySettings, String userId) {
+        Page<Medicine> result = medicineRepo.queryMedicines(medicineQuerySettings);
+        List<MedicineDTO> medicineList = result.stream().map(medicine -> {
             if (medicine.getBookmarks().stream().anyMatch(bookmark -> bookmark.getUserId().toString().equals(userId))) {
                 return new MedicineBookmarkDTO(medicine, true);
             }
             return new MedicineBookmarkDTO(medicine, false);
         }).collect(Collectors.toList());
+        long totalRecords = result.getTotalElements();
+        int maxPages = (int) Math.ceil((double) totalRecords / medicineQuerySettings.getPage().getPageSize());
+        return new QueryMedicineDTO(medicineList, maxPages);
     }
 
     public Medicine getMedicineById(UUID medId) {

@@ -8,7 +8,7 @@ COPY _MavenPOMs/pharmacy-pom.xml ./pom.xml
 
 RUN mvn clean install -DskipTests
 
-FROM amazoncorretto:17
+FROM amazoncorretto:17.0.8
 COPY --from=builder "/app/Pharmacy/target/Pharmacy-0.0.1-SNAPSHOT.jar" app.jar
 
 ENTRYPOINT ["java", "-jar", "/app.jar"]
