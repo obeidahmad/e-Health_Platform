@@ -13,7 +13,7 @@ users = [
         "role": {
             "id": "7b3fe957-f026-4a10-b302-dc9041393dc4"
         },
-        "timeSlot": "00:15:00"
+        "timeSlot": "15"
     }
 ]
 for user in users:
