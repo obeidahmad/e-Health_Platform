@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,7 +35,6 @@ public class AppointmentService {
 //		Check Doctor and User exist
 		User doctor = userRepo.findById(createAppointment.doctorId()).orElseThrow(() -> new ResourceNotFoundException("user(doctor)", "id",
 				createAppointment.doctorId()));
-		System.out.println("Meeddoh3");
 		User user = userRepo.findById(createAppointment.userId()).orElseThrow(() -> new ResourceNotFoundException("user", "id",
 				createAppointment.userId()));
 
@@ -82,8 +82,13 @@ public class AppointmentService {
 	public List<AppointmentDTO> getAppointmentsByUserId(TimeFrame timeFrame, Date startDate, String userId) {
 		List<Appointment> appointments;
 		switch (timeFrame) {
-			case MONTH ->
-					appointments = appointmentRepo.findAllByMonthAndByUserId(new Timestamp(startDate.getTime()), userId);
+			case MONTH -> {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(startDate);
+				int month = calendar.get(Calendar.MONTH) + 1;
+				int year = calendar.get(Calendar.YEAR);
+				appointments = appointmentRepo.findAllByMonthAndByUserId(month, year, userId);
+			}
 			case WEEK -> {
 				Timestamp endDate = new Timestamp(Date.valueOf(startDate.toLocalDate().plusDays(7)).getTime());
 				appointments = appointmentRepo.findAllByDateBetweenAndUserId(new Timestamp(startDate.getTime()), endDate, userId);
@@ -97,8 +102,13 @@ public class AppointmentService {
 	public List<AppointmentDTO> getAppointmentsByDoctorId(TimeFrame timeFrame, Date startDate, String doctorId) {
 		List<Appointment> appointments;
 		switch (timeFrame) {
-			case MONTH ->
-					appointments = appointmentRepo.findAllByMonthAndByDoctorId(new Timestamp(startDate.getTime()), doctorId);
+			case MONTH -> {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(startDate);
+				int month = calendar.get(Calendar.MONTH) + 1;
+				int year = calendar.get(Calendar.YEAR);
+				appointments = appointmentRepo.findAllByMonthAndByDoctorId(month, year, doctorId);
+			}
 			case WEEK -> {
 				Timestamp endDate = new Timestamp(Date.valueOf(startDate.toLocalDate().plusDays(7)).getTime());
 				appointments = appointmentRepo.findAllByDateBetweenAndDoctorId(new Timestamp(startDate.getTime()), endDate, doctorId);
