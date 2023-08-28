@@ -11,6 +11,17 @@ services:
     ports:
       - "8082:8082"
 
+  user-fyp:
+    container_name: user-fyp
+    image: user-fyp:latest
+    build:
+      context: fyp-be
+      dockerfile: ./user.dockerfile
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres-fyp
+
   pharmacy-fyp:
     container_name: pharmacy-fyp
     image: pharmacy-fyp:latest
