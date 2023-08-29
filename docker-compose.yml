@@ -2,6 +2,15 @@ version: '3.9'
 
 
 services:
+  module-controller-fyp:
+    container_name: module-controller-fyp
+    image: module-controller-fyp:latest
+    build:
+      context: fyp-be/ModuleController
+      dockerfile: ./Dockerfile
+    ports:
+      - "8084:8084"
+
   auth-fyp:
     container_name: auth-fyp
     image: auth-fyp:latest
@@ -63,17 +72,6 @@ services:
       dockerfile: ./notif-scheduler.dockerfile
     depends_on:
       - postgres-fyp
-
-  minio:
-    image: minio/minio:RELEASE.2022-10-08T20-11-00Z.fips
-    container_name: minio
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    environment:
-      MINIO_ROOT_USER: miniouser
-      MINIO_ROOT_PASSWORD: miniopass
-    command: server --console-address ":9001" /data
 
   nginx:
     container_name: nginx-fyp
