@@ -22,6 +22,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/appt")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class AppointmentController {
 	private final AppointmentService appointmentService;
 	private final AvailabilityService availabilityService;
