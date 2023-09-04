@@ -1,13 +1,9 @@
-package edu.ua.pharmacy.services.general;
+package edu.ua.appointment.services;
 
-import edu.ua.pharmacy.exceptions.NotAuthorizedException;
-import edu.ua.pharmacy.exceptions.ResourceNotFoundException;
-import edu.ua.pharmacy.models.DTOs.general.UserDTO;
-import edu.ua.sqldatabasepersistence.models.sql_models.general.User;
-import edu.ua.sqldatabasepersistence.repositories.general.UserRepository;
+import edu.ua.appointment.exceptions.NotAuthorizedException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +12,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class UserService {
-	private final UserRepository userRepo;
-
-	public User getUserById(String id) {
-		return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("user", "id", id));
-	}
-
-	public UserDTO getUserDTOById(String id) {
-		return new UserDTO(getUserById(id));
-	}
-
 	public void verifyUserAuthorization(String jwtToken, String userId) {
 		String withoutSignature = jwtToken.substring(0, jwtToken.lastIndexOf('.') + 1);
 		try {

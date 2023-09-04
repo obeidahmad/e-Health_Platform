@@ -79,6 +79,11 @@ public class AppointmentService {
 		appointmentRepo.deleteById(appointmentId);
 	}
 
+	public Appointment getAppointmentByID(UUID appointmentId) {
+		return appointmentRepo.findById(appointmentId).orElseThrow(() ->
+				new ResourceNotFoundException("appointment", "id", appointmentId));
+	}
+
 	public List<AppointmentDTO> getAppointmentsByUserId(TimeFrame timeFrame, Date startDate, String userId) {
 		List<Appointment> appointments;
 		switch (timeFrame) {
