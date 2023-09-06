@@ -1,9 +1,10 @@
-import docker
+from docker import DockerClient
+from docker.errors import NotFound
 from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
-client = docker.from_env()
+client = DockerClient(base_url="unix:///var/run/docker.sock")
 
 container_mapping = {
     "pharmacy": "pharmacy-fyp",
@@ -12,12 +13,20 @@ container_mapping = {
 
 
 def start_container(container_name):
-    container = client.containers.get(container_name)
-    if container.status == "exited":
-        container.start()
-        return f"Container {container_name} started."
-    else:
-        return f"Container {container_name} is already running."
+    try:
+        container = client.containers.get(container_name)
+        if container.status == "exited":
+            container.start()
+            return f"Container {container_name} started."
+        else:
+            return f"Container {container_name} is already running."
+    except NotFound:
+        container = client.containers.run(
+            container_name + "latest",
+            detach=True,
+            name=container_name,
+            networks=["fyp-network"],  # Attach to the custom network created in step 1
+        )
 
 
 def stop_container(container_name):
