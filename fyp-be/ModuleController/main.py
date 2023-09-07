@@ -38,6 +38,11 @@ def stop_container(container_name):
         return f"Container {container_name} is already stopped."
 
 
+def container_status(container_name):
+    container = client.containers.get(container_name)
+    return container.status
+
+
 @app.get("/module/start/{container}")
 def start_endpoint(container: str):
     container_name = container_mapping.get(container)
@@ -52,3 +57,12 @@ def stop_endpoint(container: str):
     if container_name:
         return stop_container(container_name)
     raise HTTPException(status_code=404, detail=f"Container {container} not found.")
+
+
+@app.get('/module/status/{container}')
+def status_endpoint(container: str):
+    container_name = container_mapping.get(container)
+    if container_name:
+        return container_status(container_name)
+    raise HTTPException(status_code=404, detail=f"Container {container} not found.")
+
