@@ -1,14 +1,24 @@
 from docker import DockerClient
 from docker.errors import NotFound
 from fastapi import FastAPI, HTTPException
+from starlette.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 client = DockerClient(base_url="unix:///var/run/docker.sock")
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 container_mapping = {
     "pharmacy": "pharmacy-fyp",
-    "appointment": "appointment-fyp"
+    "appointment": "appointment-fyp",
+    "auth": "auth-fyp",
+#     "users": "user-fyp",
+#     "notification": "notification-scheduler-fyp"
 }
 
 
@@ -66,3 +76,8 @@ def status_endpoint(container: str):
         return container_status(container_name)
     raise HTTPException(status_code=404, detail=f"Container {container} not found.")
 
+@app.get('/module/status')
+def status_endpoint():
+    return [
+        {"name": name,"status":  container_status(container)} for name, container in container_mapping.items()
+    ]

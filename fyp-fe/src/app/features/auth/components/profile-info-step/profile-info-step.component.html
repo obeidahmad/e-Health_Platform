@@ -1,0 +1,70 @@
+<form (ngSubmit)="isValid()" [formGroup]="form" class="login-form" nz-form>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input a date">
+      <nz-date-picker formControlName="date_of_birth" nzPlaceHolder="Your date of birth"
+                      style="width: 100%"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input an place of birth">
+      <nz-input-group nzPrefixIcon="home">
+        <input formControlName="place_of_birth" nz-input placeholder="Your place of birth" type="text"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please select your gender!">
+      <nz-input-group nzPrefixIcon="user">
+        <nz-select
+          formControlName="gender"
+          id="gender"
+          nzPlaceHolder="Select your gender">
+          <nz-option nzLabel="Male" nzValue="Male"></nz-option>
+          <nz-option nzLabel="Female" nzValue="Female"></nz-option>
+          <nz-option nzLabel="Other" nzValue="Other"></nz-option>
+        </nz-select>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please select your civil status!">
+      <nz-input-group nzPrefixIcon="user">
+        <nz-select
+          formControlName="civil_status"
+          nzPlaceHolder="Select your civil status">
+          <nz-option nzLabel="Single" nzValue="Single"></nz-option>
+          <nz-option nzLabel="Married" nzValue="Married"></nz-option>
+          <nz-option nzLabel="Widowed" nzValue="Widowed"></nz-option>
+          <nz-option nzLabel="Divorced" nzValue="Divorced"></nz-option>
+          <nz-option nzLabel="Prefer not to say" nzValue="Divorced"></nz-option>
+        </nz-select>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item style="width: 100%">
+    <nz-form-control nzErrorTip="Please input your phone number!"
+                     style="width: 100%">
+      <nz-input-group nzPrefixIcon="phone">
+        <input formControlName="phone_number" nz-input placeholder="Your phone number" type="text"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please select your nationality!">
+      <nz-input-group nzPrefixIcon="flag">
+        <nz-select
+          formControlName="nationality"
+          nzPlaceHolder="Select your nationality">
+          <nz-option nzLabel="Lebanese" nzValue="Lebanese"></nz-option>
+          <nz-option nzLabel="Syrian" nzValue="Syrian"></nz-option>
+          <nz-option nzLabel="Palestinian" nzValue="Palestinian"></nz-option>
+          <nz-option nzLabel="Other" nzValue="Other"></nz-option>
+        </nz-select>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

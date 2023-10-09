@@ -23,6 +23,7 @@ export class AppointmentService {
 
   public getAllDoctorAppointments(apptRequest: UserAvailabilityRequest) {
     const url: string = `${this.url}/doctor/${apptRequest.timeframe}/${apptRequest.date}/${apptRequest.id}`;
+    console.log(url)
     return this._http.get<AppointmentDto[]>(url)
   }
 

@@ -4,9 +4,9 @@
     <h1 nz-col>{{medItem.brandName}}</h1>
     <app-tag [content]="getAvailability()" [type]="(medItem.quantity ==0)?'error':'primary' " nz-col></app-tag>
     <app-tag *ngIf="medItem.requiresPrescription" content="Prescription needed" nz-col type="info"></app-tag>
-    <div nz-col nzFlex="auto">
-      <span class="bookmark" nz-icon (click)="toggleBookmark()" [nzTheme]="getBookmarked()" nzType="book"></span>
-    </div>
+    <!--    <div *ngIf="role=='patient'" nz-col nzFlex="auto">-->
+    <!--      <span (click)="toggleBookmark()" [nzTheme]="getBookmarked()" class="bookmark" nz-icon nzType="book"></span>-->
+    <!--    </div>-->
   </div>
 
   <div [nzGutter]="16" nz-row>
@@ -41,10 +41,34 @@
     </div>
   </div>
 
-  <div *ngIf="purchaseStatus == 'new'">
-    <button nz-button nzSize="large" nzType="primary" (click)="reserveMed()">Reserve this medicine</button>
+  <div *ngIf="purchaseStatus == 'new' && role == 'patient'">
+    <button (click)="reserveMed()" nz-button nzSize="large" nzType="primary">Reserve this medicine</button>
   </div>
-  <div *ngIf="purchaseStatus != 'new'">
-    <button nz-button nzSize="large" nzType="primary" (click)="unReserveMed()">Remove reservation</button>
-  </div>
+  <section *ngIf="role == 'nurse'">
+
+<!--    <button (click)="addPurchase()" nz-button nzSize="large" style="margin: 1rem 0">Add Purchase</button>-->
+
+    <ul [nzDataSource]="medHistory" nz-list nzBordered nzSize="large">
+      <nz-list-header>Medicin History</nz-list-header>
+      <li *ngFor="let item of medHistory" nz-list-item nzNoFlex>
+        <ul *ngIf="item.status =='reserved'" nz-list-item-actions>
+          <nz-list-item-action>
+            <a (click)="markPurchased(item)">Mark as bought</a>
+          </nz-list-item-action>
+        </ul>
+        {{ item.createdAt | date }} <br>
+        <nz-tag>{{item.status | titlecase}}</nz-tag>
+
+      </li>
+    </ul>
+    <nz-button-group nzSize="large" style="margin-top: 2rem">
+      <button (click)="delete()" nz-button nzDanger>
+        Delete
+      </button>
+      <button (click)="edit()" nz-button [nzType]="'default'">
+        Edit
+      </button>
+    </nz-button-group>
+  </section>
 </section>
+

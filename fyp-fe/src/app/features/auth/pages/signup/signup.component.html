@@ -1,1 +1,41 @@
-<p>signup works!</p>
+<h1>Welcome to SMC Dispensary</h1>
+<h3>Start your signup process</h3>
+
+
+<nz-steps [nzCurrent]="currentStep">
+  <nz-step nzDescription="About you" nzTitle="Basic Info"></nz-step>
+  <nz-step nzDescription="Your details" nzTitle="Profile"></nz-step>
+</nz-steps>
+
+
+<div class="steps-content">
+  <div [hidden]="currentStep !==0">
+    <app-basic-info-step></app-basic-info-step>
+  </div>
+  <div [hidden]="currentStep!==1">
+    <app-profile-info-step></app-profile-info-step>
+  </div>
+</div>
+
+
+<div class="steps-action">
+
+  <button (click)="next()" *ngIf="currentStep < 1" nz-button nzType="primary">
+    <span>Next</span>
+  </button>
+  <button (click)="done()" *ngIf="currentStep === 1" nz-button nzType="primary">
+    <span>Done</span>
+  </button>
+  <button (click)="pre()" *ngIf="currentStep > 0" nz-button nzType="default">
+    <span>Previous</span>
+  </button>
+</div>
+
+<nz-divider></nz-divider>
+
+<aside>
+  <nz-divider  nzPlain  nzText="New to our platform?"></nz-divider>
+  <div class="signup">
+    <a (click)="redirectToSignIn()">Signup <span nz-icon nzType="arrow-right" nzTheme="outline"></span></a>
+  </div>
+</aside>

@@ -26,6 +26,14 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzMessageModule} from "ng-zorro-antd/message";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import { DrDashboardComponent } from '../../features/appointments/pages/dr-dashboard/dr-dashboard.component';
+import { PatientAppointmentsCalendarComponent } from '../../features/appointments/components/patient-appointments-calendar/patient-appointments-calendar.component';
+import {NzCollapseModule} from "ng-zorro-antd/collapse";
+import {NzDescriptionsModule} from "ng-zorro-antd/descriptions";
+import {NzEmptyModule} from "ng-zorro-antd/empty";
+import {NzTagModule} from "ng-zorro-antd/tag";
+import {NzDrawerModule} from "ng-zorro-antd/drawer";
+import {NzCalendarModule} from "ng-zorro-antd/calendar";
+import {NzListModule} from "ng-zorro-antd/list";
 
 
 @NgModule({
@@ -37,6 +45,7 @@ import { DrDashboardComponent } from '../../features/appointments/pages/dr-dashb
     ApptCardComponent,
     DrViewComponent,
     DrDashboardComponent,
+    PatientAppointmentsCalendarComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +66,14 @@ import { DrDashboardComponent } from '../../features/appointments/pages/dr-dashb
     NzDividerModule,
     NzModalModule,
     NzMessageModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzCollapseModule,
+    NzDescriptionsModule,
+    NzEmptyModule,
+    NzTagModule,
+    NzDrawerModule,
+    NzCalendarModule,
+    NzListModule
   ]
 })
 export class AppointmentsModule {

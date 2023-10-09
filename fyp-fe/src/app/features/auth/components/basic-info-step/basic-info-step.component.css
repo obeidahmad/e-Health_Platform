@@ -1,0 +1,19 @@
+form{
+  margin-top: 2rem;
+}
+
+.login-form-button {
+  float: right;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+
+
+
+.socials{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}

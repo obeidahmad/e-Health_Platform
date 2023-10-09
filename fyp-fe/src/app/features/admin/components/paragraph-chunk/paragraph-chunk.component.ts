@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {EventStructure} from "../../../../domain/admin/models/events";
 
 @Component({
   selector: 'app-paragraph-chunk',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./paragraph-chunk.component.css']
 })
 export class ParagraphChunkComponent implements OnInit {
+  @Input() eventStructure!: EventStructure;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

@@ -1,0 +1,40 @@
+<main>
+  <nz-radio-group (ngModelChange)="loadEvent()" [(ngModel)]="radioValue" nzButtonStyle="solid">
+    <label nz-radio-button nzValue="new">New!</label>
+    <label nz-radio-button nzValue="old">Archived</label>
+  </nz-radio-group>
+
+  <button [routerLink]="['events-new']" nz-button nzType="primary" style="float: right">Publish New Event</button>
+
+  <nz-skeleton *ngIf="loading" [nzAvatar]="false" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+  <section *ngIf="!loading && events.length">
+    <nz-collapse>
+      <nz-collapse-panel
+        *ngFor="let panel of events"
+        [nzExtra]="extraTpl"
+        [nzHeader]="panel.title">
+
+        <div *ngFor="let item of panel.structure">
+          <div [ngSwitch]="item.type">
+            <app-image-chunk *ngSwitchCase="'image'" [eventStructure]="item"></app-image-chunk>
+            <app-title-chunk *ngSwitchCase="'title'" [eventStructure]="item"></app-title-chunk>
+            <app-image-with-caption-chunk *ngSwitchCase="'image-with-caption'"
+                                          [eventStructure]="item"></app-image-with-caption-chunk>
+            <app-paragraph-chunk *ngSwitchCase="'paragraph'" [eventStructure]="item"></app-paragraph-chunk>
+          </div>
+        </div>
+        <nz-divider></nz-divider>
+
+        <div style="float: right">
+          <button (click)="deleteEvent(panel)" [nzType]="'dashed'" nz-button
+                  nzDanger>Delete event
+          </button>
+        </div>
+        <ng-template #extraTpl>
+          <span (click)="$event.stopPropagation()">{{panel.date | date}}</span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </section>
+  <nz-empty *ngIf="!loading && events.length < 1 "></nz-empty>
+</main>

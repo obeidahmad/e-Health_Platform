@@ -1,41 +1,54 @@
 <div class="title">
-  <input nz-input placeholder="Event title..." [(ngModel)]="event.title" />
-  <nz-date-picker [(ngModel)]="event.date"></nz-date-picker>
+  <input [(ngModel)]="event.title" nz-input placeholder="Event title..."/>
+  <nz-date-picker [nzShowTime]="true"
+                  [(ngModel)]="event.date"></nz-date-picker>
 </div>
 
-<div class="editor">
-  <div *ngFor="let item of event.structure">
-    <ng-template [ngSwitch]="item.type">
-      <app-image-chunk *ngSwitchCase="'image'"></app-image-chunk>
-      <app-title-chunk *ngSwitchCase="'title'"></app-title-chunk>
-      <app-image-with-caption-chunk *ngSwitchCase="'image-with-caption'"></app-image-with-caption-chunk>
-      <app-paragraph-chunk *ngSwitchCase="'paragraph'"></app-paragraph-chunk>
-    </ng-template>
+<div class="editor" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="structure" *ngFor="let item of event.structure" >
+    <span  class="delete"
+           (click)="removeSection(item)"
+           nz-icon nzType="delete"
+           nzTheme="outline"></span>
+    <div [ngSwitch]="item.type">
+      <div *ngSwitchCase="'image'" class="structure-section">
+        <app-image-chunk
+          [eventStructure]="item"></app-image-chunk>
+      </div>
+      <div *ngSwitchCase="'title'" class="structure-section">
+        <app-title-chunk
+          [eventStructure]="item"></app-title-chunk>
+      </div>
+      <div *ngSwitchCase="'image-with-caption'" class="structure-section">
+        <app-image-with-caption-chunk
+          [eventStructure]="item"></app-image-with-caption-chunk>
+      </div>
+      <div *ngSwitchCase="'paragraph'" class="structure-section">
+        <app-paragraph-chunk
+          [eventStructure]="item"></app-paragraph-chunk>
+      </div>
+    </div>
   </div>
 
-    <nz-card class="the-plus">
-      <span nz-icon nzType="plus" nzTheme="outline"></span>
-    </nz-card>
+  <nz-card (click)="openDrawerNew()" class="the-plus">
+    <span nz-icon nzTheme="outline" nzType="plus"></span>
+  </nz-card>
 </div>
 
 
+<button style="float: right"
+        (click)="addNewEvent()"
+        nz-button nzType="primary">Publish New Event</button>
 
 <nz-drawer
   (nzOnClose)="closeNewChunkDrawer()"
   [nzClosable]="false"
-  [nzFooter]="footerTpl"
   [nzVisible]="drawerSettings.visible"
   [nzWidth]="720"
-  nzPlacement="left"
+  nzPlacement="right"
   nzTitle="Add New Section">
-
-
+  <div *nzDrawerContent>
+    <app-new-event-form (extraSection)="addToStructure($event)"></app-new-event-form>
+  </div>
 </nz-drawer>
 
-<ng-template #footerTpl>
-
-  <div style="float: right">
-    <button (click)="closeFilter()" nz-button style="margin-right: 8px;">Cancel</button>
-    <button (click)="closeFilter()" nz-button nzType="primary">Submit</button>
-  </div>
-</ng-template>

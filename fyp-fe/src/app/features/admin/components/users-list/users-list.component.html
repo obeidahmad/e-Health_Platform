@@ -1,0 +1,61 @@
+<main>
+  <nz-radio-group
+    *ngIf="role=='admin'"
+    (ngModelChange)="load()" [(ngModel)]="radioValue" nzButtonStyle="solid">
+    <label nz-radio-button nzValue="patient">Patients</label>
+    <label nz-radio-button nzValue="staff">Staff</label>
+  </nz-radio-group>
+
+  <button [routerLink]="['users-new']"
+          *ngIf="radioValue == 'staff'"
+          nz-button nzType="primary" style="float: right">Add new staff member</button>
+
+  <nz-skeleton *ngIf="loading" [nzAvatar]="false" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+  <section *ngIf="!loading && patients.length &&radioValue=='patient'">
+
+
+    <nz-collapse>
+      <nz-collapse-panel
+        *ngFor="let panel of patients"
+        [nzHeader]="panel.first_name + ' ' + panel.last_name">
+
+        <nz-descriptions nzBordered>
+          <nz-descriptions-item nzTitle="First Name">{{panel.first_name}}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Last Name">{{panel.last_name}}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Phone Number">{{panel.phone_number}}</nz-descriptions-item>
+          <nz-descriptions-item [nzSpan]="2" nzTitle="Place of Birth">{{panel.place_of_birth}}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Gender">{{panel.gender}}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Nationality">{{panel.nationality}}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Civil Status">{{panel.civil_status}}</nz-descriptions-item>
+        </nz-descriptions>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+
+    <nz-empty *ngIf="!loading && patients.length < 1 "></nz-empty>
+  </section>
+
+
+  <section *ngIf="!loading && staff.length && radioValue == 'staff'">
+
+    <nz-collapse>
+      <nz-collapse-panel
+        *ngFor="let panel of staff"
+        [nzHeader]="panel.first_name + ' ' + panel.last_name">
+
+        <nz-descriptions nzBordered>
+          <nz-descriptions-item nzTitle="First Name">{{panel.first_name}}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Last Name">{{panel.last_name}}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Role">    <nz-tag>{{panel.role}}</nz-tag>
+          </nz-descriptions-item>
+          <nz-descriptions-item
+            *ngIf="panel.time_slot"
+            nzTitle="Time Slot">{{panel.time_slot}}</nz-descriptions-item>
+        </nz-descriptions>
+      </nz-collapse-panel>
+    </nz-collapse>
+    <nz-empty *ngIf="!loading && staff.length < 1 "></nz-empty>
+  </section>
+
+
+</main>

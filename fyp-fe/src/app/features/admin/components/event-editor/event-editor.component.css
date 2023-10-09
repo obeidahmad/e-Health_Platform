@@ -26,6 +26,7 @@
   opacity: 0.7;
   cursor: pointer;
   transition: all 0.2s ease-in;
+  margin-top: 1rem;
 }
 
 .the-plus:hover{
@@ -37,4 +38,23 @@
   font-size: 2rem;
   color: var(--secondary-color);
   opacity: 0.8;
+}
+
+
+button {
+  margin-top: 1rem;
+}
+
+.structure {
+  position: relative;
+}
+
+
+.delete {
+  color: #BA1A1A;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 12px;
+  cursor: pointer;
 }

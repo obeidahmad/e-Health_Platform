@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {EventStructure} from "../../../../domain/admin/models/events";
 
 @Component({
   selector: 'app-title-chunk',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./title-chunk.component.css']
 })
 export class TitleChunkComponent implements OnInit {
+  @Input() eventStructure!: EventStructure;
 
   constructor() { }
 

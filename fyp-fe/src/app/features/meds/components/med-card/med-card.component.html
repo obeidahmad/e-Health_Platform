@@ -1,8 +1,9 @@
 <nz-card (click)="triggerSelected()" nzHoverable>
-  <div class="header">
-    <span (click)="toggleBookmark()" *ngIf="!minimal" [nzTheme]="getBookmarked()" class="bookmark" nz-icon
+  <div class="header" *ngIf="role == 'patient'">
+    <span (click)="toggleBookmark($event)" *ngIf="!minimal" [nzTheme]="getBookmarked()" class="bookmark" nz-icon
           nzType="book"></span>
     <span *ngIf="minimal" class="bookmark">{{getDate()}}</span>
+    <div *ngIf="minimal" class="bookmark"><nz-tag nzColor="green">{{status}}</nz-tag></div>
     <!--    <span nz-icon nzType="book" [nzTheme]="fill"></span>-->
   </div>
   <div *ngIf="!minimal">

@@ -1,46 +1,23 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventInput} from "@fullcalendar/core";
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CalendarOptions, DateSelectArg, EventApi, EventClickArg} from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-
-let eventGuid = 0;
-const TODAY_STR = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
-
-export const INITIAL_EVENTS: EventInput[] = [
-  {
-    id: createEventId(),
-    title: 'All-day event',
-    start: TODAY_STR
-  },
-  {
-    id: createEventId(),
-    title: 'Timed event',
-    start: TODAY_STR + 'T00:00:00',
-    end: TODAY_STR + 'T03:00:00'
-  },
-  {
-    id: createEventId(),
-    title: 'Timed event',
-    start: TODAY_STR + 'T12:00:00',
-    end: TODAY_STR + 'T15:00:00'
-  }
-];
-
-export function createEventId() {
-  return String(eventGuid++);
-}
+import {AppointmentDto} from "../../../../domain/appointments/models/appointment-dto";
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
+  @Input() takeApptAction: boolean = false;
+  @Output() dateSelected: EventEmitter<DateSelectArg> = new EventEmitter<DateSelectArg>();
+  @Output() dateChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Input() appointments: AppointmentDto[] = [];
 
-
-  calendarVisible = true;
+  currentEvents: EventApi[] = [];
   calendarOptions: CalendarOptions = {
     plugins: [
       interactionPlugin,
@@ -54,7 +31,15 @@ export class CalendarComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    initialEvents: this.appointments.map(appt => {
+      return {
+        id: appt.id,
+        title: "Appointment",
+        start: appt.date,
+        end: this.addMinutes(new Date(appt.date), 15)
+
+      }
+    }), // alternatively, use the `events` setting to fetch from a feed
     weekends: false,
     editable: true,
     selectable: true,
@@ -62,40 +47,45 @@ export class CalendarComponent implements OnInit {
     dayMaxEvents: true,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
+    eventsSet: this.handleEvents.bind(this),
+    datesSet: this.handleDateChanged.bind(this)
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
     eventRemove:
     */
   };
-  currentEvents: EventApi[] = [];
 
   constructor(private changeDetector: ChangeDetectorRef) {
   }
 
+  handleDateChanged(changedEvent: any) {
+    const d = new Date(changedEvent.start);
+    d.setMonth(d.getMonth()  )
+    this.dateChanged.emit(d.toISOString().slice(0, 10));
+  }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
+    this.dateSelected.emit(selectInfo);
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
 
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      });
-    }
+    // if (title) {
+    //   calendarApi.addEvent({
+    //     id: createEventId(),
+    //     title,
+    //     start: selectInfo.startStr,
+    //     end: selectInfo.endStr,
+    //     allDay: selectInfo.allDay
+    //   });
+    // }
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    //   clickInfo.event.remove();
+    // }
   }
 
   handleEvents(events: EventApi[]) {
@@ -104,6 +94,29 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
+
+  ngAfterViewInit(): void {
+    this.updateAppt([...this.appointments])
+  }
+
+  updateAppt(appts: AppointmentDto[]) {
+    this.calendarOptions.events = appts.map(appt => {
+      return {
+        id: appt.id,
+        title: "Appointment",
+        start: appt.date,
+        end: this.addMinutes(new Date(appt.date), 15)
+
+      }
+    })
+  }
+
+  private addMinutes(date: Date, minutes: number) {
+    date.setMinutes(date.getMinutes() + minutes);
+    return date;
+  }
+
 
 }

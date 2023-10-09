@@ -1,0 +1,25 @@
+form {
+  margin-top: 2rem;
+}
+
+.login-form-button {
+  float: right;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+
+.steps-action {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 2rem;
+}
+
+.steps-content {
+margin-top: 1rem;
+  margin-left: 12px;
+}
+
+nz-steps {
+  margin-top: 1rem;
+}

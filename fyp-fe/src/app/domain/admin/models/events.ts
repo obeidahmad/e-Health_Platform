@@ -1,7 +1,6 @@
 export type EventStructureType = "image" | "image-with-caption" | "paragraph"  | "title";
 
 export interface EventStructure {
-  order?: number;
   type: EventStructureType;
   src?: string;
   title?: string;
@@ -9,8 +8,9 @@ export interface EventStructure {
 }
 
 export interface DispensaryEvent {
+  uid: string;
   title: string;
   date: string;
-  hour?: string;
   structure: EventStructure[];
 }
+

@@ -1,0 +1,93 @@
+<!--<nz-skeleton *ngIf="loadingAppts" [nzAvatar]="false" [nzParagraph]="{ rows: 4 }"></nz-skeleton>-->
+
+<section >
+  <h1>My Calendar</h1>
+  <app-calendar
+    (dateChanged)="loadAppts($event)"
+    [takeApptAction]="true"></app-calendar>
+
+</section>
+
+<section>
+  <h1>Doctors</h1>
+  <nz-collapse>
+    <nz-collapse-panel
+      [nzExtra]="extraTpl"
+      *ngFor="let panel of drs"
+      [nzHeader]="panel.first_name + ' ' + panel.last_name">
+
+      <nz-descriptions nzBordered>
+        <nz-descriptions-item nzTitle="First Name">{{panel.first_name}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Last Name">{{panel.last_name}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Role">    <nz-tag>{{panel.role}}</nz-tag>
+        </nz-descriptions-item>
+        <nz-descriptions-item
+          nzTitle="Time Slot">{{panel.time_slot}}</nz-descriptions-item>
+      </nz-descriptions>
+      <ng-template #extraTpl>
+        <a (click)="makeAppt($event, panel)">Make Appointment</a>
+      </ng-template>
+    </nz-collapse-panel>
+
+  </nz-collapse>
+
+  <nz-empty *ngIf="drs.length < 1 "></nz-empty>
+</section>
+
+<nz-drawer
+  (nzOnClose)="closeNewChunkDrawer()"
+  [nzClosable]="false"
+  [nzVisible]="drawerSettings.visible"
+  [nzWidth]="720"
+  nzPlacement="right"
+  nzTitle="Make Appointment">
+  <div *nzDrawerContent>
+      <div [ngStyle]="{ width: '400', border: '1px solid #d9d9d9', borderRadius: '4px' }">
+
+        <nz-date-picker
+          (ngModelChange)="onValueChange($event)"
+          [(ngModel)]="date"
+          [nzAllowClear]="false"
+          [nzFormat]="'yyyy-MM-dd HH:mm:ss'"
+          [nzShowTime]="{ nzHideDisabledOptions: true}"
+          [nzSize]="'large'"
+          nzInline
+        ></nz-date-picker>
+<!--        <nz-calendar-->
+<!--          [nzFullscreen]="false"-->
+<!--          [nzMode]="'month'"-->
+<!--          (nzSelectChange)="onValueChange($event)"-->
+<!--          (nzPanelChange)="onPanelChange($event)"-->
+<!--        ></nz-calendar>-->
+      </div>
+
+
+    <ul style="margin-top: 1rem"
+      [nzDataSource]="availability" nz-list nzBordered nzSize="large">
+      <nz-list-header>Doctor's availability in selected month:</nz-list-header>
+      <li *ngFor="let item of availability" nz-list-item nzNoFlex>
+        {{ item.day | date }} <br>
+        From {{item.startHour}} to {{item.endHour}}
+
+      </li>
+    </ul>
+
+    <button style="margin-top: 1rem; display: block"
+      nz-button nzType="primary"
+            (click)="takeTheAppointmenteuh()"
+            nzSize="large">Take appointment on {{date.toLocaleDateString()}} at {{date.toLocaleTimeString()}}</button>
+
+<!--      <nz-date-picker-->
+<!--        (ngModelChange)="onDateChange($event)"-->
+<!--        [(ngModel)]="date"-->
+<!--        [nzAllowClear]="false"-->
+<!--        [nzDisabledDate]="disabledWeekendsAndPrevious"-->
+<!--        [nzDisabledTime]="disabledDateTime"-->
+<!--        [nzFormat]="'yyyy-MM-dd HH:mm:ss'"-->
+<!--        [nzShowTime]="{ nzHideDisabledOptions: true}"-->
+<!--        [nzSize]="'large'"-->
+<!--        nzInline-->
+<!--      ></nz-date-picker>-->
+
+    </div>
+</nz-drawer>

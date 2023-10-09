@@ -1,17 +1,24 @@
 <section>
-  <app-search></app-search>
+  <app-search (query)="updateMeds($event)">
+
+  </app-search>
+  <button nz-button nzType="primary" style="float: right"
+          (click)="addNewForm()"> Add New </button>
 </section>
 
 <main [nzGutter]="46" class="meds-items" nz-row nzJustify="start">
+
   <div *ngFor="let item of meds;"
        [nzLg]="{ span: 8 }"
        [nzMd]="{ span: 24 }"
        [nzSm]="{ span: 24 }"
        [nzXl]="{ span: 6}"
        [nzXs]="{ span: 24 }" class="items" nz-col>
-    <app-med-card [medItem]="item" (selected)="navigateToMed($event)"></app-med-card>
+    <app-med-card
+      (bookmarked)="toggleBookmark($event)"
+      (selected)="navigateToMed($event)" [medItem]="item" [role]="role"></app-med-card>
   </div>
 </main>
-<nz-pagination [nzPageIndex]="searchAndFilterSettings.pageNumber"
-               [nzTotal]="500"
-               (nzPageIndexChange)="changePage($event)"></nz-pagination>
+<nz-pagination (nzPageIndexChange)="changePage($event)"
+               [nzPageIndex]="searchAndFilterSettings.pageNumber"
+               [nzTotal]="numberOfPages * searchAndFilterSettings.pageSize"></nz-pagination>

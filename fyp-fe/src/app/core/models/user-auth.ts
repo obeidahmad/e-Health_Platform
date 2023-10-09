@@ -25,3 +25,16 @@ export interface Firebase {
 export interface Identities {
   email: string[]
 }
+
+
+export interface NonPatientSignup {
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  admin_token: string;
+}
+
+export interface DoctorSignup extends NonPatientSignup{
+  time_slot: number;
+}

@@ -3,7 +3,8 @@
                   [nzSuffix]="inputClearTpl"
                   class="input-search"
                   nz-col>
-    <input [(ngModel)]="searchQuery"
+    <input [ngModel]="searchQuery"
+           (ngModelChange)="updateModel($event)"
            [nzBorderless]="true"
            name="searchQuery"
            nz-input
@@ -53,7 +54,10 @@
             <nz-select
               [(ngModel)]="filterQuery.medClass"
               name="medClass"
-              nzPlaceHolder="eg. Fever reducer"></nz-select>
+              nzPlaceHolder="eg. Fever reducer">
+              <nz-option *ngFor="let form of medClasses"
+                         [nzLabel]="form" [nzValue]="form"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -64,7 +68,10 @@
             <nz-select
               [(ngModel)]="filterQuery.medForm"
               name="medForm"
-              nzPlaceHolder="eg. Tablet"></nz-select>
+              nzPlaceHolder="eg. Tablet">
+              <nz-option *ngFor="let form of medForms"
+                         [nzLabel]="form" [nzValue]="form"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>

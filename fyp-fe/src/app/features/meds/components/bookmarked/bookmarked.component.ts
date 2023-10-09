@@ -17,7 +17,11 @@ export class BookmarkedComponent implements OnInit {
     this._medsService
       .getBookmarked()
       .subscribe({
-        next: (meds) => this.meds = meds
+        next: (meds) => {
+          console.log('bookmarks')
+          console.log(meds)
+          this.meds = meds
+        }
       })
   }
 

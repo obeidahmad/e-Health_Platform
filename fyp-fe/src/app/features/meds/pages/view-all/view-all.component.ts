@@ -4,6 +4,9 @@ import {Router} from "@angular/router";
 import {CoreRoutes} from "../../../../core/core-routes";
 import {MedItem} from "../../../../domain/meds/models/med-item";
 import {MedsQuerySettings} from "../../../../domain/meds/models/meds-query-settings";
+import {AuthService} from "../../../../domain/authentication/services/auth.service";
+import {MedRoutes} from "../../../../domain/med-routes";
+import * as events from "events";
 
 @Component({
   selector: 'app-view-all',
@@ -16,12 +19,17 @@ export class ViewAllComponent implements OnInit {
     pageNumber: 1,
     pageSize: 9
   }
+  public numberOfPages: number = 0;
 
   constructor(private _medsService: MedsService,
+              private _authService: AuthService,
               private _router: Router) {
   }
+  role!: string;
+
 
   ngOnInit(): void {
+    this.role = this._authService.getCurrentUserRole();
     this.getAll();
   }
 
@@ -35,9 +43,35 @@ export class ViewAllComponent implements OnInit {
   }
 
   private getAll() {
-    this._medsService.getAllByUser(this.searchAndFilterSettings)
-      .subscribe(res => {
-        this.meds = res
-      });
+    if (this.role == 'patient') {
+      this._medsService.getAllByUser(this.searchAndFilterSettings)
+        .subscribe(res => {
+          this.meds = res.data
+          this.numberOfPages = res.numberOfPages;
+        });
+    }else {
+      this._medsService.getAll(this.searchAndFilterSettings)
+        .subscribe(res => {
+          console.log(res)
+          this.meds = res.data
+          this.numberOfPages = res.numberOfPages;
+          console.log(this.numberOfPages)
+        });
+    }
+  }
+
+  addNewForm() {
+    this._router.navigate([CoreRoutes.MEDS, MedRoutes.CREATE]);
+  }
+
+  updateMeds($event: MedsQuerySettings) {
+    this.searchAndFilterSettings = {
+      ...$event,
+    }
+    this.getAll();
+  }
+
+  toggleBookmark($event: MedItem) {
+   this._medsService.bookmarkMeds([$event.id]).subscribe();
   }
 }

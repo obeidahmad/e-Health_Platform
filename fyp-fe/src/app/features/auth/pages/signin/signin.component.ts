@@ -52,4 +52,8 @@ export class SigninComponent implements OnInit {
       this._router.navigate([CoreRoutes.AUTH, AuthRoutes.FORGOT_PASSWORD]).then()
     }
   }
+
+  redirectToSignUp() {
+    this._router.navigate([CoreRoutes.AUTH, AuthRoutes.SIGNUP])
+  }
 }

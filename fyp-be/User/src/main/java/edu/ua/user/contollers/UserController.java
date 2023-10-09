@@ -3,13 +3,11 @@ package edu.ua.user.contollers;
 import edu.ua.user.services.UserService;
 import edu.ua.sqldatabasepersistence.models.sql_models.general.User;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;

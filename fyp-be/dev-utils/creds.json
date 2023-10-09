@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "e-dispensary",
+  "private_key_id": "c3162f44d7b02539f776a1f203e54082fb036707",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC9GXHpvsq3aCR3\nJaHLb2DkLwT4NUU/0ceGdicTQF2sba2ApEXIYZpEk0Dq4Una+lNMgH4B50zynspe\nA1DfKvgFe6iYBkNVTlUwfxewSeeSfhBRDsDcgA5e1z0TJNLSFQnLdBqo6YKhR+FW\nVGyME04jPVaDz8me2211tZ8Os+Tonh7xKCso3jwU7RcFFxkH9HACF/ki7fQa8Imu\nznbwb69Ao2r1YLdEBB/RGOxA9LijVHalNwOCVt9uTgvvgsl3nLOk3Ys7v78fy2C8\n0aS856lbo3kUKgU1Zi9I2Q8FbP4F7o12SXImpP2pf4AHbXmN5pBQLQhedegR6N3y\n5+9hpPm/AgMBAAECggEABJNp2biNhzu0kv2EQ/e0qmHzjzvnkNBQ2/fV1Fxcxcra\nK/Wrip6UJEdVhtD5EM/9XimcwNga8rQItEFrfF0gOB16/ZcJNUeC6MC3W+WDQqEH\npJTkaZOsgRThnCGD+6yh2nGy7h6lOlBF5xxb4N5CdPylH0v0+IHIZrKmrM9Wqecc\nw5CI1sqqaqqmXZLz8z9OejKORgiye262n0HokH3mKet32ThA3lMW4glPMvKCHypY\n5I3lcnjuLXiCUYmto1gNniLexYIP364rC6uyBeU/tFMFUG2S3Q8Iw1H8z6lnR+ir\nnpXg5BzuQhaE8uNmH9lOiMwnRpVNmWE1kCNgIaCDwQKBgQD4NSPE7zHYEo9ymTmI\nOFJbkUH5LKmyDu2QM+ZLPZnXSLQhDi6H72OpEekFcQHYrhebC8AAr/oR6TLYC8Z6\nn2pIbgATkOxXnPzGOwljzQ+iF3lLQgQkSX51gzNdQik20f2hS68W2tNokEymZFXk\ncLmjYgs7pi9oG/eXB9HSIfadiQKBgQDDCT+9KOEDoJs0dpYpvvb9xUGgj5f8rWqv\n8GzpwCtsNVCBJoBojeLRyBEYiHk5T7uUGor2iXHVe8MImS3Ilp8sGTaOouZWT/C6\n7QAG/0k95arXCov4mlOFvFXoQI+rGL5KFfT4AoRcZFGyte7/eaVfnKQMPus2AOWG\nENv1GKmTBwKBgQDjGOPYXS5Sz3CWXuGH5FheVYJydM3zD7uG1CWitAMdOfUtxWcH\nkx2xZKS7CNGyql8IynBrcJeyaZbOm7+HFHLPQG4reM71vrp8uSl3OflSyn19QTK+\n7Muaw2dsrYs+EFYqjS/vDlqd8mFfYLBB6m2/soYqlnwLmoMnmcz9oXueWQKBgFEl\nUPqfvnbm5IxAZpu500OkRXjLJZ5AfKn06yuaA7cCu5rwbO6TUfKcPdiqN12L+exV\n2slWSCFdW7kBGlZhrJoJZ3SS/CifG/Z50tAWeN+i5aCQx8nIU8XJpSh7bArwwYNL\nfV+OlIloR8GGBokOkKqmHm7l4rDWUKil7Q4dk7gTAoGAC0dEDqu19ULAZVnycf8I\nlbd/cquEqNy6eaCk4SnQa9C8wUAn47P0fq3nt10xEkxJlarfV8e5vmD7cylp8K4N\nj1MDkofWMZ/0MUCi/d48MSCg9AsCjULHPgXbuNVNJI2PKgF7/fK99tlyJiicu1g2\ny5IVoQykRhjaYWtKxW4HWP4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-zx8fy@e-dispensary.iam.gserviceaccount.com",
+  "client_id": "104500178558301130007",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-zx8fy%40e-dispensary.iam.gserviceaccount.com"
+}

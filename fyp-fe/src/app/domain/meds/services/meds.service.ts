@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {MedsQuerySettings} from "../models/meds-query-settings";
-import {MedItem} from "../models/med-item";
+import {MedItem, MedsResponse} from "../models/med-item";
 import {Observable} from "rxjs";
 import {AuthService} from "../../authentication/services/auth.service";
 import {CreateMed, UpdateMed} from "../models/create-med";
@@ -19,13 +19,18 @@ export class MedsService {
               private _authService: AuthService) {
   }
 
-  public getAll(settings: MedsQuerySettings): Observable<MedItem[]> {
-    return this._http.post<MedItem[]>(this.url + '/all', settings);
+  public getAll(settings: MedsQuerySettings): Observable<MedsResponse> {
+    return this._http.post<MedsResponse>(this.url + '/all', settings);
   }
 
-  public getAllByUser(settings: MedsQuerySettings): Observable<MedItem[]> {
+
+  public getAllByUser(settings: MedsQuerySettings): Observable<MedsResponse> {
     const userId = this._authService.getCurrentUserId();
-    return this._http.post<MedItem[]>(`${this.url}/all/${userId}`, settings);
+    return this._http.post<MedsResponse>(`${this.url}/all/${userId}`, settings);
+  }
+
+  public getMedicinePurchaseHistory(medId: string): Observable<Purchase[]> {
+    return this._http.get<Purchase[]>(`${this.url}/purchase/${medId}`);
   }
 
   public createMed(medItem: CreateMed): Observable<MedItem> {
@@ -37,7 +42,7 @@ export class MedsService {
   }
 
   public deleteMed(medId: string) {
-    return this._http.delete(this.url + `/${medId}`);
+    return this._http.delete(this.url + `/delete/${medId}`);
   }
 
   public updateMed(medItem: UpdateMed) {
@@ -82,4 +87,7 @@ export class MedsService {
     return this._http.get<string[]>(this.url + '/classes');
   }
 
+  public buyMedicine(id: string, userId: string) {
+    return this._http.post(`${this.url}/buy/${userId}/${id}`, {})
+  }
 }

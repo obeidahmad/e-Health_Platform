@@ -4,4 +4,5 @@ export interface AppointmentDto{
   updatedAt: string;
   doctorId: string;
   userId: string;
+  date: string;
 }

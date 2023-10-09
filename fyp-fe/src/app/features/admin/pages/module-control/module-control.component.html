@@ -1,0 +1,16 @@
+<nz-list nzGrid>
+  <div nz-row [nzGutter]="16">
+    <div nz-col [nzSpan]="8" *ngFor="let item of containers">
+      <nz-list-item [style.border]="(item.status == 'running')? '1px solid var(--primary-color)' : '1px solid var(--error-color)'">
+        <nz-card [nzTitle]="item.name | titlecase"  [nzExtra]="extraTemplate">
+          <br>
+          <button (click)="toggle(item)" [nzDanger]="item.status == 'running'" nzBlock nz-button nzType="primary">{{(item.status == 'running')? "Stop" : "Start"}}</button>
+        </nz-card>
+        <ng-template #extraTemplate>
+          <nz-tag [nzColor]="(item.status == 'running')? 'green' : 'red'">{{item.status | titlecase}}</nz-tag>
+        </ng-template>
+      </nz-list-item>
+    </div>
+  </div>
+
+</nz-list>

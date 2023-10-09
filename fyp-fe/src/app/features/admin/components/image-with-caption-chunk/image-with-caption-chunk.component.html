@@ -1,1 +1,11 @@
-<p>image-with-caption-chunk works!</p>
+<div class="event-chunk">
+  <img
+    *ngIf="eventStructure.src"
+    [nzSrc]="eventStructure.src"
+    alt=""
+    nz-image
+  />
+  <div>
+    <p>{{eventStructure.content}}</p>
+  </div>
+</div>

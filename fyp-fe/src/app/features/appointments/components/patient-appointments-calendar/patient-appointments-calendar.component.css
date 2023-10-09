@@ -1,0 +1,11 @@
+section {
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+::ng-deep .ant-radio-group.ant-picker-calendar-mode-switch.ant-radio-group-small label:nth-child(2){
+  display: none;
+}

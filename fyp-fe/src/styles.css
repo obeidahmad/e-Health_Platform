@@ -1,8 +1,8 @@
 :root {
   --primary-color: #1860A5;
-  --secondary-color: #42405D;
+  --secondary-color: rgba(66, 64, 93, 0.24);
   --primary-80: #74AEF8;
-  --primary-container: #FBFCFF;
+  --primary-container: rgba(251, 252, 255, 0.14);
   --error-color: #BA1A1A;
   --surface-1: #FBFCFF;
   --primary-dark: #0a2f52;
@@ -30,4 +30,21 @@ h1, h2, h3, h4, h5, h6, li {
 
 input{
   color: var(--primary-dark);
+}
+
+.event-chunk{
+  margin-top: 1rem;
+}
+
+.event-chunk img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+
+.range-picker{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

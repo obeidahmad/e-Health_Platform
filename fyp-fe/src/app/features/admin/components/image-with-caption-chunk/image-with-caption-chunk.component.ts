@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {EventStructure} from "../../../../domain/admin/models/events";
 
 @Component({
   selector: 'app-image-with-caption-chunk',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./image-with-caption-chunk.component.css']
 })
 export class ImageWithCaptionChunkComponent implements OnInit {
+  @Input() eventStructure!: EventStructure;
 
   constructor() { }
 

@@ -5,6 +5,8 @@ import {AvailabilityService} from "../../../../domain/appointments/services/avai
 import {AvailabilityRequest} from "../../../../domain/appointments/models/availability-request";
 import {AuthService} from "../../../../domain/authentication/services/auth.service";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {Router} from "@angular/router";
+import {CoreRoutes} from "../../../../core/core-routes";
 
 @Component({
   selector: 'app-set-availability',
@@ -16,12 +18,12 @@ export class SetAvailabilityComponent implements OnInit {
   doctorTimeSlot: number = 15; // TODO
   today = new Date();
   date: Date[] = [];
-  isVisible = false;
 
   selectedData: Array<{ day: any, startTime: string, endTime: string, stamp: Date }> = []
   excludeWholeMonth: boolean = false;
 
   constructor(private _availabilityService: AvailabilityService,
+              private _router: Router,
               private _nzMessage: NzMessageService,
               private _authService: AuthService) {
   }
@@ -114,19 +116,6 @@ export class SetAvailabilityComponent implements OnInit {
     this.selectedData = this.selectedData.filter(data => data != date);
   }
 
-  // handleCancel(): void {
-  //   console.log('Button cancel clicked!');
-  //   this.isVisible = false;
-  // }
-  //
-  // updateOne($event: any) {
-  //
-  // }
-  //
-  // onOk($event: any) {
-  //
-  // }
-
   dateRange(startDate: string, endDate: string) {
     let start = startDate.split('-');
     let end = endDate.split('-');
@@ -146,6 +135,19 @@ export class SetAvailabilityComponent implements OnInit {
     return dates;
   }
 
+  // handleCancel(): void {
+  //   console.log('Button cancel clicked!');
+  //   this.isVisible = false;
+  // }
+  //
+  // updateOne($event: any) {
+  //
+  // }
+  //
+  // onOk($event: any) {
+  //
+  // }
+
   setAvailabilityForRange() {
     if (this.selectedData.length < 1) return;
     const selected = [...this.selectedData]
@@ -153,7 +155,7 @@ export class SetAvailabilityComponent implements OnInit {
       // @ts-ignore
       return new Date(b.stamp) - new Date(a.stamp);
     });
-    let last = selected[0].stamp.toISOString().replace(/\//g, "T").split('T')[0];
+    let last = selected[0].stamp.toISOString().replace(/\//g, "-").split('T')[0];
     // @ts-ignore
     let first = selected.pop().stamp.toISOString().replace(/\//g, "-").split('T')[0];
 
@@ -163,7 +165,7 @@ export class SetAvailabilityComponent implements OnInit {
       // @ts-ignore
       let fullLast: any = months.pop();
       fullLast = fullLast.split("-");
-      fullLast[fullLast.length -1] = '31'
+      fullLast[fullLast.length - 1] = '31'
       last = fullLast.join('-')
     }
 
@@ -185,7 +187,7 @@ export class SetAvailabilityComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.loadingRequest = false;
-        // TODO navigate back
+        this._router.navigate([CoreRoutes.APPT, 'doctor'])
       },
       error: (err) => {
         this._nzMessage.error(err);
@@ -193,6 +195,8 @@ export class SetAvailabilityComponent implements OnInit {
       }
     })
   }
+
+
 
   private disableUsed = (value: Date): boolean => {
     const weekend = this.disableWeekend(value);

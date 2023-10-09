@@ -14,10 +14,33 @@ import { TitleChunkComponent } from '../../features/admin/components/title-chunk
 import { ImageWithCaptionChunkComponent } from '../../features/admin/components/image-with-caption-chunk/image-with-caption-chunk.component';
 import {EventEditorComponent} from "../../features/admin/components/event-editor/event-editor.component";
 import {NzInputModule} from "ng-zorro-antd/input";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzImageModule} from "ng-zorro-antd/image";
+import {NzListModule} from "ng-zorro-antd/list";
+import {NzTagModule} from "ng-zorro-antd/tag";
+import {NzMessageModule} from "ng-zorro-antd/message";
+import {NzRadioModule} from "ng-zorro-antd/radio";
+import {NzCollapseModule} from "ng-zorro-antd/collapse";
+import {NzSkeletonModule} from "ng-zorro-antd/skeleton";
+import {NzEmptyModule} from "ng-zorro-antd/empty";
+import { EventsListComponent } from '../../features/admin/components/events-list/events-list.component';
+import {ModuleControlComponent} from "../../features/admin/pages/module-control/module-control.component";
+import { NewUserComponent } from '../../features/admin/pages/new-user/new-user.component';
+import {FormlyModule} from "@ngx-formly/core";
+import { UsersComponent } from '../../features/admin/pages/users/users.component';
+import { UsersListComponent } from '../../features/admin/components/users-list/users-list.component';
+import { NewEventFormComponent } from '../../features/admin/components/new-event-form/new-event-form.component';
+import { CustomFileInputComponent } from '../../features/admin/components/custom-file-input/custom-file-input.component';
+import {NzUploadModule} from "ng-zorro-antd/upload";
+import {NzProgressModule} from "ng-zorro-antd/progress";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzTabsModule} from "ng-zorro-antd/tabs";
+import {NzDescriptionsModule} from "ng-zorro-antd/descriptions";
+import {NzBadgeModule} from "ng-zorro-antd/badge";
 
 @NgModule({
   declarations: [
@@ -28,7 +51,14 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     ParagraphWithTitleChunkComponent,
     TitleChunkComponent,
     ImageWithCaptionChunkComponent,
-    EventEditorComponent
+    EventEditorComponent,
+    ModuleControlComponent,
+    EventsListComponent,
+    NewUserComponent,
+    UsersComponent,
+    UsersListComponent,
+    NewEventFormComponent,
+    CustomFileInputComponent,
   ],
   imports: [
     CommonModule,
@@ -41,7 +71,24 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     FormsModule,
     NzDatePickerModule,
     NzCardModule,
-    NzIconModule
+    NzIconModule,
+    NzImageModule,
+    NzListModule,
+    NzTagModule,
+    NzMessageModule,
+    NzRadioModule,
+    NzCollapseModule,
+    NzSkeletonModule,
+    NzEmptyModule,
+    FormlyModule.forChild(),
+    ReactiveFormsModule,
+    NzUploadModule,
+    NzProgressModule,
+    DragDropModule,
+    NzDividerModule,
+    NzTabsModule,
+    NzDescriptionsModule,
+    NzBadgeModule,
   ]
 })
 export class AdminModule {

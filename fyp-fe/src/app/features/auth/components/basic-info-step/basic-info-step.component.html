@@ -1,0 +1,36 @@
+<form (ngSubmit)="isValid()" [formGroup]="form" class="login-form" nz-form>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input a valid email.">
+      <nz-input-group nzPrefixIcon="mail">
+        <input formControlName="email" nz-input placeholder="Email" type="text"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input your password.">
+      <nz-input-group nzPrefixIcon="lock">
+        <input formControlName="password" nz-input placeholder="Password" type="password"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input your first name.">
+      <nz-input-group nzPrefixIcon="user">
+        <input formControlName="first_name" nz-input placeholder="First name" type="text"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input your last name.">
+      <nz-input-group nzPrefixIcon="user">
+        <input formControlName="last_name" nz-input placeholder="Last name" type="text"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<nz-divider nzPlain  nzText="Or"></nz-divider>
+
+<div class="socials">
+  <app-google-btn (google)="signUpWithGoogle()"></app-google-btn>
+</div>

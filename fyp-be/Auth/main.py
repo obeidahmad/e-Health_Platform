@@ -1,4 +1,5 @@
 import firebase_admin
+import requests
 from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from firebase_admin import credentials, auth, firestore
@@ -12,6 +13,7 @@ app = FastAPI()
 cred = credentials.Certificate("secret.json")
 firebase_app = firebase_admin.initialize_app(cred)
 firestore_db = firestore.client()
+user_be_url = 'http://user-fyp:8083/user'
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,6 +33,9 @@ async def signup(user_credentials: UserSignup):
                                 display_name=f"{user_credentials.first_name} + {user_credentials.last_name}")
         records = user_credentials.base_user_info.dict()
         records['timestamp'] = firestore.firestore.SERVER_TIMESTAMP
+        records['first_name'] = user_credentials.first_name
+        records['last_name'] = user_credentials.last_name
+
         document_id = user.uid
         ref = firestore_db.collection("patients").document(document_id)
         ref.set(records)
@@ -40,6 +45,12 @@ async def signup(user_credentials: UserSignup):
         custom_claims = {'role': 'patient'}
         auth.set_custom_user_claims(user.uid, custom_claims)
         # custom_token = auth.create_custom_token(user.uid, custom_claims)
+
+        user_custom = {
+            'id': user.uid,
+            'role': {"id": "35e1ff30-23aa-447c-93e9-a93840ab7ccc"},
+        }
+        requests.post(user_be_url, json=user_custom, verify=False)
         return auth.get_user_by_email(user_credentials.email)
 
 
@@ -58,7 +69,15 @@ async def signup():
         custom_token = auth.create_custom_token(user.uid, custom_claims)
         return {"token": custom_token}
 
-
+@app.get('/why')
+async def why():
+    user_custom = {
+        'id': 'bruh',
+        'role': {
+            'id': "0fa1f17e-8060-4232-9dec-d81fbc822c91"
+        },
+    }
+    requests.post(user_be_url, json=user_custom)
 @app.post("/signup_nurse")
 async def signup(user_credentials: NonPatientSignup):
     try:
@@ -70,6 +89,16 @@ async def signup(user_credentials: NonPatientSignup):
                                 email_verified=True,
                                 password=user_credentials.password,
                                 display_name=f"{user_credentials.first_name} + {user_credentials.last_name}")
+
+        records = {
+            'email': user_credentials.email,
+            'first_name': user_credentials.first_name,
+            'last_name': user_credentials.last_name,
+            'role': 'nurse',
+        }
+        document_id = user.uid
+        ref = firestore_db.collection("users").document(document_id)
+        ref.set(records)
     except EmailAlreadyExistsError as e:
         raise HTTPException(status_code=400, detail="This user already exists!")
     except InvalidIdTokenError:
@@ -78,6 +107,13 @@ async def signup(user_credentials: NonPatientSignup):
         custom_claims = {'role': 'nurse'}
         auth.set_custom_user_claims(user.uid, custom_claims)
         custom_token = auth.create_custom_token(user.uid, custom_claims)
+        user_custom = {
+            'id': user.uid,
+            'role': {
+                'id': "0fa1f17e-8060-4232-9dec-d81fbc822c91"
+            },
+        }
+        requests.post(user_be_url, json=user_custom)
         return {"token": custom_token}
 
 
@@ -92,6 +128,16 @@ async def signup(user_credentials: DoctorSignup):
                                 email_verified=True,
                                 password=user_credentials.password,
                                 display_name=f"{user_credentials.first_name} + {user_credentials.last_name}")
+        records = {
+            'email': user_credentials.email,
+            'first_name': user_credentials.first_name,
+            'last_name': user_credentials.last_name,
+            'role': 'doctor',
+            'time_slot': user_credentials.time_slot,
+        }
+        document_id = user.uid
+        ref = firestore_db.collection("users").document(document_id)
+        ref.set(records)
     except EmailAlreadyExistsError as e:
         raise HTTPException(status_code=400, detail="This user already exists!")
     except InvalidIdTokenError:
@@ -100,6 +146,15 @@ async def signup(user_credentials: DoctorSignup):
         custom_claims = {'role': 'doctor', 'time_slot': user_credentials.time_slot}
         auth.set_custom_user_claims(user.uid, custom_claims)
         custom_token = auth.create_custom_token(user.uid, custom_claims)
+
+        user_custom = {
+            'id': user.uid,
+            'role': {
+                "id": "7b3fe957-f026-4a10-b302-dc9041393dc4"
+            }
+        }
+        requests.post(user_be_url, json=user_custom, verify=False)
+
         return {"token": custom_token}
 
 

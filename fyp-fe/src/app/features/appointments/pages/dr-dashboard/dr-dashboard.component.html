@@ -1,12 +1,16 @@
 
 <section>
-<h1>Today's sessions</h1>
+  <button nzType="primary" nz-button
+          style="float: right"
+          (click)="setAvailability()">
+    Update Your Availability
+  </button>
 
 </section>
 
 <section>
   <h1>My Calendar</h1>
-  <app-calendar></app-calendar>
+  <app-calendar *ngIf="!loadingAppts" [appointments]="appointments"></app-calendar>
 </section>
 
 <section></section>

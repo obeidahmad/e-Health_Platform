@@ -1,4 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {MedsService} from "../../../../domain/meds/services/meds.service";
+import {NgModel} from "@angular/forms";
+import {debounceTime, distinctUntilChanged, skip, Subject} from "rxjs";
+import {MedsQuerySettings} from "../../../../domain/meds/models/meds-query-settings";
 
 @Component({
   selector: 'app-search',
@@ -9,8 +13,8 @@ export class SearchComponent implements OnInit {
   public drawerSettings: { visible: boolean } = {
     visible: false
   };
-
-  constructor() {
+  @Output() query: EventEmitter<MedsQuerySettings> = new EventEmitter<MedsQuerySettings>();
+  constructor(private _medService: MedsService) {
   }
 
   private _filterQuery = {
@@ -42,9 +46,13 @@ export class SearchComponent implements OnInit {
     requiresPrescription: boolean
   }) {
     this._filterQuery = value;
+    this.filter();
+
   }
 
   private _searchQuery?: string;
+  medClasses: string[] = [];
+  medForms: string[] = [];
 
   get searchQuery(): string | undefined {
     return this._searchQuery;
@@ -60,6 +68,34 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._medService.getMedForms().subscribe(forms=>this.medForms = forms);
+    this._medService.getMedClasses().subscribe(forms=>this.medClasses = forms);
+    this.txtQueryChanged
+      .pipe(debounceTime(1000))
+      .pipe(distinctUntilChanged())
+      .subscribe(model => {
+        this.searchQuery = model;
+        // @ts-ignore
+        const query = {
+          pageNumber: 1,
+          pageSize: 9,
+          searchText: model,
+          // ...this.filterQuery
+        }
+        // if (query.medForm == '') { // @ts-ignore
+        //   query.medForm=undefined;
+        // }
+        // if (query.medClass == '') { // @ts-ignore
+        //   query.medClass=undefined;
+        // }
+        // @ts-ignore
+        this.query.emit(query)
+
+
+      });
+    // .control.valueChanges
+    //   .pipe(skip(1), debounceTime(200), distinctUntilChanged())
+    //   .subscribe(value => console.log(value));
   }
 
   public openFilter() {
@@ -67,6 +103,16 @@ export class SearchComponent implements OnInit {
   }
 
   public closeFilter() {
+    console.log(this.filterQuery)
     this.drawerSettings.visible = false;
+  }
+
+  private filter() {
+
+  }
+  txtQueryChanged: Subject<string> = new Subject<string>();
+
+  updateModel($event: any) {
+  this.txtQueryChanged.next($event);
   }
 }

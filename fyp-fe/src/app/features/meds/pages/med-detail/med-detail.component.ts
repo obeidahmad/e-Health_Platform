@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {MedItem} from "../../../../domain/meds/models/med-item";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MedsService} from "../../../../domain/meds/services/meds.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {Purchase} from "../../../../domain/meds/models/purchase";
+import {AuthService} from "../../../../domain/authentication/services/auth.service";
+import {CoreRoutes} from "../../../../core/core-routes";
+import {MedRoutes} from "../../../../domain/med-routes";
 
 @Component({
   selector: 'app-med-detail',
@@ -13,34 +16,51 @@ import {Purchase} from "../../../../domain/meds/models/purchase";
 export class MedDetailComponent implements OnInit {
   public medItem!: MedItem;
   public loading: boolean = true;
-  private medId!: string;
   public purchaseStatus: "new" | "bought" | "reserved" = "new";
+  public role!: string;
+  private medId!: string;
   private purchase!: Purchase;
+  public medHistory: Purchase[] = [];
+  // drawerSettings = {
+  //   visible: false
+  // };
 
   constructor(private _route: ActivatedRoute,
+              private _router: Router,
               private _nzMessage: NzMessageService,
+              private _authService: AuthService,
               private _medService: MedsService) {
     this._route.params.subscribe(params => {
       this.medId = params['id'];
     })
+    this.role = _authService.getCurrentUserRole();
   }
 
   ngOnInit(): void {
     this._medService.getMedById(this.medId).subscribe({
       next: (res) => {
         this.medItem = res;
-        this._medService.getUserPurchases().subscribe({
-          next: (purchases) => {
-            console.log(purchases)
-            const match = purchases.find(p => p.medicine.id == res.id);
-            if (match) {
-              this.purchaseStatus = match.status;
-              this.purchase = match;
+        if (this.role == 'patient') {
+          this._medService.getUserPurchases().subscribe({
+            next: (purchases) => {
+
+              const match = purchases.find(p => p.medicine.id == res.id);
+              if (match) {
+                this.purchaseStatus = match.status;
+                this.purchase = match;
+              }
             }
-            this.loading = false;
-          }
-        })
-      }
+          })
+        } else if (this.role == 'nurse'){
+          this._medService.getMedicinePurchaseHistory(this.medItem.id).subscribe({
+            next: (purchases) => {
+              this.medHistory = purchases;
+              console.log(this.medHistory)
+            }
+          })
+        }
+      },
+      complete: () => this.loading =false
     });
   }
 
@@ -83,7 +103,7 @@ export class MedDetailComponent implements OnInit {
   }
 
   unReserveMed() {
-    if (!this.purchase){
+    if (!this.purchase) {
       this._nzMessage.warning("Cannot remove, check with admin");
       return;
     }
@@ -95,5 +115,22 @@ export class MedDetailComponent implements OnInit {
           this.purchaseStatus = 'new';
         }
       });
+  }
+
+
+  markPurchased(item: Purchase) {
+    this._medService.buyMedicine(this.medItem.id, item.user.id).subscribe();
+
+  }
+
+  delete() {
+    this._medService.deleteMed(this.medId).subscribe({
+      next: () => this._router.navigate([CoreRoutes.MEDS])
+    });
+
+  }
+
+  edit() {
+    this._router.navigate([CoreRoutes.MEDS, MedRoutes.CREATE, this.medId], {state: {medId: this.medId}})
   }
 }

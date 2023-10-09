@@ -17,9 +17,9 @@ export class AvailabilityService {
               private _authService: AuthService) {
   }
 
-  public getDrAvailability(availability: UserAvailabilityRequest): Observable<AvailabilityResponse> {
+  public getDrAvailability(availability: UserAvailabilityRequest): Observable<AvailabilityResponse[]> {
     const url: string = `${this.url}/availability/${availability.timeframe}/${availability.date}/${availability.id}`;
-    return this._http.get<AvailabilityResponse>(url);
+    return this._http.get<AvailabilityResponse[]>(url);
   }
 
   public setDrAvailability(availability: AvailabilityRequest) {

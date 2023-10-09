@@ -11,3 +11,9 @@ export interface MedItem {
   medForm: string;
   isBookmarked?: boolean;
 }
+
+
+export interface MedsResponse {
+  data: MedItem[];
+  numberOfPages: number;
+}

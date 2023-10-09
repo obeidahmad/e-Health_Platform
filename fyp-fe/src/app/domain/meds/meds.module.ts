@@ -38,6 +38,9 @@ import {CreateMedFormComponent} from '../../features/meds/pages/create-med-form/
 import {NzSkeletonModule} from "ng-zorro-antd/skeleton";
 import {NzMessageModule} from "ng-zorro-antd/message";
 import {NzEmptyModule} from "ng-zorro-antd/empty";
+import {NzListModule} from "ng-zorro-antd/list";
+import {FormlyModule} from "@ngx-formly/core";
+import {NzRadioModule} from "ng-zorro-antd/radio";
 
 
 @NgModule({
@@ -82,7 +85,10 @@ import {NzEmptyModule} from "ng-zorro-antd/empty";
     NzDescriptionsModule,
     NzSkeletonModule,
     NzMessageModule,
-    NzEmptyModule
+    NzEmptyModule,
+    NzListModule,
+    FormlyModule,
+    NzRadioModule
   ]
 })
 export class MedsModule {

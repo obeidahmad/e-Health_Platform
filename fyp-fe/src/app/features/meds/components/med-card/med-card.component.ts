@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MedItem} from "../../../../domain/meds/models/med-item";
+import {b} from "@fullcalendar/core/internal-common";
 
 @Component({
   selector: 'app-med-card',
@@ -10,7 +11,10 @@ export class MedCardComponent implements OnInit {
   @Input() medItem!: MedItem;
   @Input() minimal: boolean = false;
   @Input() purchaseDate!: string;
+  @Input() status!: string;
+  @Input() role!: string;
   @Output() selected: EventEmitter<string> = new EventEmitter<string>();
+  @Output() bookmarked: EventEmitter<MedItem> = new EventEmitter<MedItem>();
 
   getDate() {
     return new Date(this.purchaseDate).toLocaleDateString('en-us', {
@@ -27,8 +31,10 @@ export class MedCardComponent implements OnInit {
 
   }
 
-  toggleBookmark() {
-
+  toggleBookmark($event: MouseEvent) {
+    $event.stopPropagation();
+    this.medItem.isBookmarked = !this.medItem.isBookmarked;
+    this.bookmarked.emit(this.medItem);
   }
 
   getBookmarked() {

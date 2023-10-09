@@ -1,0 +1,21 @@
+<nz-upload
+  *ngIf="!formControl.value"
+  [nzCustomRequest]="uploadImage"
+  [nzFilter]="filterUploads"
+  [nzMultiple]="false"
+  nzType="drag">
+  <p class="ant-upload-drag-icon">
+    <span nz-icon nzType="inbox"></span>
+  </p>
+  <p class="ant-upload-text">Click or drag image to this area to upload</p>
+  <p class="ant-upload-hint">
+    Please upload image type only
+  </p>
+</nz-upload>
+
+<div style="width: 100%">
+  <img *ngIf="formControl.value"
+       style="max-width: 600px"
+       width="600px"
+       [nzSrc]="formControl.value" nz-image>
+</div>

@@ -31,10 +31,10 @@ const routes: Routes = [
     path: CoreRoutes.ADMIN,
     loadChildren: () => import('../domain/admin/admin.module').then(m => m.AdminModule),
   },
-  {
-    path: '**',
-    redirectTo: CoreRoutes.AUTH
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: CoreRoutes.AUTH
+  // }
 ];
 
 @NgModule({

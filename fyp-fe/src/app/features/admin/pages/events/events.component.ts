@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DispensaryEvent} from "../../../../domain/admin/models/events";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-events',
@@ -7,8 +6,6 @@ import {DispensaryEvent} from "../../../../domain/admin/models/events";
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  constructor() { }
-
   ngOnInit(): void {
   }
 

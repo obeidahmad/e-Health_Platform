@@ -5,13 +5,22 @@
       <h1>MJO Center</h1>
     </div>
     <ul nz-menu nzMode="horizontal">
-      <li nz-menu-item nzSelected>nav 1</li>
-      <li nz-menu-item>nav 2</li>
-      <li nz-menu-item>nav 3</li>
+      <li *ngFor="let menuItem of selected" nz-menu-item nzMatchRouter>
+        <a [routerLink]="menuItem.route">{{menuItem.name}}</a>
+      </li>
     </ul>
     <div [nzGutter]="12" class="profile" nz-row nzAlign="middle">
-      <button nz-button nz-col nzType="default">Login</button>
-      <button nz-button nz-col nzType="primary">Signup</button>
+      <nz-avatar
+        nz-popover
+        [nzPopoverTitle]="getName()"
+        [nzPopoverContent]="contentTemplate"
+        nzPopoverPlacement="bottom"
+        nzIcon="user" style="background-color:var(--primary-color);" (click)="gotoProfile()"></nz-avatar>
+      <ng-template #contentTemplate>
+        <button nz-button nzType="primary" (click)="logout()">Logout</button>
+      </ng-template>
+      <!--      <button nz-button nz-col nzType="default">Login</button>-->
+<!--      <button nz-button nz-col nzType="primary">Signup</button>-->
     </div>
   </nz-header>
   <section class="sub-header">

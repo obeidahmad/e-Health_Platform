@@ -15,7 +15,7 @@ class NonPatientSignup(BaseModel):
 
 
 class DoctorSignup(NonPatientSignup):
-    time_slot: int
+    time_slot: int = 15
 
 
 class BasicUserInformation(BaseModel):

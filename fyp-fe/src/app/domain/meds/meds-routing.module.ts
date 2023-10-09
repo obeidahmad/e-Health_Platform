@@ -17,7 +17,13 @@ const routes: Routes = [
       },
       {
         path: MedRoutes.CREATE,
-        component: CreateMedFormComponent
+        component: CreateMedFormComponent,
+        children: [
+          {
+            path: ':id',
+            component: CreateMedFormComponent
+          }
+        ]
       },
       {
         path: ':id',

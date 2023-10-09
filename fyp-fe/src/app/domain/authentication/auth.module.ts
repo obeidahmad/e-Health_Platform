@@ -17,6 +17,13 @@ import { VerifyEmailComponent } from '../../features/auth/pages/verify-email/ver
 import {NzAnchorModule} from "ng-zorro-antd/anchor";
 import { PatientProfileComponent } from '../../features/auth/components/patient-profile/patient-profile.component';
 import { DoctorProfileComponent } from '../../features/auth/components/doctor-profile/doctor-profile.component';
+import {NzIconModule} from "ng-zorro-antd/icon";
+import { BasicInfoStepComponent } from '../../features/auth/components/basic-info-step/basic-info-step.component';
+import { ProfileInfoStepComponent } from '../../features/auth/components/profile-info-step/profile-info-step.component';
+import {NzStepsModule} from "ng-zorro-antd/steps";
+import {NzSelectModule} from "ng-zorro-antd/select";
+import {NzInputNumberModule} from "ng-zorro-antd/input-number";
+import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 
 
 @NgModule({
@@ -27,21 +34,28 @@ import { DoctorProfileComponent } from '../../features/auth/components/doctor-pr
     ForgotPasswordComponent,
     VerifyEmailComponent,
     PatientProfileComponent,
-    DoctorProfileComponent
+    DoctorProfileComponent,
+    BasicInfoStepComponent,
+    ProfileInfoStepComponent
   ],
-    imports: [
-        CommonModule,
-        AuthRoutingModule,
-        NzImageModule,
-        ReactiveFormsModule,
-        NzFormModule,
-        NzInputModule,
-        NzButtonModule,
-        NzMessageModule,
-        NzDividerModule,
-        SharedModule,
-        NzAnchorModule,
-    ]
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    NzImageModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzMessageModule,
+    NzDividerModule,
+    SharedModule,
+    NzAnchorModule,
+    NzIconModule,
+    NzStepsModule,
+    NzSelectModule,
+    NzInputNumberModule,
+    NzDatePickerModule,
+  ]
 })
 export class AuthModule {
 }

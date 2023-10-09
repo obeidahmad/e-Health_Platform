@@ -9,8 +9,8 @@ from rocketry import Rocketry
 
 app = Rocketry()
 
-email_sender = ""
-email_password = ""
+email_sender = "afrah.hassan12345@gmail.com"
+email_password = "dvaz gqdh xouj vpxt"
 
 smtp_port = 465
 smtp_server = "smtp.gmail.com"
@@ -25,10 +25,10 @@ db_host = "localhost"
 db_port = "5432"
 db_database = "fyp"
 
-cred = credentials.Certificate("./e-dispensary-firebase-adminsdk-credentials.json")
+cred = credentials.Certificate("./secret.json")
 initialize_app(cred)
 db = firestore.client()
-users_ref = db.collection("users")
+users_ref = db.collection("patients")
 
 
 @app.task("every 2 hours")
@@ -37,18 +37,19 @@ def do_things():
         connection = psycopg2.connect(user=db_user, password=db_password, host=db_host, port=db_port, database=db_database)
         cursor = connection.cursor()
         cursor.execute(
-            "SELECT appt.id, appt.date, appt.user_id FROM appts.appointments as appt WHERE appt.notified = false AND appt.date > date('now') + 1;")
+            "SELECT appt.id, appt.date, appt.user_id FROM appts.appointments as appt WHERE appt.notified = false")
 
         for appt_id, day, user_id in cursor.fetchall():
             print(f"Found appointment on '{day}' for user of id '{user_id}'")
             user_data = users_ref.document(user_id).get().to_dict()
+            print(user_data)
             email_receiver = user_data["email"]
             email_receiver_name = user_data["first_name"] + " " + user_data["last_name"]
             print("User Info Fetched")
 
             with smtplib.SMTP_SSL(smtp_server, smtp_port, context=smtp_context) as server:
                 server.login(email_sender, email_password)
-
+                print("Sending Email")
                 msg = EmailMessage()
                 msg["Subject"] = email_subject
                 msg["From"] = email_sender

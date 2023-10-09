@@ -6,4 +6,5 @@ export interface Purchase {
   updatedAt: string;
   medicine: MedItem;
   status: 'bought' | 'reserved';
+  user?: any;
 }
