@@ -1,0 +1,73 @@
+Enum meds.drug_classes {
+  "class1"
+  "class2"
+}
+
+Enum meds.forms {
+  "tablet"
+  "other"
+}
+
+Enum meds.admin_actions {
+  "Add drugs"
+  "Update drug"
+}
+
+Enum meds.user_actions {
+  "Reserve Drug"
+  "Bookmark Drug"
+  "Unreserve Drug"
+  "Unbookmark Drug"
+}
+
+Table meds.drugs {
+  id int [pk, increment]
+  name varchar [not null]
+  show_available_public bool [not null]
+  show_available_private bool [not null]
+  allow_reservation bool [not null]
+  show_price bool [not null]
+  dosage varchar [not null]
+  description varchar [null]
+  available_quantity int [not null]
+  reserved_quantity int [default: 0]
+  price bigint [null]
+  brand_id int [not null, ref: > meds.brands.id]
+  drug_classes meds.drug_classes [not null]
+  form meds.forms [not null]
+  image_url varchar [not null]
+}
+
+Table meds.active_ingredients {
+  id int [pk, increment]
+  name varchar [not null]
+}
+
+Table meds.brands {
+  id int [pk, increment]
+  name varchar [not null]
+}
+
+Table meds.drugs_ingredients {
+  drug_id int [ref: > meds.drugs.id]
+  ingredient_id int [ref: > meds.active_ingredients.id]
+  Indexes {
+    (drug_id, ingredient_id) [pk]
+  }
+}
+
+Table meds.user_logs {
+  id int [pk, increment]
+  action meds.user_actions [not null]
+  user_id int [not null] // reference to user table
+  drug_id int [not null, ref: > meds.drugs.id]
+  description varchar [not null]
+}
+
+Table meds.admin_logs {
+  id int [pk, increment]
+  action meds.admin_actions [not null]
+  admin_id int [not null] //reference to user/admin table
+  drug_id int [not null, ref: > meds.drugs.id]
+  description varchar [not null]
+}
