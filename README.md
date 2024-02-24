@@ -1,7 +1,7 @@
 # e-Health Platform for Social Medical Center
 ---
 
-This project is part of a philanthropic initiative, for the Medical and Social Center M.J.O. Beirut. A testament to this rapidly evolving digital age, we aimed to digitize the services offered by the Medical Center, not only to keep pace with modern advancements but also to enhance accessibility, efficiency, and convenience for both patients and medical personel. 
+This project is part of a philanthropic initiative, for the Medical and Social Center ![M.J.O. Beirut](https://mjobeyrouth.wordpress.com/). A testament to this rapidly evolving digital age, we aimed to digitize the services offered by the Medical Center, not only to keep pace with modern advancements but also to enhance accessibility, efficiency, and convenience for both patients and medical personel. 
 This project packs a list of applications forming the digital infrastrcure of the medical center, along with a user-friendly web portal for patients, doctors and admins. Embodying the the spirit of M.J.O. Beirut, this platform follows best practices for rigid information security and scalability.
 
 The different features are:
