@@ -123,3 +123,13 @@ Once satisfied
 ```sh
 docker compose up
 ```
+
+## Acknowledgement
+[Afrah Hassan](https://github.com/afrahhassan0)
+
+[Ahmad Obeid](https://github.com/obeidahmad)
+
+-----
+
+## [Further Reading](https://github.com/obeidahmad/e-Health_Platform/tree/main/Documents)
+
