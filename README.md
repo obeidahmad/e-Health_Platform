@@ -1,18 +1,17 @@
-# E-Dispensary Social Medical Center
+# e-Health Platform for Social Medical Center
 ---
 
-This project is a group of tools forming the digital infrastrcure of a medical center, along with a user-friendly web portal for patients, doctors and admin, following best practices in security and scalability.
+This project is part of a philanthropic initiative, for the Medical and Social Center M.J.O. Beirut. A testament to this rapidly evolving digital age, we aimed to digitize the services offered by the Medical Center, not only to keep pace with modern advancements but also to enhance accessibility, efficiency, and convenience for both patients and medical personel. 
+This project packs a list of applications forming the digital infrastrcure of the medical center, along with a user-friendly web portal for patients, doctors and admins. Embodying the the spirit of M.J.O. Beirut, this platform follows best practices for rigid information security and scalability.
 
-This projet heavily utilises Firebase. The different backend modules include:
+The different features are:
 
-- Pharmacy management
-- Appointments management
-- Email notification scheduling
-- Docker control managment API
-- Authentication module (extending the basic firebase functionality)
+- Pharmacy and Meds Sotrage management
+- Appointments management with email notification
+- Social news builder
+- Secure Patients records management
 
-
-As well as a SPA to seamlessly integrate the different module with customized views for each user role.
+All those features are seamlessly integrated in a Single-Page UI with customized visibility for each user/medical personel.
 
 
 ![signup page](docs/signup.png)
@@ -22,25 +21,12 @@ As well as a SPA to seamlessly integrate the different module with customized vi
 
 ![building blocks](docs/diagram.png)
 
-The diagram above shows the general structure. There are three high level layers:
+The diagram above shows the general structure. There are three main layers:
 - The frontend
 - The gateway
 - The backend
 
-The front-end is the user interface. It takes its credentials from the cloud provider and utilizes cloud services for storage of some user data and blob storage. References of this remote data and the rest of the services are in the backend. The backend is reachable through the gateway, as the backend has no knowledge or decisions in authentication or role-based authorization and redirections. These are done on the level of the gateway.
-It checks the validity of the request credentials and role and redirects it to the appropriate backend module.
-Each backend module has its own independent database schema, providing solid grouds for scalability in the future if a full microservices architecture was applied. 
-
-This approach: 
-- Isolates the different services, reducing single point failures, so any issues that
-happen can be more easily located without affecting the rest of the system. 
-- Offers scalability, so if there is more demand for one service multiple instances
-of it can be run to satisfy the demand without having to waste resources on the
-rest. Each service can also be modified independently.
-- Aids continuous integration: as isolation and scalability are ensured, the deployment
-process is also streamlined for each service. Updates can be pushed faster, and
-new features done without messing with unrelated code.
-- Is technology agnostic, as different features have unique needs, which was reflected in the technology choice shown below.
+The frontend, responsible for the user interface, seamlessly interacts with cloud services for data storage. Meanwhile, the backend, accessible only through the identity management gateway, handles business logic and data processing. Each backend module operates independently, ensuring robustness and future scalability. Our architecture is made with growth in mind, whether you’re expanding within a monolithic system or transitioning to a full microservices setup.
 
 ### Tools and technologies
 
@@ -105,23 +91,13 @@ extension for role-based access control</td>
     </tbody>
 </table>
 
-## Pre-requisites for deployment
+## Deployment
+### Pre-requisites
 - Docker
 - A firebase project including
     - Firebase auth for identity management
     - Firestore for sensitive
     - Firebase storage 
-
-
-
-## About deployment
-
-If you are willing to use your own server, you will need to install docker on that server to run the built containers. The available configuration works out of the box for development environment.
-
-The docker compose file has all the images configuration. For the port mappings make sure to change the running port of each corresponding service, in `application.properties` for the Spring boot module and uvicorn command for the Python modules. The Postgres database has default user and password too that have to be updated accordingly
- It is important however to change the database user, password and DB present under postgres-fyp service, you need to then update it in the source code of the four modules -Appointment Pharmacy SQLDatabasePersistence User- change in the src/main/resources/application.properties the spring.datasource.username, spring.datasource.password and spring.datasource.url (the same file for all the modules) and add your password, username and db. 
-The schemas needed are not automatically created. They should be manually added.
-
 
 ### Firebase project 
 
@@ -137,3 +113,13 @@ Setup for auth:
 Setup for Firestore:
 - Store protection based on auth status and roles 
 - Schema initialization
+
+### Final Steps
+You will firstly need to change the database connection strings in the proper `application.properties` files. Removal of the SQL container in the docker compose file may be necessary if you are using a standalone Database Server.
+
+The database schemas needed are not automatically created. They should be manually added.
+
+Once satisfied
+```sh
+docker compose up
+```
