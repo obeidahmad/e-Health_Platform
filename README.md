@@ -1,4 +1,4 @@
-# E-Dispensary Social Medical Center
+# Social Medical Center
 ---
 
 This project is a group of tools forming the digital infrastrcure of a medical center, along with a user-friendly web portal for patients, doctors and admin, following best practices in security and scalability.
